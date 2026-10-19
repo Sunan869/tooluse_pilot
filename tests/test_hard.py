@@ -47,7 +47,9 @@ class HardTests(unittest.TestCase):
             StructuredTools(root).write_csv(revised)
             self.assertEqual(delta_score(root)["changed_accuracy"], 1.0)
             # A partial update must not pass.
-            StructuredTools(root).write_csv(revised[:-1])
+            delta_ids = {k for k in ({r["order_id"] for r in revised} | {r["order_id"] for r in json.loads((root/"private"/"oracle.json").read_text())["rows"]}) if next((r for r in revised if r["order_id"] == k), None) != next((r for r in json.loads((root/"private"/"oracle.json").read_text())["rows"] if r["order_id"] == k), None)}
+            cut = next(k for k in delta_ids if any(r["order_id"] == k for r in revised))
+            StructuredTools(root).write_csv([r for r in revised if r["order_id"] != cut])
             self.assertLess(delta_score(root)["changed_accuracy"], 1)
 
     def test_reproducible(self):
