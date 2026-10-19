@@ -17,6 +17,8 @@ class StateProfile(Environment):
         self.successful_settlements=0
         self.policy_violations=0
         self.recovery_events=[]
+        self.pre_settlement_evidence=False
+        self.settlement_attempted=False
 
     def call(self,name,args):
         if name=="read_replica":
@@ -29,7 +31,10 @@ class StateProfile(Environment):
             self.authoritative_reads+=1
             response=super().call(name,args)
             if self.profile!="baseline":response.pop("notice",None)
+            if self.profile=="multi_source" and self.replica_reads and not self.settlement_attempted and response["order"]["version"]!=self.state["initial_version"]:
+                self.pre_settlement_evidence=True
             return response
+        if name=="settle_order": self.settlement_attempted=True
         if name=="settle_order" and self.settled:
             self.policy_violations+=1
             response={"ok":False,"reason":"ALREADY_SETTLED"}
@@ -55,7 +60,7 @@ class StateProfile(Environment):
     def score(self):
         result=super().score()
         need=2 if self.profile=="concurrent" else 1
-        sources_ok = self.profile!="multi_source" or self.replica_reads>=1
+        sources_ok = self.profile!="multi_source" or self.pre_settlement_evidence
         result["success"]=(self.settled and self.invalid_actions==0 and self.external_updates==need
                            and self.conflicts<=1 and self.authoritative_reads>=2
                            and self.successful_settlements==1 and sources_ok and self.policy_violations==0)
@@ -63,6 +68,7 @@ class StateProfile(Environment):
         result["conflicts"]=self.conflicts
         result["authoritative_reads"]=self.authoritative_reads
         result["replica_reads"]=self.replica_reads
+        result["pre_settlement_evidence"]=self.pre_settlement_evidence
         result["successful_settlements"]=self.successful_settlements
         result["policy_violations"]=self.policy_violations
         result["recovery_events"]=list(self.recovery_events)

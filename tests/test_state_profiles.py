@@ -14,7 +14,7 @@ class ProfilesTests(unittest.TestCase):
         env.call("settle_order",latest)
         self.assertFalse(env.score()["success"])
         env.call("read_replica",{})
-        self.assertTrue(env.score()["success"])
+        self.assertFalse(env.score()["success"])
 
     def test_repeated_settle_is_not_success(self):
         env=StateProfile(0,"implicit")
@@ -43,6 +43,15 @@ class ProfilesTests(unittest.TestCase):
         self.assertEqual(env.score()["policy_violations"],0)
         latest=env.call("read_order",{})["order"]
         self.assertTrue(env.call("settle_order",latest)["ok"])
+        self.assertTrue(env.score()["success"])
+
+    def test_evidence_before_settlement(self):
+        env=StateProfile(0,"multi_source")
+        env.call("read_replica",{})
+        env.call("read_order",{})
+        latest=env.call("read_order",{})["order"]
+        env.call("settle_order",latest)
+        self.assertTrue(env.score()["pre_settlement_evidence"])
         self.assertTrue(env.score()["success"])
 
     def test_silent_update(self):
