@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "rows": [
+    {
+      "order_id": "PO-0004",
+      "expected_cents": 2246389,
+      "net_paid_cents": 2246389,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0006",
+      "expected_cents": 1588584,
+      "net_paid_cents": 1585690,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0007",
+      "expected_cents": 658694,
+      "net_paid_cents": 658694,
+      "issues": "SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0008",
+      "expected_cents": 2397813,
+      "net_paid_cents": 2396813,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0009",
+      "expected_cents": 2237596,
+      "net_paid_cents": 2237596,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0010",
+      "expected_cents": 1346988,
+      "net_paid_cents": 1346988,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0011",
+      "expected_cents": 1149942,
+      "net_paid_cents": 1148101,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0013",
+      "expected_cents": 2195396,
+      "net_paid_cents": 2195396,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0015",
+      "expected_cents": 925228,
+      "net_paid_cents": 924228,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0016",
+      "expected_cents": 2517362,
+      "net_paid_cents": 2515201,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0021",
+      "expected_cents": 1618287,
+      "net_paid_cents": 1617631,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0022",
+      "expected_cents": 862192,
+      "net_paid_cents": 861192,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0026",
+      "expected_cents": 2570281,
+      "net_paid_cents": 2569672,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0029",
+      "expected_cents": 630319,
+      "net_paid_cents": 629319,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0030",
+      "expected_cents": 2113517,
+      "net_paid_cents": 2113517,
+      "issues": "REQUIRES_APPROVAL"
+    }
+  ]
+}
