@@ -24,6 +24,27 @@ class ProfilesTests(unittest.TestCase):
         env.call("settle_order",latest)
         self.assertFalse(env.score()["success"])
 
+    def test_duplicate_settlement_is_blocked(self):
+        env=StateProfile(0,"implicit")
+        env.call("read_order",{})
+        current=env.call("read_order",{})["order"]
+        self.assertTrue(env.call("settle_order",current)["ok"])
+        duplicate=env.call("settle_order",current)
+        self.assertFalse(duplicate["ok"])
+        self.assertEqual(duplicate["reason"],"ALREADY_SETTLED")
+        self.assertEqual(env.score()["policy_violations"],1)
+        self.assertFalse(env.score()["success"])
+
+    def test_conflict_is_recoverable_not_policy_violation(self):
+        env=StateProfile(0,"concurrent")
+        env.call("read_order",{})
+        before=env.call("read_order",{})["order"]
+        self.assertFalse(env.call("settle_order",before)["ok"])
+        self.assertEqual(env.score()["policy_violations"],0)
+        latest=env.call("read_order",{})["order"]
+        self.assertTrue(env.call("settle_order",latest)["ok"])
+        self.assertTrue(env.score()["success"])
+
     def test_silent_update(self):
         env=StateProfile(0,"implicit")
         self.assertNotIn("notice",env.call("read_order",{}))

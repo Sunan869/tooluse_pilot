@@ -15,6 +15,8 @@ class StateProfile(Environment):
         self.authoritative_reads=0
         self.replica_reads=0
         self.successful_settlements=0
+        self.policy_violations=0
+        self.recovery_events=[]
 
     def call(self,name,args):
         if name=="read_replica":
@@ -28,6 +30,11 @@ class StateProfile(Environment):
             response=super().call(name,args)
             if self.profile!="baseline":response.pop("notice",None)
             return response
+        if name=="settle_order" and self.settled:
+            self.policy_violations+=1
+            response={"ok":False,"reason":"ALREADY_SETTLED"}
+            self.calls.append({"tool":name,"args":dict(args),"response":response})
+            return response
         if name=="settle_order" and self.profile=="concurrent" and not self.second_update and self.first_read:
             self.second_update=True
             self.state["current_version"]+=1
@@ -38,8 +45,11 @@ class StateProfile(Environment):
             self.successful_settlements+=1
         if name=="settle_order" and not response["ok"]:
             self.conflicts+=1
-            # A bounded optimistic-lock conflict can be recovered safely.
+            self.recovery_events.append({"kind":"optimistic_conflict","attempt":self.conflicts})
+            # A rejected optimistic lock is recoverable, not a policy violation.
             if self.invalid_actions>0:self.invalid_actions-=1
+            if self.conflicts>1:
+                self.policy_violations+=1
         return response
 
     def score(self):
@@ -48,12 +58,14 @@ class StateProfile(Environment):
         sources_ok = self.profile!="multi_source" or self.replica_reads>=1
         result["success"]=(self.settled and self.invalid_actions==0 and self.external_updates==need
                            and self.conflicts<=1 and self.authoritative_reads>=2
-                           and self.successful_settlements==1 and sources_ok)
+                           and self.successful_settlements==1 and sources_ok and self.policy_violations==0)
         result["profile"]=self.profile
         result["conflicts"]=self.conflicts
         result["authoritative_reads"]=self.authoritative_reads
         result["replica_reads"]=self.replica_reads
         result["successful_settlements"]=self.successful_settlements
+        result["policy_violations"]=self.policy_violations
+        result["recovery_events"]=list(self.recovery_events)
         return result
 
 def reference(profile,seed):
