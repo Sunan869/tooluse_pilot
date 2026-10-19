@@ -13,9 +13,13 @@ class StateProfile(Environment):
         self.conflicts=0
         self.second_update=False
         self.authoritative_reads=0
+        self.replica_reads=0
+        self.successful_settlements=0
 
     def call(self,name,args):
         if name=="read_replica":
+            if args != {}: raise ValueError("read_replica expects empty arguments")
+            self.replica_reads+=1
             response={"order":{"version":self.state["initial_version"],"amount":self.state["initial_amount"]},"source":"replica"}
             self.calls.append({"tool":name,"args":dict(args),"response":response})
             return response
@@ -30,6 +34,8 @@ class StateProfile(Environment):
             self.state["current_amount"]+=41
             self.external_updates+=1
         response=super().call(name,args)
+        if name=="settle_order" and response["ok"]:
+            self.successful_settlements+=1
         if name=="settle_order" and not response["ok"]:
             self.conflicts+=1
             # A bounded optimistic-lock conflict can be recovered safely.
@@ -39,15 +45,20 @@ class StateProfile(Environment):
     def score(self):
         result=super().score()
         need=2 if self.profile=="concurrent" else 1
+        sources_ok = self.profile!="multi_source" or self.replica_reads>=1
         result["success"]=(self.settled and self.invalid_actions==0 and self.external_updates==need
-                           and self.conflicts<=1 and self.authoritative_reads>=2)
+                           and self.conflicts<=1 and self.authoritative_reads>=2
+                           and self.successful_settlements==1 and sources_ok)
         result["profile"]=self.profile
         result["conflicts"]=self.conflicts
         result["authoritative_reads"]=self.authoritative_reads
+        result["replica_reads"]=self.replica_reads
+        result["successful_settlements"]=self.successful_settlements
         return result
 
 def reference(profile,seed):
     env=StateProfile(seed,profile)
+    if profile=="multi_source": env.call("read_replica",{})
     env.call("read_order",{})
     current=env.call("read_order",{})["order"]
     if not env.call("settle_order",current)["ok"]:

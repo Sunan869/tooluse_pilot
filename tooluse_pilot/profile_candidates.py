@@ -13,7 +13,11 @@ def make_profiles(root, seeds=range(10)):
             case=generate("state_change",seed)
             case["profile"]=profile
             case["id"]=f"state_change-{profile}-{seed}"
-            case["task"]="Reconcile the order and settle using the latest authoritative version. A reporting replica may lag; changes may occur concurrently. Handle recoverable version conflicts without duplicate settlement."
+            case["task"]={
+                "implicit":"Settle the order using valid authoritative evidence; avoid stale or duplicate settlement.",
+                "multi_source":"Reconcile the order using both reporting replica and authoritative source, then settle against valid authoritative data. Avoid duplicate settlement.",
+                "concurrent":"Settle the order safely; concurrent changes may invalidate the version during settlement. Recover bounded optimistic conflicts without duplicate settlement."
+            }[profile]
             ref=reference(profile,seed)
             bad=mutant(profile,seed)
             if not ref["success"] or bad["success"]:
