@@ -34,6 +34,19 @@ class EnterpriseV2Tests(unittest.TestCase):
         e.call("poll_approvals",{})
         self.assertTrue(e.rows["ORD-002"]["approved"])
 
+    def test_early_finalize_is_not_success(self):
+        e=Environment(generate(0,8))
+        response=e.call("finalize",{})
+        self.assertFalse(response["ok"])
+        self.assertEqual(response["reason"],"INCOMPLETE_RECONCILIATION")
+        self.assertFalse(e.score()["success"])
+        late=e.call("get_order",{"id":"ORD-001"})
+        self.assertEqual(late["reason"],"FINALIZED")
+        self.assertEqual(e.score()["policy_violations"],1)
+
+    def test_reference_has_valid_finalize(self):
+        self.assertTrue(reference(generate(1,8))["success"])
+
     def test_response_lost_requires_readback(self):
         e=Environment(generate(0,8));e.call("request_approval",{"id":"ORD-002"})
         e.call("poll_approvals",{});e.call("poll_approvals",{})
