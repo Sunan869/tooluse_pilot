@@ -9,11 +9,13 @@ def variants(base):
         raise ValueError("enterprise_settlement_v2 required")
     unapproved=[o["id"] for o in base["environment"]["orders"] if not o["approved"]]
     if len(unapproved)<2:raise ValueError("need at least two initially blocked orders")
-    for ordinal,(target,delay) in enumerate([(unapproved[0],2),(unapproved[1],3)]):
+    # The base already approves unapproved[0] on poll 2. Do not recreate it.
+    callback_sets=[{unapproved[1]:2}, {unapproved[0]:2,unapproved[1]:3}]
+    for ordinal,callbacks in enumerate(callback_sets):
         case=copy.deepcopy(base)
         case["id"]=base["id"]+"-cf-"+str(ordinal)
-        case["environment"]["approval_callbacks"]={target:delay}
-        case["mutation"]={"kind":"approval_callback_switch","target":target,"poll_threshold":delay}
+        case["environment"]["approval_callbacks"]=callbacks
+        case["mutation"]={"kind":"approval_callback_switch","callbacks":callbacks}
         yield case
 
 def evaluate(base):
