@@ -39,7 +39,7 @@ class Environment:
         self.finalize_valid=False
     def call(self,name,args):
         if not isinstance(args,dict):raise ValueError("arguments must be object")
-        if self.finalized and name!="finalize":
+        if self.finalized:
             self.violations+=1
             response={"ok":False,"reason":"FINALIZED"}
             self.calls.append({"tool":name,"args":dict(args),"response":response})
@@ -52,7 +52,10 @@ class Environment:
             if name=="get_order":
                 out={"order":dict(self.rows[oid]),"status":self.status[oid]}
             elif name=="request_approval":
-                self.pending.add(oid);out={"requested":True}
+                if self.rows[oid]["approved"]:
+                    out={"requested":False,"reason":"ALREADY_APPROVED"}
+                else:
+                    self.pending.add(oid);out={"requested":True}
             else:
                 if oid==self.uncertain:self.checked_uncertain=True
                 out={"status":self.status[oid],"settled":self.status[oid]=="settled"}
@@ -93,7 +96,7 @@ class Environment:
         self.calls.append({"tool":name,"args":dict(args),"response":out})
         return out
     def _ready_to_finalize(self):
-        if not self.checked_uncertain or self.polls<2:return False
+        if not self.checked_uncertain or self.polls<2 or self.violations:return False
         for oid,row in self.rows.items():
             if not row["approved"] and oid not in self.pending:return False
             if row["approved"] and self.status[oid]!="settled" and all(self.status[d]=="settled" for d in row["depends_on"]):return False
