@@ -31,7 +31,8 @@ def specs():
 
 class Environment:
     def __init__(self,case):
-        self.rows={x["id"]:dict(x) for x in case["environment"]["orders"]}
+        self.env_config=case["environment"]
+        self.rows={x["id"]:dict(x) for x in self.env_config["orders"]}
         self.status={k:"pending" for k in self.rows};self.pending=set()
         self.calls=[];self.violations=0;self.conflicts=0;self.successes=0
         self.polls=0;self.finalized=False;self.uncertain=None;self.checked_uncertain=False
@@ -65,12 +66,14 @@ class Environment:
                 out={"status":self.status[oid],"settled":self.status[oid]=="settled"}
         elif name=="poll_approvals" and args=={}:
             self.polls+=1
-            # Deterministic asynchronous callback, approval for ORD-002 unlocks its branch.
-            oid="ORD-002"
-            if oid in self.pending and self.polls>=2:
-                self.rows[oid]["approved"]=True;self.pending.remove(oid)
-            out={"approved":[oid] if self.rows.get(oid,{}).get("approved") else [],
-                 "pending":sorted(self.pending)}
+            callbacks=self.env_config.get('approval_callbacks',{'ORD-002':2})
+            newly=[]
+            for oid,threshold in callbacks.items():
+                if oid in self.pending and self.polls>=threshold:
+                    self.rows[oid]['approved']=True
+                    self.pending.remove(oid)
+                    newly.append(oid)
+            out={'approved':newly,'pending':sorted(self.pending)}
         elif name=="settle" and set(args)=={"id","version","key"}:
             oid=args["id"];key=args["key"];version=args["version"]
             if oid not in self.rows or type(version) is not int or not isinstance(key,str) or not key:
@@ -148,7 +151,8 @@ def reference(case):
     e=Environment(case);e.call("list_orders",{})
     for oid in e.rows:
         if not e.rows[oid]["approved"]:e.call("request_approval",{"id":oid})
-    e.call("poll_approvals",{});e.call("poll_approvals",{})
+    required_polls=max(e.env_config.get("approval_callbacks",{"ORD-002":2}).values(),default=2)
+    for _ in range(max(2,required_polls)):e.call("poll_approvals",{})
     for oid in e.rows:
         r=e.call("get_order",{"id":oid})["order"]
         if not r["approved"] or any(e.status[d]!="settled" for d in r["depends_on"]):continue
