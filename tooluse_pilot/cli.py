@@ -27,6 +27,8 @@ def main():
     ar=sub.add_parser('analyze-candidates');ar.add_argument('results',nargs='+')
     fm=sub.add_parser('mutate-candidate');fm.add_argument('candidate');fm.add_argument('outdir')
     fv=sub.add_parser('verify-mutations');fv.add_argument('outdir')
+    egc=sub.add_parser('generate-evidence-pairs');egc.add_argument('directory');egc.add_argument('--seeds',type=int,default=3)
+    evc=sub.add_parser('verify-evidence-pairs');evc.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -103,6 +105,12 @@ def main():
     elif a.cmd=='verify-mutations':
         from .failure_mutations import verify
         print(json.dumps(verify(a.outdir),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-evidence-pairs':
+        from .evidence_batch import generate_pair
+        print(json.dumps(generate_pair(a.directory,a.seeds),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-evidence-pairs':
+        from .evidence_batch import verify
+        print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
