@@ -5,11 +5,12 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 
-def grade(case_dir, trace_path=None):
+def grade(case_dir, trace_path=None, trace_data=None):
     root = Path(case_dir)
-    truth = json.loads((root / "private" / "oracle.json").read_text(encoding="utf-8"))[
-        "rows"
-    ]
+    revision=root/'private'/'revision_applied.json'
+    applied=revision.exists() and json.loads(revision.read_text(encoding='utf-8')).get('applied') is True
+    oracle_name='oracle_revised.json' if applied else 'oracle.json'
+    truth=json.loads((root/'private'/oracle_name).read_text(encoding='utf-8'))['rows']
     target = root / "output" / "anomalies.csv"
     if not target.exists():
         return {
@@ -50,8 +51,8 @@ def grade(case_dir, trace_path=None):
         return {"total": 0, "result_score": 0, "process_score": 0, "error": str(ex)}
     # Process is optional to support uninstrumented Python/Shell execution; not awarded without evidence.
     process_score = 0
-    if trace_path:
-        trace = json.loads(Path(trace_path).read_text(encoding="utf-8"))
+    if trace_path or trace_data is not None:
+        trace = trace_data if trace_data is not None else json.loads(Path(trace_path).read_text(encoding='utf-8'))
         names = [x.get("tool") for x in trace.get("calls", [])]
         if {"list_sheets", "read_rows", "write_csv"} <= set(names):
             sheetset = {

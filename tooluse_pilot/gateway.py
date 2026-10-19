@@ -289,7 +289,12 @@ def run_gateway(
     cost_complete = True
     state = "max_requests"
     prices = modelcfg.get("pricing")
+    dynamic_file=root/"private"/"dynamic.json"
+    dynamic=json.loads(dynamic_file.read_text(encoding="utf-8")) if dynamic_file.exists() else None
+    revision_marker=root/"private"/"revision_applied.json"
+    revision_done=False
     try:
+        if revision_marker.exists(): revision_marker.unlink()
         old_output = root / "output" / "anomalies.csv"
         if old_output.exists():
             old_output.unlink()
@@ -465,6 +470,13 @@ def run_gateway(
                     )
             if state == "max_tool_calls":
                 break
+            if dynamic and not revision_done:
+                visited={x.get("args",{}).get("sheet") for x in tools.calls if x.get("tool")=="read_rows"}
+                if len(visited)>=int(dynamic["trigger_after_read_sheets"]):
+                    messages.append({"role":"user","content":dynamic["message"]})
+                    revision_done=True
+                    revision_marker.write_text(json.dumps({"applied":True}),encoding="utf-8")
+                    trace.append({"event":"user_revision","after_turn":turn,"asof":dynamic["asof"]})
             if budget is not None:
                 if not cost_complete:
                     state = "unknown_cost_budget"
@@ -477,7 +489,11 @@ def run_gateway(
             tools.publish()
         from .grade import grade
 
-        scored = grade(root)
+        scored = grade(root, trace_data={"calls":tools.calls})
+        if dynamic:
+            scored["revision_injected"]=revision_done
+            if not revision_done:
+                scored.update(total=0,result_score=0,error="revision not injected")
         result = {
             "run_id": run_id,
             "model_alias": model_alias,

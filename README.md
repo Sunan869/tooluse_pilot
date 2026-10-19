@@ -164,3 +164,8 @@ python -m tooluse_pilot.cli export-usage --out runs/deepseek-hard-usage.csv
 ```
 
 IMPORTANT: `--max-requests` and `--max-tools` are hard execution limits, but without configured pricing a monetary budget cannot be enforced. Inspect the TokenOPS invoice; estimated cost is not a receipt. For a low-spend pilot try `--count 60` first. The structured tool returns row data and `write_csv` takes the entire output as JSON; it will not scale to arbitrary-size workbooks. This is intentional for the first pilot, not an enterprise spreadsheet engine. Python/Shell mode uses a Docker sandbox and is not exercised by this first single-mode trial.
+
+
+## W6 dynamic follow-up experiment
+
+Use `python -m tooluse_pilot.cli generate-hard examples/dynamic-w6 --seed 20261019 --count 100 --dynamic` to generate the case. After the model has read every sheet, the Runner injects a *new user message* moving the snapshot to 2026-09-11. The private oracle changes only when the update is injected. Run `python -m unittest discover -s tests -v` before using the paid API, then `python -m tooluse_pilot.cli run-model examples/dynamic-w6 --config gateway.models.json --model gpt --mode structured --max-requests 20 --max-tools 60`. Inspect `events` for `user_revision` and `score.revision_injected`. The existing static case remains supported.

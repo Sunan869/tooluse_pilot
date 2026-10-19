@@ -8,7 +8,7 @@ def main():
     p=argparse.ArgumentParser(description='Dual-mode tool-use benchmark pilot')
     sub=p.add_subparsers(dest='cmd',required=True)
     g=sub.add_parser('generate');g.add_argument('case');g.add_argument('--seed',type=int,default=20261019);g.add_argument('--count',type=int,default=40)
-    h=sub.add_parser('generate-hard');h.add_argument('case');h.add_argument('--seed',type=int,default=20261019);h.add_argument('--count',type=int,default=180)
+    h=sub.add_parser('generate-hard');h.add_argument('case');h.add_argument('--seed',type=int,default=20261019);h.add_argument('--count',type=int,default=180);h.add_argument('--dynamic',action='store_true')
     rh=sub.add_parser('reference-hard');rh.add_argument('case')
     r=sub.add_parser('reference');r.add_argument('case');r.add_argument('--mode',choices=['structured','python_shell'],default='structured')
     s=sub.add_parser('grade');s.add_argument('case');s.add_argument('--trace')
@@ -21,7 +21,7 @@ def main():
     if a.cmd=='generate': print(make_case(a.case,a.seed,a.count))
     elif a.cmd=='generate-hard':
         from .hard import make_hard_case
-        print(make_hard_case(a.case,a.seed,a.count))
+        print(make_hard_case(a.case,a.seed,a.count,dynamic=a.dynamic))
     elif a.cmd=='reference-hard':
         from .hard import reference_hard
         print(reference_hard(a.case))
