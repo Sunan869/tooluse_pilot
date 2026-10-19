@@ -12,7 +12,7 @@ def generate(seed, count=6):
     for i in range(count):
         oid=f"ORD-{i+1:03d}"
         orders.append({"id":oid,"amount":rng.randint(200,950),
-                       "depends_on":[f"ORD-{i-1:03d}"] if i>1 else [],
+                       "depends_on":[f"ORD-{(i-3 if i%6==0 else i-1):03d}"] if i>1 else [],
                        "approved":i%3!=1,"version":1})
     return {"id":f"enterprise-{seed}-{count}","family":"enterprise_settlement","seed":seed,
             "task":"Reconcile the order register; process approved orders only after their dependencies are settled. Request missing approvals and leave those orders pending. The first commit may meet an optimistic-lock conflict; refresh and retry safely. Do not make duplicate settlements. Report final state using tools.",
@@ -89,13 +89,17 @@ class Environment:
                 expected[oid]="pending"
             else:expected[oid]="settled"
         correct=sum(self.status[k]==expected[k] for k in expected)
+        executable=sum(x=="settled" for x in expected.values())
+        blocked=len(expected)-executable
         needed_approvals={k for k,v in self.rows.items() if not v["approved"]}
         success=(self.finalized and correct==len(expected)
                  and needed_approvals<=self.approvals and self.violations==0
                  and self.conflicts==1 and self.successful==sum(v=="settled" for v in expected.values())
                  and self.conflicted<=self.refresh_after_conflict)
         return {"success":success,"correct_orders":correct,"total_orders":len(expected),
-                "settled":self.successful,"conflicts":self.conflicts,
+                "settled":self.successful,"executable_orders":executable,
+                "blocked_orders":blocked,"settlement_states":dict(self.status),
+                "conflicts":self.conflicts,
                 "policy_violations":self.violations,"approval_requests":len(self.approvals),
                 "finalized":self.finalized,"tool_calls":len(self.calls)}
 
