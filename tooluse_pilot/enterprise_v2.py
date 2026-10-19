@@ -37,6 +37,8 @@ class Environment:
         self.polls=0;self.finalized=False;self.uncertain=None;self.checked_uncertain=False
         self.keys={};self.injected=False;self.dynamic_changed=False
         self.finalize_valid=False
+        self.finalization_attempts=0
+        self.uncertain_query_count=0
     def call(self,name,args):
         if not isinstance(args,dict):raise ValueError("arguments must be object")
         if self.finalized:
@@ -57,7 +59,9 @@ class Environment:
                 else:
                     self.pending.add(oid);out={"requested":True}
             else:
-                if oid==self.uncertain:self.checked_uncertain=True
+                if oid==self.uncertain:
+                    self.checked_uncertain=True
+                    self.uncertain_query_count+=1
                 out={"status":self.status[oid],"settled":self.status[oid]=="settled"}
         elif name=="poll_approvals" and args=={}:
             self.polls+=1
@@ -90,7 +94,8 @@ class Environment:
                         self.uncertain=oid;out={"ok":False,"reason":"RESPONSE_LOST","outcome":"unknown"}
                     else:out={"ok":True}
         elif name=="finalize" and args=={}:
-            self.finalized=True;self.finalize_valid=self._ready_to_finalize()
+            self.finalized=True;self.finalization_attempts+=1
+            self.finalize_valid=self._ready_to_finalize()
             out={"ok":self.finalize_valid,"reason":None if self.finalize_valid else "INCOMPLETE_RECONCILIATION"}
         else:raise ValueError("unknown tool or arguments")
         self.calls.append({"tool":name,"args":dict(args),"response":out})
@@ -113,7 +118,11 @@ class Environment:
         return {"success":success,"correct_orders":correct,"total_orders":len(self.rows),
           "settled":self.successes,"approval_polls":self.polls,"conflicts":self.conflicts,
           "uncertain_commit_checked":self.checked_uncertain,"policy_violations":self.violations,
-          "finalized":self.finalized,"finalize_valid":self.finalize_valid,"tool_calls":len(self.calls)}
+          "finalized":self.finalized,"finalize_valid":self.finalize_valid,
+          "finalization_attempts":self.finalization_attempts,
+          "uncertain_query_count":self.uncertain_query_count,
+          "pending_approvals":sorted(self.pending),
+          "order_states":dict(self.status),"tool_calls":len(self.calls)}
 
 def reference(case):
     e=Environment(case);e.call("list_orders",{})
