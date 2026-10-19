@@ -61,6 +61,15 @@ class EnterpriseV2Tests(unittest.TestCase):
         self.assertFalse(result["requested"])
         self.assertNotIn("ORD-001",env.pending)
 
+    def test_audit_report_exposes_individual_outcomes(self):
+        result=reference(generate(3,8))
+        self.assertTrue(result["success"])
+        self.assertEqual(result["finalization_attempts"],1)
+        self.assertGreaterEqual(result["uncertain_query_count"],1)
+        self.assertEqual(len(result["order_states"]),8)
+        self.assertEqual(len(result["pending_approvals"]),2)
+        self.assertTrue(set(result["order_states"].values()) <= {"pending","settled"})
+
     def test_response_lost_requires_readback(self):
         e=Environment(generate(0,8));e.call("request_approval",{"id":"ORD-002"})
         e.call("poll_approvals",{});e.call("poll_approvals",{})
