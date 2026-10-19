@@ -19,6 +19,8 @@ def main():
     pv=sub.add_parser('verify-profiles');pv.add_argument('directory')
     cg=sub.add_parser('generate-compound');cg.add_argument('directory');cg.add_argument('--seeds',type=int,default=10)
     cv=sub.add_parser('verify-compound');cv.add_argument('directory')
+    eg=sub.add_parser('generate-enterprise');eg.add_argument('directory');eg.add_argument('--seeds',type=int,default=5);eg.add_argument('--orders',type=int,default=8)
+    ev=sub.add_parser('verify-enterprise');ev.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -64,6 +66,12 @@ def main():
         print(json.dumps(batch(a.directory,a.seeds),ensure_ascii=False,indent=2))
     elif a.cmd=='verify-compound':
         from .compound_batch import verify
+        print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-enterprise':
+        from .enterprise_batch import make_batch
+        print(json.dumps(make_batch(a.directory,a.seeds,a.orders),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-enterprise':
+        from .enterprise_batch import verify
         print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config

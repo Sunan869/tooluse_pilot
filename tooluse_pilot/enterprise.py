@@ -12,7 +12,7 @@ def generate(seed, count=6):
     for i in range(count):
         oid=f"ORD-{i+1:03d}"
         orders.append({"id":oid,"amount":rng.randint(200,950),
-                       "depends_on":[f"ORD-{i:03d}"] if i>0 else [],
+                       "depends_on":[f"ORD-{i-1:03d}"] if i>1 else [],
                        "approved":i%3!=1,"version":1})
     return {"id":f"enterprise-{seed}-{count}","family":"enterprise_settlement","seed":seed,
             "task":"Reconcile the order register; process approved orders only after their dependencies are settled. Request missing approvals and leave those orders pending. The first commit may meet an optimistic-lock conflict; refresh and retry safely. Do not make duplicate settlements. Report final state using tools.",

@@ -13,6 +13,7 @@ from uuid import uuid4
 from .executable import Environment, tool_specs
 from .state_profiles import StateProfile
 from .compound import CompoundEnvironment, specs as compound_specs
+from .enterprise import Environment as EnterpriseEnvironment, specs as enterprise_specs
 from .gateway import _config, _is_retryable, _usage_dict, get_responses_calls, to_responses_tools
 from .ledger import record, usage_fields, calculate_cost
 
@@ -27,7 +28,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     profile=case.get("profile")
     if profile is not None and case["family"] != "state_change":
         raise ValueError("Profiles supported only for state_change")
-    env=(CompoundEnvironment(case) if case["family"]=="compound_settlement"
+    env=(EnterpriseEnvironment(case) if case["family"]=="enterprise_settlement" else
+         CompoundEnvironment(case) if case["family"]=="compound_settlement"
          else StateProfile(case,profile) if profile else Environment(case,workbook_path=workbook))
     cfg=_config(config_path)
     modelcfg=cfg["models"][model_alias]
@@ -42,7 +44,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     else:
         client=client_factory()
     run_id=str(uuid4())
-    definitions=compound_specs() if case["family"]=="compound_settlement" else tool_specs(case["family"])
+    definitions=(enterprise_specs() if case["family"]=="enterprise_settlement" else
+                 compound_specs() if case["family"]=="compound_settlement" else tool_specs(case["family"]))
     if profile:
         definitions=[*definitions,{
             "type":"function","function":{
