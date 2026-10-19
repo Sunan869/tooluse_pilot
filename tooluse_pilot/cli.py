@@ -14,6 +14,7 @@ def main():
     s=sub.add_parser('grade');s.add_argument('case');s.add_argument('--trace')
     m=sub.add_parser('run-model');m.add_argument('case');m.add_argument('--config',default='gateway.models.json');m.add_argument('--model',required=True);m.add_argument('--db',default='runs/usage.sqlite');m.add_argument('--max-requests',type=int,default=25);m.add_argument('--max-tools',type=int,default=100);m.add_argument('--budget',type=float);m.add_argument('--mode',choices=['structured','python_shell'],default='structured');m.add_argument('--sandbox-image',default='tooluse-pilot-sandbox:py311-openpyxl')
     b=sub.add_parser('batch');b.add_argument('case');b.add_argument('--config',default='gateway.models.json');b.add_argument('--models',nargs='+',required=True);b.add_argument('--modes',nargs='+',choices=['structured','python_shell'],default=['structured','python_shell']);b.add_argument('--outdir',default='runs/batch');b.add_argument('--db',default='runs/usage.sqlite');b.add_argument('--max-requests',type=int,default=25);b.add_argument('--max-tools',type=int,default=100);b.add_argument('--budget',type=float)
+    cnd=sub.add_parser('run-candidate');cnd.add_argument('candidate');cnd.add_argument('--config',default='gateway.models.json');cnd.add_argument('--model',required=True);cnd.add_argument('--db',default='runs/usage.sqlite');cnd.add_argument('--max-requests',type=int,default=12);cnd.add_argument('--max-tools',type=int,default=30)
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -45,6 +46,9 @@ def main():
                 reports.append(report)
                 print(json.dumps(report,ensure_ascii=False),flush=True)
         (destination/'summary.json').write_text(json.dumps(reports,ensure_ascii=False,indent=2),encoding='utf-8')
+    elif a.cmd=='run-candidate':
+        from .executable_runner import run_candidate
+        print(json.dumps(run_candidate(a.candidate,a.config,a.model,a.db,a.max_requests,a.max_tools),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
