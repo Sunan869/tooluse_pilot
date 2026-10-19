@@ -23,6 +23,8 @@ def main():
     ev=sub.add_parser('verify-enterprise');ev.add_argument('directory')
     ev2=sub.add_parser('generate-enterprise-v2');ev2.add_argument('directory');ev2.add_argument('--seeds',type=int,default=5);ev2.add_argument('--orders',type=int,default=8)
     vv2=sub.add_parser('verify-enterprise-v2');vv2.add_argument('directory')
+    cal=sub.add_parser('calibrate');cal.add_argument('roots',nargs='+');cal.add_argument('--per-family',type=int,default=2);cal.add_argument('--execute',action='store_true');cal.add_argument('--model');cal.add_argument('--config',default='gateway.models.json');cal.add_argument('--outdir',default='runs/calibration');cal.add_argument('--db',default='runs/usage.sqlite');cal.add_argument('--max-requests',type=int,default=20);cal.add_argument('--max-tools',type=int,default=60)
+    ar=sub.add_parser('analyze-candidates');ar.add_argument('results',nargs='+')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -81,6 +83,18 @@ def main():
     elif a.cmd=='verify-enterprise-v2':
         from .enterprise_v2_batch import verify
         print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='calibrate':
+        from .research_calibration import plan,execute
+        if a.per_family<1:raise ValueError('--per-family must be positive')
+        if a.execute:
+            if not a.model:raise ValueError('--model is required with --execute')
+            result=execute(a.roots,a.outdir,a.config,a.model,a.per_family,a.max_requests,a.max_tools,a.db)
+        else:
+            result=plan(a.roots,a.per_family)
+        print(json.dumps(result,ensure_ascii=False,indent=2))
+    elif a.cmd=='analyze-candidates':
+        from .research_calibration import analyze,read_results
+        print(json.dumps(analyze(read_results(a.results)),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
