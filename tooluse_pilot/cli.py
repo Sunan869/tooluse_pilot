@@ -17,6 +17,8 @@ def main():
     cnd=sub.add_parser('run-candidate');cnd.add_argument('candidate');cnd.add_argument('--config',default='gateway.models.json');cnd.add_argument('--model',required=True);cnd.add_argument('--db',default='runs/usage.sqlite');cnd.add_argument('--max-requests',type=int,default=12);cnd.add_argument('--max-tools',type=int,default=30)
     pg=sub.add_parser('generate-profiles');pg.add_argument('directory');pg.add_argument('--seeds',type=int,default=10)
     pv=sub.add_parser('verify-profiles');pv.add_argument('directory')
+    cg=sub.add_parser('generate-compound');cg.add_argument('directory');cg.add_argument('--seeds',type=int,default=10)
+    cv=sub.add_parser('verify-compound');cv.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -57,6 +59,12 @@ def main():
     elif a.cmd=='verify-profiles':
         from .profile_candidates import verify_profiles
         print(json.dumps(verify_profiles(a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-compound':
+        from .compound_batch import batch
+        print(json.dumps(batch(a.directory,a.seeds),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-compound':
+        from .compound_batch import verify
+        print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
