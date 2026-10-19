@@ -11,6 +11,7 @@ import time
 from pathlib import Path
 from uuid import uuid4
 from .executable import Environment, tool_specs
+from .state_profiles import StateProfile
 from .gateway import _config, _is_retryable, _usage_dict, get_responses_calls, to_responses_tools
 from .ledger import record, usage_fields, calculate_cost
 
@@ -22,7 +23,10 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     if case["family"]=="workbook_layout":
         workbook=Path(path).parent/"input"/"sales.xlsx"
         if not workbook.is_file():raise FileNotFoundError(workbook)
-    env=Environment(case,workbook_path=workbook)
+    profile=case.get("profile")
+    if profile is not None and case["family"] != "state_change":
+        raise ValueError("Profiles supported only for state_change")
+    env=StateProfile(case,profile) if profile else Environment(case,workbook_path=workbook)
     cfg=_config(config_path)
     modelcfg=cfg["models"][model_alias]
     api_type=modelcfg.get("api_type","chat_completions")
@@ -37,7 +41,16 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
         client=client_factory()
     run_id=str(uuid4())
     definitions=tool_specs(case["family"])
+    if profile:
+        definitions=[*definitions,{
+            "type":"function","function":{
+                "name":"read_replica","description":"Read a potentially delayed replica snapshot",
+                "parameters":{"type":"object","properties":{},"required":[],"additionalProperties":False}
+            }}]
+
     system="Complete the business task with the available tools. Never claim success if tools rejected the action."
+    if profile:
+        system += " Data may change concurrently. Use versioned evidence and handle conflicts safely."
     history=[{"role":"user","content":case["task"]}] if api_type=="responses" else [
         {"role":"system","content":system},{"role":"user","content":case["task"]}]
     if api_type=="responses": definitions=to_responses_tools(definitions)
@@ -114,7 +127,7 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
         if state=="max_tools":break
     result={"run_id":run_id,"candidate_id":case["id"],"model":modelcfg["model"],
             "protocol":api_type,"state":state,"requests":attempts,"tool_calls":calls,
-            "score":env.score(),"estimated_cost":cost_total if cost_complete else None,
+            "score":env.score(),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
             "events":events,"calls":env.calls,"usage_db":str(db_path)}
     # Never write to the candidate itself: preserve reproducibility.
     return result

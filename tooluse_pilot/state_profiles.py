@@ -8,9 +8,11 @@ class StateProfile(Environment):
     def __init__(self, seed, profile):
         if profile not in PROFILES: raise ValueError("invalid profile")
         self.profile=profile
-        super().__init__(generate("state_change",seed))
+        case = seed if isinstance(seed,dict) else generate("state_change",seed)
+        super().__init__(case)
         self.conflicts=0
         self.second_update=False
+        self.authoritative_reads=0
 
     def call(self,name,args):
         if name=="read_replica":
@@ -18,6 +20,7 @@ class StateProfile(Environment):
             self.calls.append({"tool":name,"args":dict(args),"response":response})
             return response
         if name=="read_order":
+            self.authoritative_reads+=1
             response=super().call(name,args)
             if self.profile!="baseline":response.pop("notice",None)
             return response
@@ -36,9 +39,11 @@ class StateProfile(Environment):
     def score(self):
         result=super().score()
         need=2 if self.profile=="concurrent" else 1
-        result["success"]=self.settled and self.invalid_actions==0 and self.external_updates==need and self.conflicts<=1
+        result["success"]=(self.settled and self.invalid_actions==0 and self.external_updates==need
+                           and self.conflicts<=1 and self.authoritative_reads>=2)
         result["profile"]=self.profile
         result["conflicts"]=self.conflicts
+        result["authoritative_reads"]=self.authoritative_reads
         return result
 
 def reference(profile,seed):

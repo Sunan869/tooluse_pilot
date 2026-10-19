@@ -15,6 +15,8 @@ def main():
     m=sub.add_parser('run-model');m.add_argument('case');m.add_argument('--config',default='gateway.models.json');m.add_argument('--model',required=True);m.add_argument('--db',default='runs/usage.sqlite');m.add_argument('--max-requests',type=int,default=25);m.add_argument('--max-tools',type=int,default=100);m.add_argument('--budget',type=float);m.add_argument('--mode',choices=['structured','python_shell'],default='structured');m.add_argument('--sandbox-image',default='tooluse-pilot-sandbox:py311-openpyxl')
     b=sub.add_parser('batch');b.add_argument('case');b.add_argument('--config',default='gateway.models.json');b.add_argument('--models',nargs='+',required=True);b.add_argument('--modes',nargs='+',choices=['structured','python_shell'],default=['structured','python_shell']);b.add_argument('--outdir',default='runs/batch');b.add_argument('--db',default='runs/usage.sqlite');b.add_argument('--max-requests',type=int,default=25);b.add_argument('--max-tools',type=int,default=100);b.add_argument('--budget',type=float)
     cnd=sub.add_parser('run-candidate');cnd.add_argument('candidate');cnd.add_argument('--config',default='gateway.models.json');cnd.add_argument('--model',required=True);cnd.add_argument('--db',default='runs/usage.sqlite');cnd.add_argument('--max-requests',type=int,default=12);cnd.add_argument('--max-tools',type=int,default=30)
+    pg=sub.add_parser('generate-profiles');pg.add_argument('directory');pg.add_argument('--seeds',type=int,default=10)
+    pv=sub.add_parser('verify-profiles');pv.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -49,6 +51,12 @@ def main():
     elif a.cmd=='run-candidate':
         from .executable_runner import run_candidate
         print(json.dumps(run_candidate(a.candidate,a.config,a.model,a.db,a.max_requests,a.max_tools),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-profiles':
+        from .profile_candidates import make_profiles
+        print(json.dumps(make_profiles(a.directory,range(a.seeds)),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-profiles':
+        from .profile_candidates import verify_profiles
+        print(json.dumps(verify_profiles(a.directory),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
