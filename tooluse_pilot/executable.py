@@ -108,6 +108,17 @@ class Environment:
                 "invalid_actions":self.invalid_actions,"calls":len(self.calls)}
 
 def reference(family,seed):
+    if family=="workbook_layout":
+        from tempfile import TemporaryDirectory
+        from .workbook_task import create_workbook
+        with TemporaryDirectory() as td:
+            case=generate(family,seed)
+            path=create_workbook(case,Path(td)/"sales.xlsx")
+            env=Environment(case,workbook_path=path)
+            env.call("list_regions",{})
+            data=env.call("read_region",{"region":"Current"})
+            env.call("submit_value",{"value":data["value"],"source":"Current"})
+            return env.score()
     env=Environment(generate(family,seed))
     if family=="state_change":
         env.call("read_order",{})
@@ -119,6 +130,16 @@ def reference(family,seed):
     return env.score()
 
 def mutant(family,seed):
+    if family=="workbook_layout":
+        from tempfile import TemporaryDirectory
+        from .workbook_task import create_workbook
+        with TemporaryDirectory() as td:
+            case=generate(family,seed)
+            path=create_workbook(case,Path(td)/"sales.xlsx")
+            env=Environment(case,workbook_path=path)
+            data=env.call("read_region",{"region":"Archive"})
+            env.call("submit_value",{"value":data["value"],"source":"Archive"})
+            return env.score()
     env=Environment(generate(family,seed))
     if family=="state_change":
         cached=env.call("read_order",{})["order"]
