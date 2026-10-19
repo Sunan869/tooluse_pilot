@@ -79,3 +79,38 @@ def grade(case_dir, trace_path=None, trace_data=None):
         "extra_rows": extras,
         "duplicate_ids": duplicates,
     }
+
+def delta_score(case_dir):
+    """Validate changed order IDs against the revised oracle and actual output.
+
+    A missing, extra, or partially updated changed record is counted incorrect.
+    Unchanged entries are assessed by the ordinary result score.
+    """
+    root = Path(case_dir)
+    before = json.loads((root / "private" / "oracle.json").read_text(encoding="utf-8"))["rows"]
+    after = json.loads((root / "private" / "oracle_revised.json").read_text(encoding="utf-8"))["rows"]
+    left = {r["order_id"]: r for r in before}
+    right = {r["order_id"]: r for r in after}
+    changed = {k for k in (left.keys() | right.keys()) if left.get(k) != right.get(k)}
+    output = root / "output" / "anomalies.csv"
+    actual = {}
+    if output.is_file():
+        try:
+            with output.open("r", encoding="utf-8-sig", newline="") as f:
+                raw = list(csv.DictReader(f))
+            if len({r["order_id"] for r in raw}) != len(raw):
+                return {"changed_count": len(changed), "changed_correct": 0, "changed_accuracy": 0.0}
+            actual = {
+                r["order_id"]: {
+                    "order_id": r["order_id"], "expected_cents": int(r["expected_cents"]),
+                    "net_paid_cents": int(r["net_paid_cents"]), "issues": r["issues"],
+                } for r in raw
+            }
+        except (OSError, ValueError, KeyError, csv.Error):
+            pass
+    hits = sum(actual.get(k) == right.get(k) for k in changed)
+    return {
+        "changed_count": len(changed),
+        "changed_correct": hits,
+        "changed_accuracy": round(hits / len(changed), 4) if changed else 1.0,
+    }

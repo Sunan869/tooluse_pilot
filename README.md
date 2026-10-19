@@ -169,3 +169,8 @@ IMPORTANT: `--max-requests` and `--max-tools` are hard execution limits, but wit
 ## W6 dynamic follow-up experiment
 
 Use `python -m tooluse_pilot.cli generate-hard examples/dynamic-w6 --seed 20261019 --count 100 --dynamic` to generate the case. After the model has read every sheet, the Runner injects a *new user message* moving the snapshot to 2026-09-11. The private oracle changes only when the update is injected. Run `python -m unittest discover -s tests -v` before using the paid API, then `python -m tooluse_pilot.cli run-model examples/dynamic-w6 --config gateway.models.json --model gpt --mode structured --max-requests 20 --max-tools 60`. Inspect `events` for `user_revision` and `score.revision_injected`. The existing static case remains supported.
+
+
+### Two-stage W6 protocol
+
+The dynamic Runner now waits for the first complete model submission (final assistant turn with `output/anomalies.csv` on disk), stores a private snapshot and first-stage grade, **then** injects the changed user cutoff. A second `write_csv` call is mandatory for the updated submission. Outputs include `initial_result_score`, `revised_result_score`, `artifact_updated`, and `delta` with the exact changed-order accuracy. The revision is never inserted merely because all sheets were read. A single-write run cannot earn full marks. Use a fresh case directory for each run to avoid overwriting experiment outputs.
