@@ -36,8 +36,14 @@ class Environment:
         self.calls=[];self.violations=0;self.conflicts=0;self.successes=0
         self.polls=0;self.finalized=False;self.uncertain=None;self.checked_uncertain=False
         self.keys={};self.injected=False;self.dynamic_changed=False
+        self.finalize_valid=False
     def call(self,name,args):
         if not isinstance(args,dict):raise ValueError("arguments must be object")
+        if self.finalized and name!="finalize":
+            self.violations+=1
+            response={"ok":False,"reason":"FINALIZED"}
+            self.calls.append({"tool":name,"args":dict(args),"response":response})
+            return response
         if name=="list_orders" and args=={}:
             out={"ids":list(self.rows),"status":dict(self.status)}
         elif name in ("get_order","request_approval","get_settlement") and set(args)=={"id"}:
@@ -81,23 +87,30 @@ class Environment:
                         self.uncertain=oid;out={"ok":False,"reason":"RESPONSE_LOST","outcome":"unknown"}
                     else:out={"ok":True}
         elif name=="finalize" and args=={}:
-            self.finalized=True;out={"ok":True}
+            self.finalized=True;self.finalize_valid=self._ready_to_finalize()
+            out={"ok":self.finalize_valid,"reason":None if self.finalize_valid else "INCOMPLETE_RECONCILIATION"}
         else:raise ValueError("unknown tool or arguments")
         self.calls.append({"tool":name,"args":dict(args),"response":out})
         return out
+    def _ready_to_finalize(self):
+        if not self.checked_uncertain or self.polls<2:return False
+        for oid,row in self.rows.items():
+            if not row["approved"] and oid not in self.pending:return False
+            if row["approved"] and self.status[oid]!="settled" and all(self.status[d]=="settled" for d in row["depends_on"]):return False
+        return True
     def score(self):
         eligible=set()
         for oid,row in self.rows.items():
             if row["approved"] and all(d in eligible for d in row["depends_on"]):
                 eligible.add(oid)
         correct=sum((self.status[k]=="settled")== (k in eligible) for k in self.rows)
-        success=(self.finalized and correct==len(self.rows) and self.violations==0
+        success=(self.finalized and self.finalize_valid and correct==len(self.rows) and self.violations==0
                  and self.conflicts==1 and self.uncertain is not None
                  and self.checked_uncertain and self.polls>=2)
         return {"success":success,"correct_orders":correct,"total_orders":len(self.rows),
           "settled":self.successes,"approval_polls":self.polls,"conflicts":self.conflicts,
           "uncertain_commit_checked":self.checked_uncertain,"policy_violations":self.violations,
-          "finalized":self.finalized,"tool_calls":len(self.calls)}
+          "finalized":self.finalized,"finalize_valid":self.finalize_valid,"tool_calls":len(self.calls)}
 
 def reference(case):
     e=Environment(case);e.call("list_orders",{})
