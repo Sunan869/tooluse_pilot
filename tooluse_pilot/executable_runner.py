@@ -125,7 +125,7 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
                 answer=env.call(call.function.name,args)
                 payload=json.dumps({"ok":True,"result":answer})
             except Exception as exc:
-                env.invalid_actions+=1
+                env.invalid_actions=getattr(env,"invalid_actions",0)+1
                 payload=json.dumps({"ok":False,"error":str(exc)[:300]})
             if api_type=="responses":
                 history.append({"type":"function_call_output","call_id":call.id,"output":payload})
@@ -135,7 +135,7 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
         if state=="max_tools":break
     result={"run_id":run_id,"candidate_id":case["id"],"model":modelcfg["model"],
             "protocol":api_type,"state":state,"requests":attempts,"tool_calls":calls,
-            "score":env.score(),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
+            "score":env.score(),"invalid_tool_actions":getattr(env,"invalid_actions",0),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
             "events":events,"calls":env.calls,"usage_db":str(db_path)}
     # Never write to the candidate itself: preserve reproducibility.
     return result
