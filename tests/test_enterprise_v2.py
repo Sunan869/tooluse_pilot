@@ -47,6 +47,20 @@ class EnterpriseV2Tests(unittest.TestCase):
     def test_reference_has_valid_finalize(self):
         self.assertTrue(reference(generate(1,8))["success"])
 
+    def test_finalize_cannot_be_repeated(self):
+        env=Environment(generate(0,8))
+        first=env.call("finalize",{})
+        self.assertFalse(first["ok"])
+        second=env.call("finalize",{})
+        self.assertEqual(second["reason"],"FINALIZED")
+        self.assertEqual(env.score()["policy_violations"],1)
+
+    def test_approval_request_of_approved_order_is_noop(self):
+        env=Environment(generate(0,8))
+        result=env.call("request_approval",{"id":"ORD-001"})
+        self.assertFalse(result["requested"])
+        self.assertNotIn("ORD-001",env.pending)
+
     def test_response_lost_requires_readback(self):
         e=Environment(generate(0,8));e.call("request_approval",{"id":"ORD-002"})
         e.call("poll_approvals",{});e.call("poll_approvals",{})
