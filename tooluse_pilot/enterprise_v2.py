@@ -100,8 +100,28 @@ class Environment:
         else:raise ValueError("unknown tool or arguments")
         self.calls.append({"tool":name,"args":dict(args),"response":out})
         return out
+    def audit(self):
+        expected={}
+        reasons={}
+        for oid,row in self.rows.items():
+            if not row['approved']:
+                expected[oid]='pending'
+                reasons[oid]='approval_pending' if oid in self.pending else 'approval_not_requested'
+            elif any(expected[d]!='settled' for d in row['depends_on']):
+                expected[oid]='pending'
+                reasons[oid]='blocked_by_dependency'
+            else:
+                expected[oid]='settled'
+                reasons[oid]='eligible'
+        mismatches=[oid for oid in self.rows if self.status[oid]!=expected[oid]]
+        missing=[oid for oid,row in self.rows.items() if not row['approved'] and oid not in self.pending]
+        return {'expected_states':expected,'actual_states':dict(self.status),'reasons':reasons,
+                'mismatches':mismatches,'missing_approvals':missing,
+                'unverified_uncertain':self.uncertain is not None and not self.checked_uncertain}
     def _ready_to_finalize(self):
         if not self.checked_uncertain or self.polls<2 or self.violations:return False
+        audit=self.audit()
+        if audit['mismatches'] or audit['missing_approvals'] or audit['unverified_uncertain']:return False
         for oid,row in self.rows.items():
             if not row["approved"] and oid not in self.pending:return False
             if row["approved"] and self.status[oid]!="settled" and all(self.status[d]=="settled" for d in row["depends_on"]):return False
@@ -122,7 +142,7 @@ class Environment:
           "finalization_attempts":self.finalization_attempts,
           "uncertain_query_count":self.uncertain_query_count,
           "pending_approvals":sorted(self.pending),
-          "order_states":dict(self.status),"tool_calls":len(self.calls)}
+          "order_states":dict(self.status),"audit":self.audit(),"tool_calls":len(self.calls)}
 
 def reference(case):
     e=Environment(case);e.call("list_orders",{})
