@@ -25,6 +25,8 @@ def main():
     vv2=sub.add_parser('verify-enterprise-v2');vv2.add_argument('directory')
     cal=sub.add_parser('calibrate');cal.add_argument('roots',nargs='+');cal.add_argument('--per-family',type=int,default=2);cal.add_argument('--execute',action='store_true');cal.add_argument('--model');cal.add_argument('--config',default='gateway.models.json');cal.add_argument('--outdir',default='runs/calibration');cal.add_argument('--db',default='runs/usage.sqlite');cal.add_argument('--max-requests',type=int,default=20);cal.add_argument('--max-tools',type=int,default=60)
     ar=sub.add_parser('analyze-candidates');ar.add_argument('results',nargs='+')
+    fm=sub.add_parser('mutate-candidate');fm.add_argument('candidate');fm.add_argument('outdir')
+    fv=sub.add_parser('verify-mutations');fv.add_argument('outdir')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -95,6 +97,12 @@ def main():
     elif a.cmd=='analyze-candidates':
         from .research_calibration import analyze,read_results
         print(json.dumps(analyze(read_results(a.results)),ensure_ascii=False,indent=2))
+    elif a.cmd=='mutate-candidate':
+        from .failure_mutations import create
+        print(json.dumps(create(a.candidate,a.outdir),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-mutations':
+        from .failure_mutations import verify
+        print(json.dumps(verify(a.outdir),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
