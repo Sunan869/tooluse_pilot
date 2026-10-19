@@ -70,6 +70,21 @@ class EnterpriseV2Tests(unittest.TestCase):
         self.assertEqual(len(result["pending_approvals"]),2)
         self.assertTrue(set(result["order_states"].values()) <= {"pending","settled"})
 
+    def test_audit_detects_blocked_and_missing_approval(self):
+        env=Environment(generate(0,8))
+        audit=env.audit()
+        self.assertIn('ORD-002',audit['missing_approvals'])
+        self.assertEqual(audit['reasons']['ORD-002'],'approval_not_requested')
+        self.assertEqual(audit['expected_states']['ORD-001'],'settled')
+        self.assertIn('ORD-001',audit['mismatches'])
+        env.call('request_approval',{'id':'ORD-002'})
+        self.assertNotIn('ORD-002',env.audit()['missing_approvals'])
+
+    def test_reference_audit_has_no_mismatches(self):
+        result=reference(generate(7,8))
+        self.assertTrue(result['success'])
+        self.assertEqual(result['audit']['mismatches'],[])
+        self.assertEqual(result['audit']['missing_approvals'],[])
     def test_response_lost_requires_readback(self):
         e=Environment(generate(0,8));e.call("request_approval",{"id":"ORD-002"})
         e.call("poll_approvals",{});e.call("poll_approvals",{})
