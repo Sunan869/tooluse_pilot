@@ -18,7 +18,11 @@ from .ledger import record, usage_fields, calculate_cost
 def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
                   max_requests=12, max_tools=30, client_factory=None):
     case=json.loads(Path(path).read_text(encoding="utf-8"))
-    env=Environment(case)
+    workbook=None
+    if case["family"]=="workbook_layout":
+        workbook=Path(path).parent/"input"/"sales.xlsx"
+        if not workbook.is_file():raise FileNotFoundError(workbook)
+    env=Environment(case,workbook_path=workbook)
     cfg=_config(config_path)
     modelcfg=cfg["models"][model_alias]
     api_type=modelcfg.get("api_type","chat_completions")

@@ -123,6 +123,9 @@ def make_batch(root, seeds=range(10), families=FAMILIES):
             result = validate(case)
             location = root / case["id"]
             location.mkdir(exist_ok=False)
+            if family=="workbook_layout":
+                from .workbook_task import create_workbook
+                create_workbook(case,location/"input"/"sales.xlsx")
             (location / "candidate.json").write_text(
                 json.dumps(case, ensure_ascii=False, indent=2), encoding="utf-8")
             rows.append(result)
