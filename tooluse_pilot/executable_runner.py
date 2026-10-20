@@ -19,6 +19,7 @@ from .enterprise_v2 import Environment as EnterpriseV2Environment, specs as ente
 from .evidence_conflict import Environment as EvidenceEnvironment, specs as evidence_specs
 from .evidence_decision import Environment as DecisionEnvironment, specs as decision_specs
 from .real_file_task import Environment as FileEnvironment, specs as file_specs
+from .real_file_dynamic import Environment as DynamicEnvironment, specs as dynamic_specs
 from .gateway import _config, _is_retryable, _usage_dict, get_responses_calls, to_responses_tools
 from .ledger import record, usage_fields, calculate_cost
 
@@ -27,7 +28,7 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
                   max_requests=12, max_tools=30, client_factory=None):
     case=json.loads(Path(path).read_text(encoding="utf-8"))
     file_workspace=None
-    if case["family"]=="real_file_procurement":
+    if case["family"] in ("real_file_procurement","real_file_dynamic"):
         file_workspace=Path("runs/file_workspaces")/str(uuid4())
         file_workspace.parent.mkdir(parents=True,exist_ok=True)
         shutil.copytree(Path(path).parent,file_workspace)
@@ -38,7 +39,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     profile=case.get("profile")
     if profile is not None and case["family"] != "state_change":
         raise ValueError("Profiles supported only for state_change")
-    env=(FileEnvironment(case,file_workspace) if case["family"]=="real_file_procurement" else
+    env=(DynamicEnvironment(case,file_workspace) if case["family"]=="real_file_dynamic" else
+         FileEnvironment(case,file_workspace) if case["family"]=="real_file_procurement" else
          DecisionEnvironment(case) if case["family"]=="evidence_decision" else
          EvidenceEnvironment(case) if case["family"]=="evidence_conflict" else
          EnterpriseV2Environment(case) if case["family"]=="enterprise_settlement_v2" else
@@ -58,7 +60,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     else:
         client=client_factory()
     run_id=str(uuid4())
-    definitions=(file_specs() if case["family"]=="real_file_procurement" else
+    definitions=(dynamic_specs() if case["family"]=="real_file_dynamic" else
+                 file_specs() if case["family"]=="real_file_procurement" else
                  decision_specs() if case["family"]=="evidence_decision" else
                  evidence_specs() if case["family"]=="evidence_conflict" else
                  enterprise_v2_specs() if case["family"]=="enterprise_settlement_v2" else
