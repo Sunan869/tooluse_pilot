@@ -149,12 +149,17 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
                 history.append({"type":"function_call_output","call_id":call.id,"output":payload})
             else:
                 history.append({"role":"tool","tool_call_id":call.id,"content":payload})
-            events.append({"event":"tool_call","tool":call.function.name,"tool_call_id":call.id})
+            events.append({"event":"tool_call","tool":call.function.name,"tool_call_id":call.id,
+                           "arguments":getattr(call.function,"arguments",None),
+                           "result":json.loads(payload)})
         if state=="max_tools":break
     result={"run_id":run_id,"candidate_id":case["id"],"model":modelcfg["model"],
             "protocol":api_type,"state":state,"requests":attempts,"tool_calls":calls,
             "score":env.score(),"invalid_tool_actions":getattr(env,"invalid_actions",0),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
             "events":events,"calls":env.calls,"usage_db":str(db_path)}
-    if file_workspace is not None:result["artifact_dir"]=str(file_workspace)
+    if file_workspace is not None:
+        result["artifact_dir"]=str(file_workspace)
+        (file_workspace/"run_result.json").write_text(
+            json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
     if hasattr(env,"close"):env.close()
     return result
