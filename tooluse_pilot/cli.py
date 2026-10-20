@@ -152,7 +152,6 @@ def main():
         from .ledger import summary
         print(json.dumps(summary(a.db),ensure_ascii=False,indent=2))
     elif a.cmd=='export-usage':
-        from pathlib import Path
         from .ledger import export_csv
         Path(a.out).parent.mkdir(parents=True,exist_ok=True)
         print('exported',export_csv(a.db,a.out),'rows to',a.out)
