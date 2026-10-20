@@ -127,7 +127,10 @@ def main():
     elif a.cmd=='verify-file-case':
         from .real_file_task import reference
         case=json.loads((Path(a.directory)/'candidate.json').read_text(encoding='utf-8'))
-        print(json.dumps(reference(case,a.directory),ensure_ascii=False,indent=2))
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            shutil.copytree(a.directory,Path(tmp)/'case')
+            print(json.dumps(reference(case,Path(tmp)/'case'),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
