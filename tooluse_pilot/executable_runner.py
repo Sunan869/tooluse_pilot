@@ -17,6 +17,7 @@ from .enterprise import Environment as EnterpriseEnvironment, specs as enterpris
 from .enterprise_v2 import Environment as EnterpriseV2Environment, specs as enterprise_v2_specs
 from .evidence_conflict import Environment as EvidenceEnvironment, specs as evidence_specs
 from .evidence_decision import Environment as DecisionEnvironment, specs as decision_specs
+from .real_file_task import Environment as FileEnvironment, specs as file_specs
 from .gateway import _config, _is_retryable, _usage_dict, get_responses_calls, to_responses_tools
 from .ledger import record, usage_fields, calculate_cost
 
@@ -31,7 +32,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     profile=case.get("profile")
     if profile is not None and case["family"] != "state_change":
         raise ValueError("Profiles supported only for state_change")
-    env=(DecisionEnvironment(case) if case["family"]=="evidence_decision" else
+    env=(FileEnvironment(case,Path(path).parent) if case["family"]=="real_file_procurement" else
+         DecisionEnvironment(case) if case["family"]=="evidence_decision" else
          EvidenceEnvironment(case) if case["family"]=="evidence_conflict" else
          EnterpriseV2Environment(case) if case["family"]=="enterprise_settlement_v2" else
          EnterpriseEnvironment(case) if case["family"]=="enterprise_settlement" else
@@ -50,7 +52,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     else:
         client=client_factory()
     run_id=str(uuid4())
-    definitions=(decision_specs() if case["family"]=="evidence_decision" else
+    definitions=(file_specs() if case["family"]=="real_file_procurement" else
+                 decision_specs() if case["family"]=="evidence_decision" else
                  evidence_specs() if case["family"]=="evidence_conflict" else
                  enterprise_v2_specs() if case["family"]=="enterprise_settlement_v2" else
                  enterprise_specs() if case["family"]=="enterprise_settlement" else
@@ -143,5 +146,5 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
             "protocol":api_type,"state":state,"requests":attempts,"tool_calls":calls,
             "score":env.score(),"invalid_tool_actions":getattr(env,"invalid_actions",0),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
             "events":events,"calls":env.calls,"usage_db":str(db_path)}
-    # Never write to the candidate itself: preserve reproducibility.
+    if hasattr(env,"close"):env.close()
     return result

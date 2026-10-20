@@ -31,6 +31,8 @@ def main():
     evc=sub.add_parser('verify-evidence-pairs');evc.add_argument('directory')
     ed=sub.add_parser('generate-decision-batch');ed.add_argument('directory');ed.add_argument('--seeds',type=int,default=2)
     vd=sub.add_parser('verify-decision-batch');vd.add_argument('directory')
+    fg=sub.add_parser('generate-file-case');fg.add_argument('directory');fg.add_argument('--seed',type=int,default=0)
+    fv=sub.add_parser('verify-file-case');fv.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -119,6 +121,13 @@ def main():
     elif a.cmd=='verify-decision-batch':
         from .evidence_decision_batch import verify
         print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-file-case':
+        from .real_file_task import generate
+        print(json.dumps(generate(a.seed,a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-file-case':
+        from .real_file_task import reference
+        case=json.loads((Path(a.directory)/'candidate.json').read_text(encoding='utf-8'))
+        print(json.dumps(reference(case,a.directory),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
