@@ -32,6 +32,32 @@ class DynamicFileTests(unittest.TestCase):
             self.assertTrue(score["checks"]["requirements"])
             self.assertTrue(score["checks"]["report"])
 
+    def test_grouped_report_amount_accepted(self):
+        from tooluse_pilot.real_file_dynamic import expected
+        with tempfile.TemporaryDirectory() as temp:
+            p=Path(temp)/"source";case=generate(0,p);e=Environment(case,p)
+            vendor,amount,count=expected(e.workbook,160000,["Beijing"])
+            for cell,val in zip(("B4","B5","B6"),(vendor,amount,count)):
+                e.call("write_cell",{"sheet":"Decision","cell":cell,"value":val})
+            e.call("save_workbook",{})
+            e.call("write_report",{"text":f"Recommended {vendor}, price {int(amount):,} CNY"})
+            update=e.call("receive_update",{})
+            self.assertTrue(e.initial_ok)
+            self.assertEqual(update["budget"],130000)
+            e.close()
+
+    def test_invalid_report_amount_rejected(self):
+        from tooluse_pilot.real_file_dynamic import expected
+        with tempfile.TemporaryDirectory() as temp:
+            p=Path(temp)/"source";case=generate(0,p);e=Environment(case,p)
+            vendor,amount,count=expected(e.workbook,160000,["Beijing"])
+            for cell,val in zip(("B4","B5","B6"),(vendor,amount,count)):
+                e.call("write_cell",{"sheet":"Decision","cell":cell,"value":val})
+            e.call("save_workbook",{})
+            e.call("write_report",{"text":f"Recommended {vendor}, price {int(amount)+1:,} CNY"})
+            with self.assertRaises(ValueError):e.call("receive_update",{})
+            e.close()
+
     def test_skip_initial_files_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             p=Path(temp)/"source";case=generate(1,p);e=Environment(case,p)
