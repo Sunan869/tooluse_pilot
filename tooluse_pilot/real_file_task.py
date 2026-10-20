@@ -1,6 +1,6 @@
 """Real XLSX editing challenge. Tools operate on actual files under one case folder."""
-import csv
 import json
+import hashlib
 import random
 from pathlib import Path
 from openpyxl import Workbook, load_workbook
@@ -43,6 +43,7 @@ class Environment:
         self.workbook=load_workbook(self.path)
         self.calls=[];self.saved=False;self.reported=False;self.finished=False
         self.invalid_actions=0
+        self.initial_digest=hashlib.sha256(self.path.read_bytes()).hexdigest()
     def call(self,name,args):
         if not isinstance(args,dict):raise ValueError("arguments required")
         if self.finished:raise ValueError("already finished")
@@ -76,7 +77,7 @@ class Environment:
             actual=[str(wb["Decision"][c].value or "") for c in ("B4","B5","B6")]
         finally:wb.close()
         report=(self.folder/"report.txt").read_text(encoding="utf-8") if (self.folder/"report.txt").is_file() else ""
-        checks={"workbook_saved":self.saved,
+        checks={"workbook_changed_on_disk":hashlib.sha256(self.path.read_bytes()).hexdigest()!=self.initial_digest,
                 "vendor":actual[0]==vendor,"price":actual[1]==str(price),
                 "eligible_count":actual[2]==str(len(eligible)),
                 "report_vendor":vendor in report,"report_price":str(price) in report,
