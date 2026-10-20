@@ -8,6 +8,7 @@ import json
 import os
 import random
 import time
+import shutil
 from pathlib import Path
 from uuid import uuid4
 from .executable import Environment, tool_specs
@@ -25,6 +26,11 @@ from .ledger import record, usage_fields, calculate_cost
 def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
                   max_requests=12, max_tools=30, client_factory=None):
     case=json.loads(Path(path).read_text(encoding="utf-8"))
+    file_workspace=None
+    if case["family"]=="real_file_procurement":
+        file_workspace=Path("runs/file_workspaces")/str(uuid4())
+        file_workspace.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copytree(Path(path).parent,file_workspace)
     workbook=None
     if case["family"]=="workbook_layout":
         workbook=Path(path).parent/"input"/"sales.xlsx"
@@ -32,7 +38,7 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
     profile=case.get("profile")
     if profile is not None and case["family"] != "state_change":
         raise ValueError("Profiles supported only for state_change")
-    env=(FileEnvironment(case,Path(path).parent) if case["family"]=="real_file_procurement" else
+    env=(FileEnvironment(case,file_workspace) if case["family"]=="real_file_procurement" else
          DecisionEnvironment(case) if case["family"]=="evidence_decision" else
          EvidenceEnvironment(case) if case["family"]=="evidence_conflict" else
          EnterpriseV2Environment(case) if case["family"]=="enterprise_settlement_v2" else
@@ -46,8 +52,8 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
         raise ValueError("Unsupported model protocol")
     if client_factory is None:
         from openai import OpenAI
-        client=OpenAI(api_key=os.environ[cfg.get("api_key_env","MODEL_API_KEY")],
-                      base_url=os.environ[cfg.get("base_url_env","MODEL_BASE_URL")],
+        client=OpenAI(api_key=modelcfg.get("api_key") or os.environ[cfg.get("api_key_env","MODEL_API_KEY")],
+                      base_url=os.environ[modelcfg.get("base_url_env",cfg.get("base_url_env","MODEL_BASE_URL"))],
                       timeout=cfg.get("timeout_sec",180),max_retries=0)
     else:
         client=client_factory()
@@ -146,5 +152,6 @@ def run_candidate(path, config_path, model_alias, db_path="runs/usage.sqlite",
             "protocol":api_type,"state":state,"requests":attempts,"tool_calls":calls,
             "score":env.score(),"invalid_tool_actions":getattr(env,"invalid_actions",0),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
             "events":events,"calls":env.calls,"usage_db":str(db_path)}
+    if file_workspace is not None:result["artifact_dir"]=str(file_workspace)
     if hasattr(env,"close"):env.close()
     return result
