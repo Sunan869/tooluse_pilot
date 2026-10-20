@@ -10,8 +10,10 @@
       "base_url_env": "LOCAL_MODEL_BASE_URL",
       "api_key": "local",
       "request_options": {
-        "chat_template_kwargs": {
-          "enable_thinking": false
+        "extra_body": {
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
         }
       }
     }
