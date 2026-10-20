@@ -1,5 +1,5 @@
 """Two-stage XLSX editing benchmark. The second-stage user request is revealed by a tool."""
-import json,random,hashlib
+import json,random,re
 from pathlib import Path
 from openpyxl import Workbook,load_workbook
 from .real_file_task import Environment as Base,specs as basic_specs
@@ -34,6 +34,13 @@ def expected(wb,budget,cities):
         all(int(r[2] if c=="Beijing" else r[3])==1 for c in cities))
     return (good[0][1],str(good[0][0]),str(len(good)))
 
+def report_matches(text, vendor, amount):
+    # Accept 100729 and 100,729, but not 1007290 or a substring of another amount.
+    number=re.escape(str(int(amount)))
+    grouped=re.escape(format(int(amount),','))
+    return (re.search(r'(?<![A-Za-z0-9])'+re.escape(vendor)+r'(?![A-Za-z0-9])',text) is not None
+            and re.search(r'(?<![0-9])(?:'+number+'|'+grouped+r')(?![0-9])',text) is not None)
+
 class Environment(Base):
     def __init__(self,case,folder):
         super().__init__(case,folder);self.transitioned=False;self.initial_ok=False;self.old_report=None
@@ -46,7 +53,7 @@ class Environment(Base):
             finally:disk.close()
             rp=self.folder/"report.txt"
             text=rp.read_text(encoding="utf-8") if rp.exists() else ""
-            self.initial_ok=self.saved and actual==e and e[0] in text and e[1] in text
+            self.initial_ok=self.saved and actual==e and report_matches(text,e[0],e[1])
             if not self.initial_ok:raise ValueError("initial deliverables are missing or incorrect")
             self.old_report=text
             self.transitioned=True
