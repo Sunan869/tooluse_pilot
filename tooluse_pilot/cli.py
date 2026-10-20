@@ -29,6 +29,8 @@ def main():
     fv=sub.add_parser('verify-mutations');fv.add_argument('outdir')
     egc=sub.add_parser('generate-evidence-pairs');egc.add_argument('directory');egc.add_argument('--seeds',type=int,default=3)
     evc=sub.add_parser('verify-evidence-pairs');evc.add_argument('directory')
+    ed=sub.add_parser('generate-decision-batch');ed.add_argument('directory');ed.add_argument('--seeds',type=int,default=2)
+    vd=sub.add_parser('verify-decision-batch');vd.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -110,6 +112,12 @@ def main():
         print(json.dumps(generate_pair(a.directory,a.seeds),ensure_ascii=False,indent=2))
     elif a.cmd=='verify-evidence-pairs':
         from .evidence_batch import verify
+        print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-decision-batch':
+        from .evidence_decision_batch import make_batch
+        print(json.dumps(make_batch(a.directory,a.seeds),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-decision-batch':
+        from .evidence_decision_batch import verify
         print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
