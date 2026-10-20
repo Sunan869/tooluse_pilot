@@ -9,6 +9,19 @@ class FileTaskTests(unittest.TestCase):
                 p=Path(td)/"case"
                 case=generate(seed,p)
                 self.assertTrue(reference(case,p)["success"])
+    def test_seed_changes_recommendation_data(self):
+        from openpyxl import load_workbook
+        observed=set()
+        with tempfile.TemporaryDirectory() as td:
+            for seed in range(12):
+                p=Path(td)/str(seed)
+                generate(seed,p)
+                book=load_workbook(p/'procurement.xlsx',read_only=True,data_only=True)
+                try:
+                    observed.add(tuple(sorted((row[0],row[1]) for row in list(book['Vendors'].values)[1:])))
+                finally:
+                    book.close()
+        self.assertGreater(len(observed),1)
     def test_unsaved_changes_do_not_pass(self):
         with tempfile.TemporaryDirectory() as td:
             p=Path(td)/"case";case=generate(0,p)
