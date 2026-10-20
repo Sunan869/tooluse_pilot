@@ -20,8 +20,11 @@ def specs():
 def generate(seed,root):
     root=Path(root);root.mkdir(parents=True,exist_ok=False)
     rng=random.Random(seed)
-    vendors=[("Alpha",125000,1,1),("Beta",112000,1,0),("Gamma",147000,1,1),
-             ("Delta",138000,1,1),("Epsilon",101000,0,1)]
+    vendors=[("Alpha",125000+rng.randint(-14000,14000),1,1),
+             ("Beta",112000+rng.randint(-9000,9000),1,0),
+             ("Gamma",147000+rng.randint(-9000,9000),1,1),
+             ("Delta",138000+rng.randint(-28000,28000),1,1),
+             ("Epsilon",101000+rng.randint(-7000,7000),0,1)]
     rng.shuffle(vendors)
     wb=Workbook();w=wb.active;w.title="Vendors"
     w.append(["Vendor","Quote","Beijing","Shenzhen"])
