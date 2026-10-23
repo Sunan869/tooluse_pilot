@@ -37,6 +37,7 @@ def main():
     dv=sub.add_parser('verify-dynamic-file');dv.add_argument('directory')
     at=sub.add_parser('attribute-failures');at.add_argument('results',nargs='+');at.add_argument('--out')
     er=sub.add_parser('export-research-records');er.add_argument('outdir');er.add_argument('workspaces',nargs='+')
+    cs=sub.add_parser('screen-research-cases');cs.add_argument('out');cs.add_argument('workspaces',nargs='+')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -155,6 +156,9 @@ def main():
     elif a.cmd=='export-research-records':
         from .research_records import export_batch
         print(json.dumps(export_batch(a.workspaces,a.outdir),ensure_ascii=False,indent=2))
+    elif a.cmd=='screen-research-cases':
+        from .candidate_screening import export
+        print(json.dumps(export(a.workspaces,a.out),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
