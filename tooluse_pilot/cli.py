@@ -36,6 +36,7 @@ def main():
     dg=sub.add_parser('generate-dynamic-file');dg.add_argument('directory');dg.add_argument('--seed',type=int,default=0)
     dv=sub.add_parser('verify-dynamic-file');dv.add_argument('directory')
     at=sub.add_parser('attribute-failures');at.add_argument('results',nargs='+');at.add_argument('--out')
+    er=sub.add_parser('export-research-records');er.add_argument('outdir');er.add_argument('workspaces',nargs='+')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -151,6 +152,9 @@ def main():
             Path(a.out).parent.mkdir(parents=True,exist_ok=True)
             Path(a.out).write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps({'runs':report['runs'],'category_run_counts':report['category_run_counts'],'paid_requests':0},ensure_ascii=False,indent=2))
+    elif a.cmd=='export-research-records':
+        from .research_records import export_batch
+        print(json.dumps(export_batch(a.workspaces,a.outdir),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
