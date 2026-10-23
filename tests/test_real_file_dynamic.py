@@ -58,6 +58,14 @@ class DynamicFileTests(unittest.TestCase):
             with self.assertRaises(ValueError):e.call("receive_update",{})
             e.close()
 
+    def test_wrong_recommendation_not_validated_by_incidental_mentions(self):
+        from tooluse_pilot.real_file_dynamic import final_report_matches
+        vendors=['Alpha','Beta','Gamma','Delta']
+        bad=('Recommended supplier: Alpha\\nPrice: 100729\\n'
+             'Eligible suppliers: 3\\n- Beta: 116788\\nChosen: Alpha')
+        self.assertFalse(final_report_matches(bad,'Beta','116788',1,vendors))
+        good='Recommended Beta for 116788 CNY; 1 eligible.'
+        self.assertTrue(final_report_matches(good,'Beta','116788',1,vendors))
     def test_skip_initial_files_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             p=Path(temp)/"source";case=generate(1,p);e=Environment(case,p)
