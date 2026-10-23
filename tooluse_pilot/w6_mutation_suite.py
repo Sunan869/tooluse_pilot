@@ -38,6 +38,16 @@ def mutant(case,folder,kind):
             env.call("write_report",{"text":_report(second)})
         elif kind=="no_report_update":
             _write(env,second)
+        elif kind=="wrong_vendor":
+            _write(env,(first[0],second[1],second[2]))
+            env.call("write_report",{"text":_report(second)})
+        elif kind=="wrong_requirements":
+            _write(env,second)
+            env.workbook["Decision"]["B2"]="160000"
+            env.call("write_report",{"text":_report(second)})
+        elif kind=="contradictory_report":
+            _write(env,second)
+            env.call("write_report",{"text":_report(second)+" Chosen: "+first[0]})
         else:raise ValueError("unknown mutant")
         env.call("save_workbook",{})
         env.call("finish",{})
@@ -45,7 +55,8 @@ def mutant(case,folder,kind):
     finally:env.close()
 
 MUTANTS=("stale_both","stale_workbook","stale_report",
-         "wrong_count","wrong_price","no_report_update")
+         "wrong_count","wrong_price","no_report_update",
+         "wrong_vendor","wrong_requirements","contradictory_report")
 
 def verify_case(case,source):
     with tempfile.TemporaryDirectory() as temp:
@@ -58,8 +69,8 @@ def verify_case(case,source):
         for kind in MUTANTS:
             dest=root/kind;shutil.copytree(source,dest)
             scored=mutant(case,dest,kind)
-            if scored["success"]:
-                raise AssertionError(f"mutant unexpectedly passed: {kind}")
+            if scored["success"] or all(scored["checks"].values()):
+                raise AssertionError(f"mutant unexpectedly passed or lacks specific failing check: {kind}")
             results[kind]=scored["checks"]
         return {"reference_passed":True,"mutants_rejected":len(results),
                 "mutants":results,"model_requests":0}

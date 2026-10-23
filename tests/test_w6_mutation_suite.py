@@ -14,7 +14,7 @@ class W6MutationTests(unittest.TestCase):
                 paths.append(path)
             result=verify_batch(paths)
             self.assertEqual(result["verified_cases"],3)
-            self.assertEqual(result["mutants_per_case"],6)
+            self.assertEqual(result["mutants_per_case"],9)
             for row in result["cases"]:
                 self.assertTrue(row["reference_passed"])
                 self.assertEqual(row["mutants_rejected"],len(MUTANTS))
@@ -27,3 +27,6 @@ class W6MutationTests(unittest.TestCase):
             self.assertFalse(errors["stale_workbook"]["result"])
             self.assertFalse(errors["stale_report"]["report"])
             self.assertFalse(errors["wrong_count"]["result"])
+            self.assertFalse(errors["wrong_vendor"]["result"])
+            self.assertFalse(errors["wrong_requirements"]["requirements"])
+            self.assertFalse(errors["contradictory_report"]["report"])
