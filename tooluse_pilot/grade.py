@@ -5,11 +5,12 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 
-def grade(case_dir, trace_path=None):
+def grade(case_dir, trace_path=None, trace_data=None):
     root = Path(case_dir)
-    truth = json.loads((root / "private" / "oracle.json").read_text(encoding="utf-8"))[
-        "rows"
-    ]
+    revision=root/'private'/'revision_applied.json'
+    applied=revision.exists() and json.loads(revision.read_text(encoding='utf-8')).get('applied') is True
+    oracle_name='oracle_revised.json' if applied else 'oracle.json'
+    truth=json.loads((root/'private'/oracle_name).read_text(encoding='utf-8'))['rows']
     target = root / "output" / "anomalies.csv"
     if not target.exists():
         return {
@@ -50,8 +51,8 @@ def grade(case_dir, trace_path=None):
         return {"total": 0, "result_score": 0, "process_score": 0, "error": str(ex)}
     # Process is optional to support uninstrumented Python/Shell execution; not awarded without evidence.
     process_score = 0
-    if trace_path:
-        trace = json.loads(Path(trace_path).read_text(encoding="utf-8"))
+    if trace_path or trace_data is not None:
+        trace = trace_data if trace_data is not None else json.loads(Path(trace_path).read_text(encoding='utf-8'))
         names = [x.get("tool") for x in trace.get("calls", [])]
         if {"list_sheets", "read_rows", "write_csv"} <= set(names):
             sheetset = {
@@ -77,4 +78,39 @@ def grade(case_dir, trace_path=None):
         "correct_rows": correct,
         "extra_rows": extras,
         "duplicate_ids": duplicates,
+    }
+
+def delta_score(case_dir):
+    """Validate changed order IDs against the revised oracle and actual output.
+
+    A missing, extra, or partially updated changed record is counted incorrect.
+    Unchanged entries are assessed by the ordinary result score.
+    """
+    root = Path(case_dir)
+    before = json.loads((root / "private" / "oracle.json").read_text(encoding="utf-8"))["rows"]
+    after = json.loads((root / "private" / "oracle_revised.json").read_text(encoding="utf-8"))["rows"]
+    left = {r["order_id"]: r for r in before}
+    right = {r["order_id"]: r for r in after}
+    changed = {k for k in (left.keys() | right.keys()) if left.get(k) != right.get(k)}
+    output = root / "output" / "anomalies.csv"
+    actual = {}
+    if output.is_file():
+        try:
+            with output.open("r", encoding="utf-8-sig", newline="") as f:
+                raw = list(csv.DictReader(f))
+            if len({r["order_id"] for r in raw}) != len(raw):
+                return {"changed_count": len(changed), "changed_correct": 0, "changed_accuracy": 0.0}
+            actual = {
+                r["order_id"]: {
+                    "order_id": r["order_id"], "expected_cents": int(r["expected_cents"]),
+                    "net_paid_cents": int(r["net_paid_cents"]), "issues": r["issues"],
+                } for r in raw
+            }
+        except (OSError, ValueError, KeyError, csv.Error):
+            pass
+    hits = sum(actual.get(k) == right.get(k) for k in changed)
+    return {
+        "changed_count": len(changed),
+        "changed_correct": hits,
+        "changed_accuracy": round(hits / len(changed), 4) if changed else 1.0,
     }
