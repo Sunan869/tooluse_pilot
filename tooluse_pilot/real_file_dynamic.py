@@ -41,6 +41,16 @@ def report_matches(text, vendor, amount):
     return (re.search(r'(?<![A-Za-z0-9])'+re.escape(vendor)+r'(?![A-Za-z0-9])',text) is not None
             and re.search(r'(?<![0-9])(?:'+number+'|'+grouped+r')(?![0-9])',text) is not None)
 
+def final_report_matches(text, vendor, amount, count, vendors):
+    if not report_matches(text,vendor,amount):return False
+    names='|'.join(re.escape(x) for x in vendors)
+    pattern=r'(?i)\b(?:recommended\s+(?:supplier|vendor)?\s*:?\s*|recommend\s+|chosen\s*:\s*)('+names+r')\b'
+    endorsed=re.findall(pattern,text)
+    if not endorsed or any(x.casefold()!=vendor.casefold() for x in endorsed):return False
+    counts=re.findall(r'(?i)eligible\s+(?:suppliers?|vendors?|count)(?:\s*\([^)]*\))?\s*:\s*(\d+)',text)
+    counts+=re.findall(r'(?i)\b(\d+)\s+eligible\b',text)
+    return bool(counts) and all(int(x)==count for x in counts)
+
 class Environment(Base):
     def __init__(self,case,folder):
         super().__init__(case,folder);self.transitioned=False;self.initial_ok=False;self.old_report=None
@@ -74,7 +84,7 @@ class Environment(Base):
         rp=self.folder/"report.txt";text=rp.read_text(encoding="utf-8") if rp.exists() else ""
         checks={"initial_delivered":self.initial_ok,"update_received":self.transitioned,
                 "requirements":correct_requirements,"result":actual==e,
-                "report":e[0] in text and e[1] in text and text!=self.old_report,
+                "report":final_report_matches(text,e[0],e[1],int(e[2]),[row[0] for row in self.workbook["Vendors"].values if row[0]!="Vendor"]) and text!=self.old_report,
                 "finished":self.finished}
         return {"success":all(checks.values()) and not self.invalid_actions,
                 "checks":checks,"tool_calls":len(self.calls),"invalid_actions":self.invalid_actions}
