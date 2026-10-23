@@ -43,6 +43,8 @@ def main():
     ms=sub.add_parser('generate-multisheet');ms.add_argument('directory');ms.add_argument('--seed',type=int,default=0)
     mv=sub.add_parser('verify-multisheet');mv.add_argument('directory')
     w6=sub.add_parser('verify-w6-mutations');w6.add_argument('cases',nargs='+')
+    wx=sub.add_parser('generate-w6-reconciliation');wx.add_argument('directory');wx.add_argument('--seed',type=int,default=0)
+    wv=sub.add_parser('verify-w6-reconciliation');wv.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -183,6 +185,16 @@ def main():
     elif a.cmd=='verify-w6-mutations':
         from .w6_mutation_suite import verify_batch
         print(json.dumps(verify_batch(a.cases),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-w6-reconciliation':
+        from .real_w6_reconciliation import generate
+        print(json.dumps(generate(a.seed,a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-w6-reconciliation':
+        from .real_w6_reconciliation import reference
+        import tempfile
+        with tempfile.TemporaryDirectory() as temp:
+            shutil.copytree(a.directory,Path(temp)/'case')
+            case=json.loads((Path(temp)/'case'/'candidate.json').read_text(encoding='utf-8'))
+            print(json.dumps(reference(case,Path(temp)/'case'),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
