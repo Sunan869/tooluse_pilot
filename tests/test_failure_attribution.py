@@ -1,5 +1,5 @@
 import unittest
-from tooluse_pilot.failure_attribution import diagnose
+from tooluse_pilot.failure_attribution import diagnose,batch
 
 class AttributionTests(unittest.TestCase):
     def test_observed_qwen_errors(self):
@@ -28,6 +28,15 @@ class AttributionTests(unittest.TestCase):
         self.assertTrue(out["passed"])
         self.assertEqual(out["category_names"],[])
 
+    def test_origin_priority(self):
+        base={"score":{"success":False,"checks":{"result":False}},"state":"finished"}
+        self.assertEqual(diagnose(base)["origin"],"model_behavior")
+        flagged={**base,"evaluation_issue":True}
+        self.assertEqual(diagnose(flagged)["origin"],"environment_or_oracle")
+        interrupted={**flagged,"state":"api_error"}
+        self.assertEqual(diagnose(interrupted)["origin"],"transport")
+
     def test_transport_not_model_execution_failure(self):
         out=diagnose({"score":{"success":False},"state":"api_error"})
         self.assertEqual(out["category_names"],["transport_failure"])
+        self.assertEqual(out["origin"],"transport")
