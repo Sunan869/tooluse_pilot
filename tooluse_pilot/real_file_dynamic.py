@@ -16,6 +16,19 @@ def generate(seed,folder):
           ("Beta",116000+rng.randrange(2000),1,1),
           ("Gamma",139000+rng.randrange(2000),1,1),
           ("Delta",149000+rng.randrange(2000),1,1)]
+    # Counterfactual business paths. Seed 0 preserves the observed Qwen failure.
+    # Other seeds change which supplier wins after the user revision.
+    scenario=seed % 3
+    if scenario==1:
+        data=[("Alpha",99000+rng.randrange(2000),1,0),
+              ("Beta",136000+rng.randrange(2000),1,1),
+              ("Gamma",110000+rng.randrange(2000),1,1),
+              ("Delta",149000+rng.randrange(2000),1,1)]
+    elif scenario==2:
+        data=[("Alpha",99000+rng.randrange(2000),1,0),
+              ("Beta",138000+rng.randrange(2000),1,1),
+              ("Gamma",141000+rng.randrange(2000),1,1),
+              ("Delta",123000+rng.randrange(2000),1,1)]
     rng.shuffle(data)
     wb=Workbook();v=wb.active;v.title="Vendors"
     v.append(["Vendor","Quote","Beijing","Shenzhen"])
