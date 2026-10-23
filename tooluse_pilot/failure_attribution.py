@@ -61,3 +61,39 @@ def batch(paths):
         origins[origin]=origins.get(origin,0)+1
     return {"runs":len(reports),"category_run_counts":counts,"origin_run_counts":origins,
             "reports":reports,"paid_requests":0}
+
+def inspect_workspace(path):
+    """Independently compare final disk artifacts with case requirements."""
+    from openpyxl import load_workbook
+    from .real_file_dynamic import expected, final_report_matches
+    root=Path(path)
+    case=json.loads((root/"candidate.json").read_text(encoding="utf-8"))
+    if case.get("family")!="real_file_dynamic":
+        raise ValueError("workspace inspector currently supports real_file_dynamic")
+    book=load_workbook(root/case["input"]["workbook"],read_only=True,data_only=True)
+    try:
+        decision=book["Decision"]
+        budget=decision["B2"].value
+        cities=decision["B3"].value
+        actual=[str(decision[x].value or "") for x in ("B4","B5","B6")]
+        desired=list(expected(book,130000,["Beijing","Shenzhen"]))
+        vendors=[str(row[0]) for row in list(book["Vendors"].values)[1:]]
+        baseline=expected(book,160000,["Beijing"])
+    finally:
+        book.close()
+    report_path=root/"report.txt"
+    report=report_path.read_text(encoding="utf-8") if report_path.is_file() else ""
+    checks={
+        "revised_budget":str(budget)=="130000",
+        "revised_cities":str(cities)=="Beijing,Shenzhen",
+        "recommendation":actual[0]==desired[0],
+        "price":actual[1]==desired[1],
+        "eligible_count":actual[2]==desired[2],
+        "report_consistent":final_report_matches(report,desired[0],desired[1],int(desired[2]),vendors),
+    }
+    trace_path=root/"run_result.json"
+    trace=diagnose(json.loads(trace_path.read_text(encoding="utf-8"))) if trace_path.is_file() else None
+    return {"workspace":str(root),"candidate_id":case["id"],"expected":desired,
+            "actual":actual,"initial_expected":list(baseline),
+            "checks":checks,"artifact_consistent":all(checks.values()),
+            "trace_diagnosis":trace,"paid_requests":0}
