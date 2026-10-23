@@ -66,6 +66,18 @@ class DynamicFileTests(unittest.TestCase):
         self.assertFalse(final_report_matches(bad,'Beta','116788',1,vendors))
         good='Recommended Beta for 116788 CNY; 1 eligible.'
         self.assertTrue(final_report_matches(good,'Beta','116788',1,vendors))
+    def test_counterfactual_seeds_change_correct_recommendation(self):
+        from tooluse_pilot.real_file_dynamic import expected
+        winners=[]
+        with tempfile.TemporaryDirectory() as temp:
+            for seed in range(3):
+                folder=Path(temp)/str(seed)
+                case=generate(seed,folder)
+                env=Environment(case,folder)
+                winners.append(expected(env.workbook,130000,["Beijing","Shenzhen"])[0])
+                env.close()
+        self.assertEqual(winners,["Beta","Gamma","Delta"])
+
     def test_skip_initial_files_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             p=Path(temp)/"source";case=generate(1,p);e=Environment(case,p)
