@@ -40,6 +40,8 @@ def main():
     cs=sub.add_parser('screen-research-cases');cs.add_argument('out');cs.add_argument('workspaces',nargs='+')
     rb=sub.add_parser('generate-real-file-batch');rb.add_argument('directory');rb.add_argument('--seeds',type=int,nargs='+',default=[0,1,2])
     rv=sub.add_parser('verify-real-file-batch');rv.add_argument('directory')
+    ms=sub.add_parser('generate-multisheet');ms.add_argument('directory');ms.add_argument('--seed',type=int,default=0)
+    mv=sub.add_parser('verify-multisheet');mv.add_argument('directory')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -167,6 +169,16 @@ def main():
     elif a.cmd=='verify-real-file-batch':
         from .real_file_batch import verify
         print(json.dumps(verify(a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='generate-multisheet':
+        from .real_multisheet import generate
+        print(json.dumps(generate(a.seed,a.directory),ensure_ascii=False,indent=2))
+    elif a.cmd=='verify-multisheet':
+        from .real_multisheet import reference
+        import tempfile
+        with tempfile.TemporaryDirectory() as temp:
+            shutil.copytree(a.directory,Path(temp)/'case')
+            case=json.loads((Path(temp)/'case'/'candidate.json').read_text(encoding='utf-8'))
+            print(json.dumps(reference(case,Path(temp)/'case'),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
