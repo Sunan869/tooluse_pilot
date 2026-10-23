@@ -41,7 +41,7 @@ def report(answer):
 
 def report_valid(text,answer):
     for label,value in zip(("Total","Count","Winner","Amount"),answer):
-        mentions=re.findall(r"(?i)\\b"+label+r"\\s*:\\s*([A-Za-z0-9-]+)",text)
+        mentions=re.findall(r"(?i)\b"+label+r"\s*:\s*([A-Za-z0-9-]+)",text)
         if not mentions or any(m!=value for m in mentions):return False
     return True
 
