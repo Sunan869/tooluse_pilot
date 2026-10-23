@@ -34,7 +34,10 @@ def diagnose(run):
     if run.get("state")=="api_error":mark("transport_failure",{"state":"api_error"})
     if run.get("state") in ("max_requests","max_tools"):mark("execution_limit",{"state":run["state"]})
     invalid=run.get("invalid_tool_actions",score.get("invalid_actions",len(errors)))
-    return {"run_id":run.get("run_id"),"candidate_id":run.get("candidate_id"),
+    origin=("transport" if run.get("state")=="api_error" else
+            "environment_or_oracle" if run.get("evaluation_issue") else
+            "model_behavior" if categories or not score.get("success") else "none")
+    return {"origin":origin,"run_id":run.get("run_id"),"candidate_id":run.get("candidate_id"),
             "model":run.get("model"),"passed":bool(score.get("success")),
             "state":run.get("state"),"tool_calls":run.get("tool_calls",len(tool_events)),
             "invalid_tool_actions":invalid,"categories":categories,
@@ -52,4 +55,9 @@ def batch(paths):
     for report in reports:
         for category in set(report["category_names"]):
             counts[category]=counts.get(category,0)+1
-    return {"runs":len(reports),"category_run_counts":counts,"reports":reports,"paid_requests":0}
+    origins={}
+    for report in reports:
+        origin=report["origin"]
+        origins[origin]=origins.get(origin,0)+1
+    return {"runs":len(reports),"category_run_counts":counts,"origin_run_counts":origins,
+            "reports":reports,"paid_requests":0}
