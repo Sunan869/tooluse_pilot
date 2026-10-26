@@ -9,7 +9,7 @@ class RecoveryFeedbackTests(unittest.TestCase):
         for sample in ("total=23000 count=4 winner=Alpha amount=8000",
                        "Total: 23000\\nCount: 4\\nWinner: Alpha\\nAmount: 8000",
                        "total 23000, count 4, winner Alpha, amount 8000"):
-            self.assertTrue(report_valid(sample,correct),sample)
+            self.assertTrue(report_valid(sample.replace("\\n","\n"),correct),sample)
         self.assertFalse(report_valid("total=23000 count=4 winner=Alpha amount=8000; winner=Delta",correct))
         self.assertFalse(report_valid("total=23000 count=3 winner=Alpha amount=8000",correct))
 
