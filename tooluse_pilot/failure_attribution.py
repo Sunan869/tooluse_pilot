@@ -31,8 +31,19 @@ def diagnose(run):
     rejected=[x for x in errors if x["tool"]=="receive_update"]
     if rejected:
         mark("revision_gate_rejections",{"count":len(rejected),"errors":sorted(set(str(x["error"]) for x in rejected))})
-        later_success=any(e.get("tool")=="receive_update" and (e.get("result") or {}).get("ok") is True for e in tool_events)
-        mark("revision_gate_recovery",{"recovered":later_success,"rejections":len(rejected)})
+        gate_events=[(i,e) for i,e in enumerate(tool_events) if e.get("tool")=="receive_update"]
+        first_rejection=next((i for i,e in gate_events if (e.get("result") or {}).get("ok") is False),None)
+        success_index=next((i for i,e in gate_events if i>first_rejection and (e.get("result") or {}).get("ok") is True),None) if first_rejection is not None else None
+        corrections=[{"index":i,"tool":e.get("tool")} for i,e in enumerate(tool_events)
+                     if first_rejection<i and (success_index is None or i<success_index)
+                     and e.get("tool") in ("read_sheet","write_summary","save_workbook","write_report")]
+        reasons=sorted({reason.strip() for x in rejected
+                        for reason in str(x["error"]).split("stage_one_failed:")[-1].split(",")
+                        if reason.strip() in ("workbook_not_saved","summary_mismatch","report_mismatch")})
+        mark("revision_gate_recovery",{"recovered":success_index is not None,
+              "rejections":len(rejected),"first_rejection_index":first_rejection,
+              "success_index":success_index,"correction_actions":corrections,
+              "diagnostic_reasons":reasons})
     for name in ("initial_delivered","update_received","requirements","result","report","finished"):
         if name in checks and checks[name] is False:
             mark("failed_"+name,{"check":name})
