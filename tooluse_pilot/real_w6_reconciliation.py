@@ -40,10 +40,23 @@ def report(answer):
     return f"Total: {answer[0]}; Count: {answer[1]}; Winner: {answer[2]}; Amount: {answer[3]}."
 
 def report_valid(text,answer):
-    for label,value in zip(("Total","Count","Winner","Amount"),answer):
-        mentions=re.findall(r"(?i)\b"+label+r"\s*:\s*([A-Za-z0-9-]+)",text)
-        if not mentions or any(m!=value for m in mentions):return False
+    # Accept colon, equals sign, or plain whitespace separators, including newlines.
+    # Every explicit occurrence must agree, so contradictory claims are rejected.
+    labels=("total","count","winner","amount")
+    for label,value in zip(labels,answer):
+        pattern=r"(?i)(?<![A-Za-z])"+label+r"\\s*(?::|=|\\s)\\s*([A-Za-z0-9-]+)"
+        matches=re.findall(pattern,text)
+        if not matches or any(x.casefold()!=value.casefold() for x in matches):
+            return False
     return True
+
+def initial_diagnostics(expected,actual,text,save_called):
+    issues=[]
+    if not save_called:issues.append("workbook_not_saved")
+    if actual!=expected:
+        issues.append("summary_mismatch")
+    if not report_valid(text,expected):issues.append("report_mismatch")
+    return issues
 
 def specs():
     s={"type":"string"}
@@ -56,7 +69,7 @@ class Environment:
         self.case=case;self.root=Path(folder);self.path=self.root/case["input"]["workbook"]
         self.wb=load_workbook(self.path);self.calls=[];self.invalid_actions=0
         self.finished=False;self.transitioned=False;self.initial_ok=False
-        self.saved_after=False;self.old_report=None
+        self.saved_after=False;self.saved_before=False;self.old_report=None
     def call(self,name,args):
         if self.finished:raise ValueError("already finished")
         if name=="list_sheets" and args=={}:out={"sheets":self.wb.sheetnames}
@@ -67,6 +80,7 @@ class Environment:
         elif name=="save_workbook" and args=={}:
             self.wb.save(self.path);out={"saved":True}
             if self.transitioned:self.saved_after=True
+            else:self.saved_before=True
         elif name=="write_report" and set(args)=={"text"} and isinstance(args["text"],str):
             (self.root/"report.txt").write_text(args["text"],encoding="utf-8");out={"saved":True}
         elif name=="receive_update" and args=={} and not self.transitioned:
@@ -77,8 +91,9 @@ class Environment:
             finally:disk.close()
             p=self.root/"report.txt"
             old=p.read_text(encoding="utf-8") if p.exists() else ""
-            self.initial_ok=(actual==first and report_valid(old,first))
-            if not self.initial_ok:raise ValueError("first-stage deliverables incorrect or unsaved")
+            issues=initial_diagnostics(first,actual,old,self.saved_before)
+            self.initial_ok=not issues
+            if issues:raise ValueError("stage_one_failed: "+", ".join(issues))
             self.old_report=old;self.transitioned=True
             self.wb["Policy"]["B2"]=8000;self.wb["Policy"]["B3"]="Beijing,Shenzhen"
             quantities=((4,2,1),(1,3,1),(1,1,3))[self.case["scenario"]]

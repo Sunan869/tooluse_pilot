@@ -28,6 +28,11 @@ def diagnose(run):
     malformed=[x for x in errors if x["tool"]=="write_cell"]
     if unknown:mark("sheet_discovery_errors",{"count":len(unknown),"examples":unknown[:4]})
     if malformed:mark("cell_argument_errors",{"count":len(malformed),"examples":malformed[:4]})
+    rejected=[x for x in errors if x["tool"]=="receive_update"]
+    if rejected:
+        mark("revision_gate_rejections",{"count":len(rejected),"errors":sorted(set(str(x["error"]) for x in rejected))})
+        later_success=any(e.get("tool")=="receive_update" and (e.get("result") or {}).get("ok") is True for e in tool_events)
+        mark("revision_gate_recovery",{"recovered":later_success,"rejections":len(rejected)})
     for name in ("initial_delivered","update_received","requirements","result","report","finished"):
         if name in checks and checks[name] is False:
             mark("failed_"+name,{"check":name})
