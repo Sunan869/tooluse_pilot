@@ -44,7 +44,7 @@ def report_valid(text,answer):
     # Every explicit occurrence must agree, so contradictory claims are rejected.
     labels=("total","count","winner","amount")
     for label,value in zip(labels,answer):
-        pattern=r"(?im)(?:^|;)\s*"+label+r"\s*(?::|=|[ \t]+)\s*([A-Za-z0-9-]+)"
+        pattern=r"(?i)(?<![A-Za-z])"+label+r"\s*(?::|=|\s)\s*"+(r"([A-Za-z0-9-]+)" if label=="winner" else r"(\d+)")
         matches=re.findall(pattern,text)
         if not matches or any(x.casefold()!=value.casefold() for x in matches):
             return False
