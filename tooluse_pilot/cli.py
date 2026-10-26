@@ -47,6 +47,7 @@ def main():
     wv=sub.add_parser('verify-w6-reconciliation');wv.add_argument('directory')
     wa=sub.add_parser('audit-w6-run');wa.add_argument('workspace')
     wc=sub.add_parser('compare-w6-runs');wc.add_argument('old_workspace');wc.add_argument('new_workspace');wc.add_argument('--out')
+    rs=sub.add_parser('rescore-w6');rs.add_argument('workspace');rs.add_argument('--out')
     d=sub.add_parser('diagnose');d.add_argument('--config',default='gateway.models.json')
     e=sub.add_parser('export-usage');e.add_argument('--db',default='runs/usage.sqlite');e.add_argument('--out',default='runs/api_usage.csv')
     u=sub.add_parser('usage-summary');u.add_argument('--db',default='runs/usage.sqlite')
@@ -204,6 +205,9 @@ def main():
         from .w6_compare import compare,export
         result=export(a.old_workspace,a.new_workspace,a.out) if a.out else compare(a.old_workspace,a.new_workspace)
         print(json.dumps(result,ensure_ascii=False,indent=2))
+    elif a.cmd=='rescore-w6':
+        from .w6_rescore import rescore,export
+        print(json.dumps(export(a.workspace,a.out) if a.out else rescore(a.workspace),ensure_ascii=False,indent=2))
     elif a.cmd=='diagnose':
         from .gateway import _config
         cfg=_config(a.config)
