@@ -144,7 +144,8 @@ def main():
         print(json.dumps({k: v for k, v in result.items() if k != "cases"}, ensure_ascii=False, indent=2))
     elif args.action == "select":
         selection = select_tasks(args.root, args.per_category)
-        print(json.dumps({k: v for k, v in selection.items() if k != "cases"}, ensure_ascii=False, indent=2))\n    else:
+        print(json.dumps({k: v for k, v in selection.items() if k != "cases"}, ensure_ascii=False, indent=2))
+    else:
         if not args.category or not args.id or not args.out:
             parser.error("stage requires --category --id --out")
         print(json.dumps(stage(args.root, args.category, args.id, args.out), ensure_ascii=False, indent=2))
