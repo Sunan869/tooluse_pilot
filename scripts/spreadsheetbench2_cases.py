@@ -28,6 +28,7 @@ def resolve(root, reference):
     return None
 
 def load_tasks(root):
+    root = root.resolve()
     tasks = []
     for source in sorted(root.rglob("dataset.json")):
         if source.parent.name not in CATEGORIES:
@@ -52,6 +53,7 @@ def load_tasks(root):
     return tasks
 
 def match(root):
+    root = root.resolve()
     shortlist = json.loads((root / "shortlist.json").read_text(encoding="utf-8"))
     candidates = {item["path"] for item in shortlist.get("cases", [])}
     tasks = load_tasks(root / "raw")
@@ -66,6 +68,7 @@ def match(root):
     return result
 
 def stage(root, category, case_id, out):
+    root = root.resolve()
     rows = json.loads((root / "matched_cases.json").read_text(encoding="utf-8"))["cases"]
     matches = [x for x in rows if x["category"] == category and x["id"] == case_id]
     if len(matches) != 1:
