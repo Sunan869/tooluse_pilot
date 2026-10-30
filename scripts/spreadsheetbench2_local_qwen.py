@@ -34,7 +34,7 @@ def probe(client, model):
         model=model, temperature=None, stream=False,
         messages=[{"role":"user", "content":"调用 execute_python 工具计算 2+3，不要直接给出答案。"}],
         tools=[TOOLS[0]], tool_choice="auto",
-        **({"extra_body":{"chat_template_kwargs":{"enable_thinking":False}}} if model.lower().startswith("qwen") else {})
+        **({"extra_body":{"chat_template_kwargs":{"enable_thinking":False}}} if model.lower().startswith("qwen") else {}))
     calls = getattr(resp.choices[0].message, "tool_calls", None) or []
     return {"model":model, "tool_calls_supported":bool(calls),
             "tool_names":[call.function.name for call in calls],
@@ -78,7 +78,7 @@ def run_case(client, model, case_dir, max_requests, max_tools, image, workflow_h
         for turn in range(max_requests):
             response=client.chat.completions.create(
                 model=model,messages=messages,tools=TOOLS,tool_choice="auto",stream=False,
-                extra_body={"chat_template_kwargs":{"enable_thinking":False}})
+                **({"extra_body":{"chat_template_kwargs":{"enable_thinking":False}}} if model.lower().startswith("qwen") else {}))
             record["requests"]+=1
             print(f"[turn {turn+1}/{max_requests}] requests={record['requests']}", flush=True)
             message=response.choices[0].message
