@@ -47,7 +47,7 @@ def checksum(path):
             h.update(chunk)
     return h.hexdigest()
 
-def run_case(client, model, case_dir, max_requests, max_tools, image):
+def run_case(client, model, case_dir, max_requests, max_tools, image, workflow_hint=False):
     case_dir=Path(case_dir).resolve()
     inputs=list((case_dir/"input").glob("*.xlsx"))
     if len(inputs)!=1 or not (case_dir/"instruction.md").is_file():
@@ -61,7 +61,13 @@ def run_case(client, model, case_dir, max_requests, max_tools, image):
         {"role":"system","content":"You are editing an Excel workbook. Inspect the provided input XLSX using Python/shell tools. Apply the user's requested changes, preserve unrelated content, and save the updated XLSX under output/ with the SAME filename as the input file. Never claim success unless the file exists. The workspace has input/ and output/ directories. Files saved under /work or /tmp persist across tool calls, but Python process variables do not. Inspect only relevant cells and formulas, avoid dumping entire sheets to stdout. Do not read private files or access the network."},
         {"role":"user","content":instructions}
     ]
-    record={"run_id":run_id,"model":model,"workspace":str(case_dir),
+    if workflow_hint:
+        messages[0]["content"] += (" Workflow guidance: inspect the workbook systematically, "
+            "identify concrete suspect cells or formatting defects, apply justified edits, "
+            "and save an output XLSX. Avoid endlessly inspecting the same area. "
+            "Do not invent errors or change unrelated cells.")
+    record={"condition":"workflow_hint" if workflow_hint else "baseline",
+            "run_id":run_id,"model":model,"workspace":str(case_dir),
             "input_sha256":checksum(inputs[0]),"events":[],"state":"max_requests",
             "requests":0,"tool_calls":0,"output_files":[]}
     docker=DockerTools(case_dir,image=image,timeout=120)
@@ -140,6 +146,7 @@ def main():
     parser.add_argument("--case",type=Path)
     parser.add_argument("--max-requests",type=int,default=25)
     parser.add_argument("--max-tools",type=int,default=80)
+    parser.add_argument("--workflow-hint",action="store_true",help="Separate assisted condition; not baseline")
     parser.add_argument("--sandbox-image",default="tooluse-pilot-sandbox:py311-openpyxl")
     args=parser.parse_args()
     client=make_client(args.base_url)
@@ -151,7 +158,7 @@ def main():
         target=args.case.resolve()
         if not target.is_dir() or not target.is_relative_to(args.batch.resolve()):
             parser.error("case must be a directory under --batch")
-        result=run_case(client,args.model,target,args.max_requests,args.max_tools,args.sandbox_image)
+        result=run_case(client,args.model,target,args.max_requests,args.max_tools,args.sandbox_image,args.workflow_hint)
     print(json.dumps(result,ensure_ascii=False,indent=2))
 
 if __name__=="__main__":
