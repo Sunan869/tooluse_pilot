@@ -55,7 +55,7 @@ def download(root: Path, archive: str = ARCHIVE) -> None:
     print(f"Extracted to: {root / 'raw'}")
 
 
-def summarize_workbook(path: Path) -> dict:
+def summarize_workbook(path: Path, max_rows: int = 2000, max_cols: int = 80) -> dict:
     from openpyxl import load_workbook
     wb = load_workbook(path, read_only=True, data_only=False, keep_links=True)
     sheets = len(wb.worksheets)
@@ -63,7 +63,7 @@ def summarize_workbook(path: Path) -> dict:
     functions = Counter()
     try:
         for sheet in wb:
-            for row in sheet.iter_rows():
+            for row in sheet.iter_rows(max_row=min(sheet.max_row or 0, max_rows),\n                                       max_col=min(sheet.max_column or 0, max_cols)):
                 for cell in row:
                     if cell.value is None:
                         continue
@@ -81,7 +81,7 @@ def summarize_workbook(path: Path) -> dict:
         wb.close()
     return {"sheets": sheets, "occupied_cells": cells, "formulas": formulas,
             "cross_sheet_formulas": cross_sheet, "error_cells": errors,
-            "top_functions": dict(functions.most_common(8))}
+            "top_functions": dict(functions.most_common(8)),\n            "sample_limit": {"max_rows_per_sheet": max_rows, "max_cols_per_sheet": max_cols},\n            "partial_scan": any((ws.max_row or 0) > max_rows or\n                                (ws.max_column or 0) > max_cols for ws in wb.worksheets)}
 
 
 def catalog(root: Path, limit: int, output: Path) -> list:
@@ -108,7 +108,7 @@ def catalog(root: Path, limit: int, output: Path) -> list:
             break
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Inspected {len(records)} workbooks; manifest: {output}")
+    print(f"Inspected {len(records)} workbooks; manifest: {output}", flush=True)
     return records
 
 
