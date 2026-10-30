@@ -35,7 +35,7 @@ def run_case_responses(client,model,case_dir,max_requests,max_tools,image,workfl
             "Avoid endlessly inspecting the same area. Do not invent errors or change unrelated cells.")
     instruction=(root/"instruction.md").read_text(encoding="utf-8")
     if focus_hint:
-        instruction += ("\\n\\nDiagnostic focus (additional information, not the answer): "
+        instruction += (chr(10)*2 + "Diagnostic focus (additional information, not the answer): "
             "Prioritize auditing the cumulative calculations in the 'Ex 5 - M&A' worksheet. "
             "Determine independently whether any amounts are double counted; if justified, "
             "repair the formulas and save the workbook. Do not invent fixes.")
