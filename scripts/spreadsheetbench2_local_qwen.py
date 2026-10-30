@@ -72,7 +72,7 @@ def run_case(client, model, case_dir, max_requests, max_tools, image):
                 model=model,messages=messages,tools=TOOLS,tool_choice="auto",stream=False,
                 extra_body={"chat_template_kwargs":{"enable_thinking":False}})
             record["requests"]+=1
-            print(f"[turn {turn+1}/{max_requests}] requests={record[\"requests\"]}", flush=True)
+            print(f"[turn {turn+1}/{max_requests}] requests={record['requests']}", flush=True)
             message=response.choices[0].message
             calls=message.tool_calls or []
             messages.append(message.model_dump(exclude_none=True))
@@ -106,7 +106,7 @@ def run_case(client, model, case_dir, max_requests, max_tools, image):
                 feedback={"exit_code":result.get("exit_code",1),
                           "stdout":str(result.get("stdout",""))[:1500],
                           "stderr":str(result.get("stderr",""))[:700]}
-                print(f"  {call.function.name} exit={feedback[\"exit_code\"]}", flush=True)
+                print(f"  {call.function.name} exit={feedback['exit_code']}", flush=True)
                 messages.append({"role":"tool","tool_call_id":call.id,
                                  "content":json.dumps(feedback,ensure_ascii=False)})
             if record["state"]=="max_tools":
