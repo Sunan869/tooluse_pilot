@@ -32,8 +32,12 @@ class DockerTools:
              '-v',f'{self.root}:/work:rw','-w','/work',self.image]
         cmd+=['python','-c',code] if kind=='execute_python' else ['sh','-c',code]
         try:
-            p=subprocess.run(cmd,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=self.timeout,check=False)
-            result={'exit_code':p.returncode,'stdout':(p.stdout or '')[-6000:],'stderr':(p.stderr or '')[-2000:]}
+            # Capture bytes and decode explicitly. Windows' subprocess reader threads
+            # must never implicitly choose the system GBK codepage.
+            p=subprocess.run(cmd,capture_output=True,text=False,timeout=self.timeout,check=False)
+            stdout=(p.stdout or b'').decode('utf-8',errors='replace')
+            stderr=(p.stderr or b'').decode('utf-8',errors='replace')
+            result={'exit_code':p.returncode,'stdout':stdout[-6000:],'stderr':stderr[-2000:]}
         except subprocess.TimeoutExpired:
             result={'exit_code':124,'stdout':'','stderr':'Docker command timed out'}
         self.calls.append({'tool':kind,'exit_code':result['exit_code']})
