@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0",
+  "rows": [
+    {
+      "order_id": "PO-0004",
+      "expected_cents": 1866356,
+      "net_paid_cents": 1866356,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0006",
+      "expected_cents": 2716738,
+      "net_paid_cents": 2715698,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0008",
+      "expected_cents": 1443162,
+      "net_paid_cents": 1442162,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0011",
+      "expected_cents": 20014,
+      "net_paid_cents": 18576,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0013",
+      "expected_cents": 1385190,
+      "net_paid_cents": 1385190,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0015",
+      "expected_cents": 1989308,
+      "net_paid_cents": 1988308,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0016",
+      "expected_cents": 919248,
+      "net_paid_cents": 918949,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0018",
+      "expected_cents": 2497443,
+      "net_paid_cents": 2497443,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0019",
+      "expected_cents": 2950114,
+      "net_paid_cents": 2950114,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0021",
+      "expected_cents": 2796692,
+      "net_paid_cents": 2794164,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0022",
+      "expected_cents": 2205070,
+      "net_paid_cents": 2204070,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0025",
+      "expected_cents": 1286026,
+      "net_paid_cents": 1286026,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0026",
+      "expected_cents": 1118492,
+      "net_paid_cents": 1117357,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0028",
+      "expected_cents": 2372872,
+      "net_paid_cents": 2372872,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0029",
+      "expected_cents": 2983585,
+      "net_paid_cents": 2982585,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0030",
+      "expected_cents": 2100043,
+      "net_paid_cents": 2100043,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0031",
+      "expected_cents": 885154,
+      "net_paid_cents": 884036,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0036",
+      "expected_cents": 2625382,
+      "net_paid_cents": 2622030,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0038",
+      "expected_cents": 2155329,
+      "net_paid_cents": 2155329,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0041",
+      "expected_cents": 1480329,
+      "net_paid_cents": 1477725,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0043",
+      "expected_cents": 1837258,
+      "net_paid_cents": 1836258,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0046",
+      "expected_cents": 1155547,
+      "net_paid_cents": 1153646,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0047",
+      "expected_cents": 1537254,
+      "net_paid_cents": 1537254,
+      "issues": "SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0049",
+      "expected_cents": 2539293,
+      "net_paid_cents": 2539293,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0050",
+      "expected_cents": 789066,
+      "net_paid_cents": 788066,
+      "issues": "PAYMENT_MISMATCH"
+    },
+    {
+      "order_id": "PO-0051",
+      "expected_cents": 843213,
+      "net_paid_cents": 841743,
+      "issues": "PAYMENT_MISMATCH|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0052",
+      "expected_cents": 578901,
+      "net_paid_cents": 578901,
+      "issues": "SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0054",
+      "expected_cents": 2069956,
+      "net_paid_cents": 2069956,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0057",
+      "expected_cents": 1933368,
+      "net_paid_cents": 1932368,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0058",
+      "expected_cents": 2100023,
+      "net_paid_cents": 2100023,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0059",
+      "expected_cents": 2775761,
+      "net_paid_cents": 2775761,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0060",
+      "expected_cents": 1316856,
+      "net_paid_cents": 1316856,
+      "issues": "REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0061",
+      "expected_cents": 1163416,
+      "net_paid_cents": 1161368,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0062",
+      "expected_cents": 2577144,
+      "net_paid_cents": 2577144,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0064",
+      "expected_cents": 216424,
+      "net_paid_cents": 215424,
+      "issues": "PAYMENT_MISMATCH|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0065",
+      "expected_cents": 2996124,
+      "net_paid_cents": 2996124,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0070",
+      "expected_cents": 2973758,
+      "net_paid_cents": 2973758,
+      "issues": "REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0071",
+      "expected_cents": 1526670,
+      "net_paid_cents": 1523698,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0073",
+      "expected_cents": 2830490,
+      "net_paid_cents": 2830490,
+      "issues": "REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0075",
+      "expected_cents": 2999484,
+      "net_paid_cents": 2999484,
+      "issues": "REQUIRES_APPROVAL|SUPPLIER_INVALID"
+    },
+    {
+      "order_id": "PO-0076",
+      "expected_cents": 2881533,
+      "net_paid_cents": 2880237,
+      "issues": "PAYMENT_MISMATCH|REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0077",
+      "expected_cents": 2330909,
+      "net_paid_cents": 2330909,
+      "issues": "REQUIRES_APPROVAL"
+    },
+    {
+      "order_id": "PO-0080",
+      "expected_cents": 2398562,
+      "net_paid_cents": 2398562,
+      "issues": "REQUIRES_APPROVAL"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{"pid": 7420, "output": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\reliability-v1-20261027\\case-w7-20261030-coverage-attempt-2"}
+{
+  "state": "task_completed",
+  "requests": 12,
+  "tool_calls": 19,
+  "invalid_tool_actions": 1,
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "finished": true,
+    "evidence_valid": true,
+    "coverage_complete": true,
+    "coverage": {
+      "enrollment": {
+        "seen": 8,
+        "required": 8
+      },
+      "grades": {
+        "seen": 10,
+        "required": 10
+      }
+    },
+    "strict_process_success": false,
+    "invalid_actions": 1,
+    "expected": [
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ],
+      [
+        "s06",
+        "\u8bb8\u5b89",
+        91,
+        "B2",
+        "g-B2-s06-r2",
+        "e-s06"
+      ]
+    ],
+    "actual": [
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ],
+      [
+        "s06",
+        "\u8bb8\u5b89",
+        91,
+        "B2",
+        "g-B2-s06-r2",
+        "e-s06"
+      ]
+    ]
+  },
+  "artifact_dir": "runs\\file_workspaces\\703e4cf6-b4f7-42de-a1a9-bc9b7793e5c6"
+}

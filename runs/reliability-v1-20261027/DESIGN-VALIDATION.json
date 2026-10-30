@@ -1,0 +1,33 @@
+{
+  "pair_identity": [
+    {
+      "family": 7,
+      "seed": 20261030,
+      "same_dataset_and_prompt": true
+    },
+    {
+      "family": 7,
+      "seed": 20261031,
+      "same_dataset_and_prompt": true
+    },
+    {
+      "family": 8,
+      "seed": 20261030,
+      "same_dataset_and_prompt": true
+    },
+    {
+      "family": 8,
+      "seed": 20261031,
+      "same_dataset_and_prompt": true
+    }
+  ],
+  "historical_manifests_unchanged": {
+    "w7-paired-v1-20261027": 295,
+    "w8-version-pair-v1-20261027": 205,
+    "w9-routing-pair-v1-20261027": 223
+  },
+  "legacy_tests_passed": 126,
+  "full_references_and_replays": 12,
+  "new_model_calls_in_validation": 0,
+  "sampling_limitation": "W7/W8 use row-order variants of one small underlying student dataset; W9 is one graph. These are not twelve independent population samples."
+}

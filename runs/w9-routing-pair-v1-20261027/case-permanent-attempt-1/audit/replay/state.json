@@ -1,0 +1,41 @@
+{
+  "package": {
+    "package_id": "P",
+    "location": "D",
+    "virtual_time": "15:00",
+    "destination": "D",
+    "deadline": "16:00",
+    "budget": 4,
+    "total_cost": 4,
+    "hubs": [
+      "W",
+      "A",
+      "B",
+      "D"
+    ],
+    "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+  },
+  "charges": [
+    {
+      "entry_id": "L001",
+      "route_id": "a1",
+      "origin": "W",
+      "destination": "A",
+      "departure": 600,
+      "arrival": 720,
+      "amount": 1
+    },
+    {
+      "entry_id": "L002",
+      "route_id": "a3",
+      "origin": "A",
+      "destination": "D",
+      "departure": 840,
+      "arrival": 900,
+      "amount": 3
+    }
+  ],
+  "fault_attempts": 0,
+  "rejections": [],
+  "finished": true
+}

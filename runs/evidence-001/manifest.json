@@ -1,0 +1,36 @@
+{
+  "candidate_count": 6,
+  "paid_requests": 0,
+  "candidates": [
+    {
+      "candidate_id": "evidence-0-clean",
+      "mode": "clean",
+      "path": "runs\\evidence-001\\evidence-0-clean\\candidate.json"
+    },
+    {
+      "candidate_id": "evidence-0-conflict",
+      "mode": "conflict",
+      "path": "runs\\evidence-001\\evidence-0-conflict\\candidate.json"
+    },
+    {
+      "candidate_id": "evidence-1-clean",
+      "mode": "clean",
+      "path": "runs\\evidence-001\\evidence-1-clean\\candidate.json"
+    },
+    {
+      "candidate_id": "evidence-1-conflict",
+      "mode": "conflict",
+      "path": "runs\\evidence-001\\evidence-1-conflict\\candidate.json"
+    },
+    {
+      "candidate_id": "evidence-2-clean",
+      "mode": "clean",
+      "path": "runs\\evidence-001\\evidence-2-clean\\candidate.json"
+    },
+    {
+      "candidate_id": "evidence-2-conflict",
+      "mode": "conflict",
+      "path": "runs\\evidence-001\\evidence-2-conflict\\candidate.json"
+    }
+  ]
+}

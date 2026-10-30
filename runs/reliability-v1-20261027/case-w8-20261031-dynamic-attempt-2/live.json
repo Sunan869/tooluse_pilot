@@ -1,0 +1,90 @@
+{
+  "pid": 55896,
+  "case": "w8-20261031-dynamic",
+  "attempt": "2",
+  "completed_requests": 9,
+  "successes": 9,
+  "errors": 0,
+  "status": "completed",
+  "updated_at": "2026-10-27T03:54:24.752548+00:00",
+  "current_request_started_at": "2026-10-27T03:54:23.652874+00:00",
+  "last_error": null,
+  "last_completed_at": "2026-10-27T03:54:24.745111+00:00",
+  "state": "task_completed",
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "finished": true,
+    "evidence_valid": true,
+    "coverage_complete": true,
+    "coverage": {
+      "enrollment": {
+        "seen": 8,
+        "required": 8
+      },
+      "grades": {
+        "seen": 10,
+        "required": 10
+      }
+    },
+    "strict_process_success": true,
+    "invalid_actions": 0,
+    "expected": [
+      [
+        "s05",
+        "\u8d75\u5b81",
+        96,
+        "B2",
+        "g-B2-s05-r2",
+        "e-s05"
+      ],
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ]
+    ],
+    "actual": [
+      [
+        "s05",
+        "\u8d75\u5b81",
+        96,
+        "B2",
+        "g-B2-s05-r2",
+        "e-s05"
+      ],
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ]
+    ],
+    "task_completed": true,
+    "answer_correct": true,
+    "saved_revision": "R2",
+    "current_revision": "R2",
+    "revision_current": true
+  }
+}

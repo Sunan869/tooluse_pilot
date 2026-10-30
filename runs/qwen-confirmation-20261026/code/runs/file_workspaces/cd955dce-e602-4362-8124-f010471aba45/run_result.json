@@ -1,0 +1,85 @@
+{
+  "run_id": "d7780111-d7e7-4164-b4fb-ec0f1056b981",
+  "candidate_id": "w6-reconcile-20261026",
+  "model": "Qwen3.8-27B",
+  "protocol": "chat_completions",
+  "state": "api_error",
+  "requests": 3,
+  "tool_calls": 0,
+  "score": {
+    "success": false,
+    "checks": {
+      "initial_delivered": false,
+      "update_received": false,
+      "requirements": false,
+      "result": false,
+      "report": false,
+      "revised_saved": false,
+      "finished": false
+    },
+    "expected": [
+      "23000",
+      "4",
+      "Alpha",
+      "8000"
+    ],
+    "actual": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "invalid_actions": 0,
+    "tool_calls": 0
+  },
+  "invalid_tool_actions": 0,
+  "profile": null,
+  "estimated_cost": null,
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 1,
+      "retry_index": 0,
+      "error": "Connection error.",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 2,
+      "retry_index": 1,
+      "error": "Connection error.",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 3,
+      "retry_index": 2,
+      "error": "Connection error.",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    }
+  ],
+  "calls": [],
+  "usage_db": "E:\\文档类\\信通院\\tooluser_pilot\\runs\\qwen-confirmation-20261026\\usage.sqlite",
+  "artifact_dir": "runs\\file_workspaces\\cd955dce-e602-4362-8124-f010471aba45"
+}

@@ -1,0 +1,23 @@
+{
+  "family": "state_change",
+  "seed": 7,
+  "task": "Read order; after the external update, fetch the latest version before settling.",
+  "environment": {
+    "order_id": "PO-52445",
+    "initial_version": 7,
+    "initial_amount": 1735,
+    "updated_version": 8,
+    "updated_amount": 1776
+  },
+  "trigger": {
+    "event": "external_order_update",
+    "after": "first_read"
+  },
+  "oracle": {
+    "settle_version": 8,
+    "settle_amount": 1776
+  },
+  "wrong_pattern": "Reuse stale amount/version without a refresh",
+  "id": "state_change-7",
+  "schema_version": "0.1"
+}

@@ -1,0 +1,128 @@
+{
+  "replay_mismatches": [],
+  "replay_score": {
+    "success": false,
+    "checks": {
+      "result": false,
+      "decisions": false,
+      "report": true,
+      "round0_delivered": false,
+      "round1_delivered": false,
+      "round2_received": false,
+      "final_saved": false,
+      "finished": false
+    },
+    "expected": [
+      "17084",
+      "6",
+      "H",
+      "4063"
+    ],
+    "actual": [
+      "17587",
+      "7",
+      "H",
+      "4063"
+    ],
+    "invalid_actions": 1,
+    "tool_calls": 48,
+    "round": 0
+  },
+  "tool_errors": [
+    {
+      "index": 37,
+      "tool": "receive_update",
+      "error": "round_0_failed: result, decisions, report"
+    }
+  ],
+  "api_errors": [],
+  "independent_expected": [
+    "17084",
+    "6",
+    "H",
+    "4063"
+  ],
+  "actual": [
+    "17587",
+    "7",
+    "H",
+    "4063"
+  ],
+  "stage": "round-0",
+  "decisions_mismatches": [
+    {
+      "expected": [
+        "I",
+        2172,
+        0,
+        "city"
+      ],
+      "actual": [
+        "I",
+        2172,
+        0,
+        "group_cap"
+      ]
+    },
+    {
+      "expected": [
+        "K",
+        4267,
+        0,
+        "group_cap"
+      ],
+      "actual": [
+        "K",
+        4267,
+        0,
+        "budget"
+      ]
+    },
+    {
+      "expected": [
+        "N",
+        2519,
+        0,
+        "group_cap"
+      ],
+      "actual": [
+        "N",
+        2519,
+        0,
+        "city"
+      ]
+    },
+    {
+      "expected": [
+        "O",
+        1818,
+        0,
+        "group_cap"
+      ],
+      "actual": [
+        "O",
+        1818,
+        1,
+        "selected"
+      ]
+    },
+    {
+      "expected": [
+        "Q",
+        1524,
+        0,
+        "budget"
+      ],
+      "actual": [
+        "Q",
+        1524,
+        0,
+        "dependency"
+      ]
+    }
+  ],
+  "decision_row_count_matches": true,
+  "source_candidate_hash_matches": true,
+  "requests": 25,
+  "tool_calls": 49
+}

@@ -1,0 +1,84 @@
+{"pid": 7304, "output": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\reliability-v1-20261027\\case-w8-20261031-dynamic-attempt-1"}
+{
+  "state": "task_completed",
+  "requests": 7,
+  "tool_calls": 10,
+  "invalid_tool_actions": 0,
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "finished": true,
+    "evidence_valid": true,
+    "coverage_complete": true,
+    "coverage": {
+      "enrollment": {
+        "seen": 8,
+        "required": 8
+      },
+      "grades": {
+        "seen": 10,
+        "required": 10
+      }
+    },
+    "strict_process_success": true,
+    "invalid_actions": 0,
+    "expected": [
+      [
+        "s05",
+        "\u8d75\u5b81",
+        96,
+        "B2",
+        "g-B2-s05-r2",
+        "e-s05"
+      ],
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ]
+    ],
+    "actual": [
+      [
+        "s05",
+        "\u8d75\u5b81",
+        96,
+        "B2",
+        "g-B2-s05-r2",
+        "e-s05"
+      ],
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ]
+    ],
+    "task_completed": true,
+    "answer_correct": true,
+    "saved_revision": "R2",
+    "current_revision": "R2",
+    "revision_current": true
+  },
+  "artifact_dir": "runs\\file_workspaces\\802384fa-6d42-4650-8536-2142b3d39a23"
+}

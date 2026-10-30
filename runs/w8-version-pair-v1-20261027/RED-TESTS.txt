@@ -1,0 +1,44 @@
+EEEE.
+======================================================================
+ERROR: test_change_detectable_and_once (__main__.Tests.test_change_detectable_and_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w8-version-pair-v1-20261027\test_w8.py", line 13, in test_change_detectable_and_once
+    e,d,p=self.make('dynamic');first=e.call('read_rows',{'source':'grades'});self.assertEqual(first['read_revision'],'R1');self.assertEqual(first['current_revision'],'R2');self.assertTrue(first['stale'])
+                                                                                              ~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'read_revision'
+
+======================================================================
+ERROR: test_stale_write_no_side_effect_and_recovery (__main__.Tests.test_stale_write_no_side_effect_and_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w8-version-pair-v1-20261027\test_w8.py", line 17, in test_stale_write_no_side_effect_and_recovery
+    e,d,p=self.make('dynamic');r=e.call('write_submission',{'expected_revision':'R1','rows_json':json.dumps(oracle(d))});self.assertFalse(r['accepted']);self.assertFalse((p/'submission.xlsx').exists());self.assertFalse(e.finished)
+                                                                                                                                          ~^^^^^^^^^^^^
+KeyError: 'accepted'
+
+======================================================================
+ERROR: test_static_status_and_no_change (__main__.Tests.test_static_status_and_no_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w8-version-pair-v1-20261027\test_w8.py", line 11, in test_static_status_and_no_change
+    e,d,p=self.make('static');self.assertEqual(e.call('get_status',{})['current_revision'],'R1');r=e.call('read_rows',{'source':'grades'});self.assertEqual(r['read_revision'],r['current_revision'])
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w8-version-pair-v1-20261027\code\tooluse_pilot\w7_task.py", line 55, in call
+    else:raise ValueError('Unknown tool')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Unknown tool
+
+======================================================================
+ERROR: test_wrong_finish_does_not_leak_answer (__main__.Tests.test_wrong_finish_does_not_leak_answer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w8-version-pair-v1-20261027\test_w8.py", line 22, in test_wrong_finish_does_not_leak_answer
+    e,d,p=self.make('static');rows=oracle(d);rows[0][2]=0;e.call('write_submission',{'expected_revision':'R1','rows_json':json.dumps(rows)});r=e.call('finish',{});self.assertTrue(r['finished']);self.assertNotIn('expected',r);self.assertFalse(e.score()['answer_success']);self.assertTrue(e.score()['task_completed'])
+                                                                                                                                                                                                                                                                                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'task_completed'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.138s
+
+FAILED (errors=4)

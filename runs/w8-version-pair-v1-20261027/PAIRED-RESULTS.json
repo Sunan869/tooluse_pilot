@@ -1,0 +1,245 @@
+{
+  "conclusion": "No admissible dynamic-mechanism failure; no GPT handoff.",
+  "runs": [
+    {
+      "run": "case-dynamic-attempt-1",
+      "answer_success": true,
+      "stop_reason": "task_completed",
+      "task_completed": true,
+      "budget_exhausted": false,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 8,
+      "wire_requests": 8,
+      "successful_responses": 8,
+      "api_errors": 0,
+      "tools_replayed_exactly": 11,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s05",
+          "赵宁",
+          96,
+          "B2",
+          "g-B2-s05-r2",
+          "e-s05"
+        ],
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ]
+      ],
+      "actual": [
+        [
+          "s05",
+          "赵宁",
+          96,
+          "B2",
+          "g-B2-s05-r2",
+          "e-s05"
+        ],
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "4e21dedd081b96add0ac52bfdf60d213634fb5cbf192f8f0dfe031929e7d2358",
+      "candidate_sha256": "8108265b0a1235c769e83081a4a0089708d0dd44442a3c1a281fc714965dbb85"
+    },
+    {
+      "run": "case-static-attempt-1",
+      "answer_success": true,
+      "stop_reason": "task_completed",
+      "task_completed": true,
+      "budget_exhausted": false,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 10,
+      "wire_requests": 10,
+      "successful_responses": 10,
+      "api_errors": 0,
+      "tools_replayed_exactly": 13,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "4e21dedd081b96add0ac52bfdf60d213634fb5cbf192f8f0dfe031929e7d2358",
+      "candidate_sha256": "6bfd08324540266cfd52d9589acdb21ed8d4aee3fca3e867b26c0c7720c336f3"
+    },
+    {
+      "run": "case-static-shuffle-attempt-1",
+      "answer_success": false,
+      "stop_reason": "task_completed",
+      "task_completed": true,
+      "budget_exhausted": false,
+      "coverage_complete": true,
+      "evidence_valid": false,
+      "api_attempts": 14,
+      "wire_requests": 14,
+      "successful_responses": 14,
+      "api_errors": 0,
+      "tools_replayed_exactly": 16,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s08",
+          "孙晴",
+          91,
+          "B2",
+          "g-B2-s08-r1",
+          "e-s08"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "1b69ccb749f0c8eb5a97bc25e526c8d5e9fcd758bccc8a4521e555b58b766681",
+      "candidate_sha256": "de0851adad2fa683060157a8809f3faf471a2a822803f9fce2fbf9aff87670d9"
+    }
+  ],
+  "actual_api_attempts": 32,
+  "api_errors": 0,
+  "exact_replayed_tools": 40,
+  "other_model_calls": 0,
+  "model": "Qwen3.8-Flash-Next-AWQ-INT4",
+  "thinking": false,
+  "static_shuffle_gate": "Failed static baseline; dynamic-shuffle was not started. No selective reruns to fish for a failure.",
+  "observations": [
+    "Main static passed 10 requests/13 tools; main dynamic passed 8/11.",
+    "Dynamic tool 3 returned R1 data with current R2 and stale=true; tool 4 queried status; tool 5 reread R2 grades; correct R2 submission followed.",
+    "Shuffled static failed 14/16 despite complete evidence, omitting s01/92 for s08/91. This is not a dynamic effect and has not been claimed reproducible.",
+    "Successful finish immediately terminates runner; no next API request or remaining queued tools. Missing/stale finish is recoverable. Wrong submission can be overwritten before finish. Answer correctness and task completion are distinct.",
+    "Original W7 evidence and W8 frozen hashes verified unchanged.",
+    "A single visible score update adds refresh work but retains the same ranking computation; this experiment does not establish a harder planning requirement."
+  ],
+  "limitations": [
+    "Only one successful dynamic run; no global capability or GPT-transfer conclusion.",
+    "Full read plus explicit stale marker makes the refresh path straightforward by design.",
+    "Shuffled static baseline instability precludes attributing a subsequent failure to the dynamic treatment.",
+    "Backend model weights are not independently authenticated; request/response labels and endpoint are logged."
+  ],
+  "research_source": "https://arxiv.org/html/2605.18548v1",
+  "implementation_inference": "Single deterministic grade publication with revision metadata and conditional write is our design inspired by state-shift adaptation, not a claim or copied task from STT-Arena.",
+  "next_research_direction": "If continuing, replace simple reranking with a small action-dependent planning graph whose valid continuation changes once. Keep one trigger, reachable state queries, reversible preparation and independent final-state checks. Do not merely add rows, repeated revisions or reduce budgets."
+}

@@ -1,0 +1,4 @@
+Total: 13000
+Count: 4
+Winner: E
+Amount: 4200

@@ -1,0 +1,13 @@
+{
+  "classification": "grader_false_rejection_then_model_recovery",
+  "requests": 15,
+  "tool_calls": 29,
+  "all_delivery_checks_pass": true,
+  "invalid_actions": 1,
+  "cause": "Winner amount: 8000 matched as winner=amount by report parser. Original report semantics were correct.",
+  "patch": "Exclude compound Winner amount label from winner field matching in isolated snapshot.",
+  "regressions_passed": 22,
+  "not_a_model_failure": true,
+  "source_commit": "b63ab366d369dfd1a7915cdbfb5c0e42086c87e5",
+  "patched_source_sha256": "d8bca00f672ce886c19f0f1e8c1f44b653bb38fb4d6bd56530bbdf6c1d447ca8"
+}

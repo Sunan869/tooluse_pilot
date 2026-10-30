@@ -1,0 +1,9 @@
+Reservation V3 Implementation Plan
+Goal: test retained cross-round state, cascading release and reallocation.
+Architecture: new reservation_task module in isolated code; existing XLSX and runner protocol reused. Independent list/set oracle does not import production calculator.
+Tech: Python/openpyxl. Spec: DESIGN.txt.
+Constraints: Flash-only, thinking=false, 25 actual API/80 tools, no historical mutation.
+1. Add failing semantic tests for locked amounts, upfront reserved capacity, cascading release, equality boundaries and cancelled precedence. Implement calculator.
+2. Add three-stage environment and input generator; reject early finish and premature updates; preserve commitment snapshots.
+3. Independently calculate each stage; execute reference through tools; reject stale/wrong files and run isolated suite. Verify reference tool cost <=80 before API.
+4. Flash first run, offline replay; if valid failure rerun same bytes in new directory. Only then deliver GPT script.

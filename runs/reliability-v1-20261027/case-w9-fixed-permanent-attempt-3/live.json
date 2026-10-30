@@ -1,0 +1,38 @@
+{
+  "pid": 58440,
+  "case": "w9-fixed-permanent",
+  "attempt": "3",
+  "completed_requests": 7,
+  "successes": 7,
+  "errors": 0,
+  "status": "completed",
+  "updated_at": "2026-10-27T03:59:08.570725+00:00",
+  "current_request_started_at": "2026-10-27T03:59:07.731206+00:00",
+  "last_error": null,
+  "last_completed_at": "2026-10-27T03:59:08.565619+00:00",
+  "state": "task_completed",
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "task_completed": true,
+    "checks": {
+      "arrived": true,
+      "deadline": true,
+      "budget": true,
+      "minimum_cost": true,
+      "no_duplicate_charges": true
+    },
+    "expected_minimum_cost": 4,
+    "actual_cost": 4,
+    "arrival_time": 900,
+    "location": "Hub-Z",
+    "path": [
+      "r12",
+      "r31"
+    ],
+    "fault_exposed": false,
+    "permanent_retries": 0,
+    "rejections": [],
+    "invalid_actions": 0
+  }
+}

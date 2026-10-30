@@ -1,0 +1,115 @@
+"""Two-stage capacity/dependency allocation with exact XLSX audit output."""
+import json
+from pathlib import Path
+from openpyxl import load_workbook
+from . import real_w6_reconciliation as base
+
+HEADERS=['ID','Amount','Selected','Reason']
+
+def calculate(wb):
+    quantities=dict(list(wb['Corrections'].values)[1:])
+    priorities=dict(list(wb['Priority'].values)[1:])
+    dependencies={n:[] for n,*_ in list(wb['Orders'].values)[1:]}
+    for child,parent in list(wb['Dependencies'].values)[1:]:dependencies[child].append(parent)
+    policy=dict(list(wb['Policy'].values)[1:])
+    caps=dict(list(wb['Limits'].values)[1:]);used={k:0 for k in caps}
+    chosen={};total=0;decisions=[]
+    rows=sorted(list(wb['Orders'].values)[1:],key=lambda r:(-priorities[r[0]],r[0]))
+    for name,price,qty,bj,sz,status,group in rows:
+        amount=price*quantities.get(name,qty)
+        if status!='active':reason='inactive'
+        elif any(not {'Beijing':bj,'Shenzhen':sz}[c] for c in policy['Cities'].split(',')):reason='city'
+        elif amount>policy['Max per order']:reason='per_order'
+        elif any(parent not in chosen for parent in dependencies[name]):reason='dependency'
+        elif used[group]+amount>caps[group]:reason='group_cap'
+        elif total+amount>policy['Budget']:reason='budget'
+        else:
+            reason='selected';chosen[name]=amount;used[group]+=amount;total+=amount
+        decisions.append([name,amount,1 if reason=='selected' else 0,reason])
+    winner=min(chosen,key=lambda n:(-chosen[n],n)) if chosen else 'NONE'
+    summary=list(map(str,[total,len(chosen),winner,chosen.get(winner,0)]))
+    return summary,decisions
+
+def specs():
+    return base.specs()+[{'type':'function','function':{'name':'write_decisions',
+        'description':'Replace Decisions data rows in memory. rows_json is a JSON array of [ID, integer amount, 0-or-1 selected, reason] rows in processing order. Call save_workbook afterwards.',
+        'parameters':{'type':'object','properties':{'rows_json':{'type':'string'}},'required':['rows_json'],'additionalProperties':False}}}]
+
+class Environment(base.Environment):
+    def disk_checks(self):
+        wb=load_workbook(self.path,read_only=True,data_only=True)
+        try:
+            expected,decisions=calculate(wb)
+            actual=[str(wb['Summary'][c].value or '') for c in ['B2','B3','B4','B5']]
+            actual_decisions=[list(r) for r in list(wb['Decisions'].values)[1:]]
+        finally:wb.close()
+        text=(self.root/'report.txt').read_text(encoding='utf-8') if (self.root/'report.txt').exists() else ''
+        return expected,actual,{'result':actual==expected,'decisions':actual_decisions==decisions,'report':base.report_valid(text,expected)},text
+
+    def call(self,name,args):
+        if self.finished:raise ValueError('already finished')
+        if name=='write_decisions' and set(args)=={'rows_json'}:
+            rows=json.loads(args['rows_json'])
+            ids={r[0] for r in list(self.wb['Orders'].values)[1:]}
+            if not isinstance(rows,list) or len(rows)!=len(ids):raise ValueError('one decision per order required')
+            if any(not isinstance(r,list) or len(r)!=4 or r[0] not in ids or type(r[1]) is not int or type(r[2]) is not int or r[2] not in [0,1] or r[3] not in ['inactive','city','per_order','dependency','group_cap','budget','selected'] for r in rows):raise ValueError('invalid decision row')
+            if len({r[0] for r in rows})!=len(ids):raise ValueError('duplicate order ID')
+            sheet=self.wb['Decisions'];sheet.delete_rows(2,sheet.max_row)
+            for r in rows:sheet.append(r)
+            out={'written':len(rows)}
+        elif name=='receive_update' and args=={} and not self.transitioned:
+            _,_,checks,text=self.disk_checks()
+            issues=[k for k,v in checks.items() if not v]
+            if not self.saved_before:issues.append('workbook_not_saved')
+            if issues:raise ValueError('stage_one_failed: '+', '.join(issues))
+            self.initial_ok=True;self.old_report=text;self.transitioned=True
+            for sheet,changes in self.case['revision'].items():
+                ws=self.wb[sheet]
+                for row in range(2,ws.max_row+1):
+                    key=str(ws.cell(row,1).value)
+                    if key in changes:ws.cell(row,2,changes[key])
+            self.wb.save(self.path)
+            out={'changed_sheets':list(self.case['revision']),'instruction':'Re-read changed sheets and recompute every decision from scratch; prior selections reserve no capacity.'}
+        else:return super().call(name,args)
+        self.calls.append({'tool':name,'args':dict(args),'response':out});return out
+
+    def score(self):
+        expected,actual,checks,text=self.disk_checks()
+        wb=load_workbook(self.path,read_only=True,data_only=True)
+        try:
+            revised=all(dict(list(wb[sheet].values)[1:]).get(key)==value for sheet,changes in self.case['revision'].items() for key,value in changes.items())
+        finally:wb.close()
+        checks.update(initial_delivered=self.initial_ok,update_received=self.transitioned,requirements=revised,revised_saved=self.saved_after,finished=self.finished)
+        checks['report']=checks['report'] and text!=self.old_report
+        return {'success':all(checks.values()) and not self.invalid_actions,'checks':checks,'expected':expected,'actual':actual,'invalid_actions':self.invalid_actions,'tool_calls':len(self.calls)}
+
+def generate(variant,folder):
+    root=Path(folder);case=base.generate(20261028+variant,root)
+    wb=load_workbook(root/'reconciliation.xlsx');ws=wb['Orders'];ws.delete_rows(1,ws.max_row)
+    ws.append(['ID','Price','Qty','Beijing','Shenzhen','Status','Group'])
+    data=[['A',1200,3,1,1,'active','Red'],['B',900,4,1,1,'active','Red'],['C',1600,2,1,1,'active','Blue'],['D',1100,3,1,0,'active','Blue'],['E',700,5,1,1,'active','Red'],['F',1400,2,1,1,'active','Blue'],['G',2000,2,1,1,'active','Red'],['H',600,4,1,1,'active','Blue'],['I',500,2,1,1,'inactive','Red'],['J',1300,2,0,1,'active','Blue']]
+    for row in data[::2]+data[1::2]:ws.append(row)
+    ws=wb['Corrections'];ws.delete_rows(1,ws.max_row);ws.append(['ID','Quantity'])
+    for n,q in [('A',4),('C',3),('E',4),('G',5)]:ws.append([n,q])
+    ws=wb['Policy'];ws.delete_rows(1,ws.max_row)
+    for row in [('Key','Value'),('Max per order',8000),('Cities','Beijing'),('Budget',14500)]:ws.append(row)
+    for name,rows in {'Priority':[['ID','Rank']]+[[r[0],100-i*5] for i,r in enumerate(data)],'Limits':[['Group','Capacity'],['Red',8500],['Blue',8000]],'Dependencies':[['ID','Requires']]+([['B','A'],['E','B'],['F','C'],['H','D']] if variant else []),'Decisions':[HEADERS]}.items():
+        sh=wb.create_sheet(name)
+        for row in rows:sh.append(row)
+    wb.save(root/'reconciliation.xlsx');wb.close()
+    case.update(id=f'allocation-v1-{variant}',family='real_allocation',variant=variant,
+        revision={'Policy':{'Cities':'Beijing,Shenzhen','Budget':15000},'Corrections':{'A':6,'C':2,'E':6,'G':3},'Limits':{'Red':10000,'Blue':7000},'Priority':{'E':110,'F':105,'H':102}})
+    case['task']='''Read all workbook sheets. All quantities and prices are integers. Corrections replace quantities by ID; absent corrections keep the original. IDs are unique, dependency edges are unique and acyclic. A higher Priority Rank is processed first; tied ranks use ascending ID. Make exactly one pass; rejected orders are never reconsidered. Start with empty selections and zero capacity usage. For each order compute Price times corrected quantity, then apply the FIRST matching reason: inactive status -> inactive; missing any Policy Cities -> city; amount strictly above Max per order -> per_order; any Dependencies prerequisite not already selected -> dependency; adding amount strictly exceeds its group's Limits Capacity -> group_cap; adding amount strictly exceeds Policy Budget -> budget; otherwise select with reason selected and consume group and total capacity. Equality to any limit is allowed. Dependencies are AND, absent dependencies mean none. Rejected orders consume nothing. Save Summary B2:B5 as selected sum, selected count, highest selected amount's ID (ties ascending ID), and that amount; if no selections use 0,0,NONE,0. Write Decisions with exactly one row per order in processing order: [ID, amount, selected 0 or 1, reason], using write_decisions. Write report.txt with explicit Total, Count, Winner, Amount fields. Save workbook and report before receive_update. After update re-read changed sheets, recompute ALL selections from scratch (no reservation from stage one), rewrite Decisions, Summary and report, save, then finish. This is deterministic greedy allocation, not global optimization.'''
+    (root/'candidate.json').write_text(json.dumps(case,indent=2),encoding='utf-8');return case
+
+def reference(case,folder):
+    env=Environment(case,folder)
+    try:
+        for stage in range(2):
+            for sheet in ['Orders','Corrections','Policy','Priority','Limits','Dependencies']:env.call('read_sheet',{'sheet':sheet})
+            answer,rows=calculate(env.wb)
+            for cell,value in zip(['B2','B3','B4','B5'],answer):env.call('write_summary',{'cell':cell,'value':value})
+            env.call('write_decisions',{'rows_json':json.dumps(rows)});env.call('write_report',{'text':base.report(answer)});env.call('save_workbook',{})
+            if not stage:env.call('receive_update',{})
+        env.call('finish',{});return env.score(),env.calls
+    finally:env.close()

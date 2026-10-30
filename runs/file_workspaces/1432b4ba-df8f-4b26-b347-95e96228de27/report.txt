@@ -1,0 +1,1 @@
+total=12200 count=4 winner=Delta amount=5200

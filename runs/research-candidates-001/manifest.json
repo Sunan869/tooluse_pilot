@@ -1,0 +1,224 @@
+{
+  "schema_version": "0.1",
+  "count": 30,
+  "candidate_types": [
+    "state_change",
+    "guarded_action",
+    "workbook_layout"
+  ],
+  "oracle_checked": 30,
+  "mutants_rejected": 30,
+  "paid_api_requests": 0,
+  "results": [
+    {
+      "id": "state_change-0",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-1",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-2",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-3",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-4",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-5",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-6",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-7",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-8",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "state_change-9",
+      "family": "state_change",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-0",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-1",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-2",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-3",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-4",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-5",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-6",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-7",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-8",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "guarded_action-9",
+      "family": "guarded_action",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-0",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-1",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-2",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-3",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-4",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-5",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-6",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-7",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-8",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    },
+    {
+      "id": "workbook_layout-9",
+      "family": "workbook_layout",
+      "oracle_valid": true,
+      "mutant_rejected": true,
+      "paid_api_requests": 0
+    }
+  ]
+}

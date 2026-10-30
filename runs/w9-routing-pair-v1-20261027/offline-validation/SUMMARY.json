@@ -1,0 +1,230 @@
+{
+  "new_model_calls": 0,
+  "full_reference_runs": [
+    {
+      "case": "transient",
+      "path": [
+        "direct"
+      ],
+      "tools": 8,
+      "mock_requests": 8,
+      "score": {
+        "success": true,
+        "answer_success": true,
+        "task_completed": true,
+        "checks": {
+          "arrived": true,
+          "deadline": true,
+          "budget": true,
+          "minimum_cost": true,
+          "no_duplicate_charges": true
+        },
+        "expected_minimum_cost": 3,
+        "actual_cost": 3,
+        "arrival_time": 660,
+        "location": "D",
+        "path": [
+          "direct"
+        ],
+        "fault_exposed": true,
+        "permanent_retries": 0,
+        "rejections": [
+          {
+            "route_id": "direct",
+            "code": "E503"
+          }
+        ],
+        "invalid_actions": 0
+      }
+    },
+    {
+      "case": "permanent",
+      "path": [
+        "a1",
+        "a3"
+      ],
+      "tools": 11,
+      "mock_requests": 11,
+      "score": {
+        "success": true,
+        "answer_success": true,
+        "task_completed": true,
+        "checks": {
+          "arrived": true,
+          "deadline": true,
+          "budget": true,
+          "minimum_cost": true,
+          "no_duplicate_charges": true
+        },
+        "expected_minimum_cost": 4,
+        "actual_cost": 4,
+        "arrival_time": 900,
+        "location": "D",
+        "path": [
+          "a1",
+          "a3"
+        ],
+        "fault_exposed": true,
+        "permanent_retries": 0,
+        "rejections": [
+          {
+            "route_id": "direct",
+            "code": "E503"
+          }
+        ],
+        "invalid_actions": 0
+      }
+    },
+    {
+      "case": "permanent",
+      "path": [
+        "b1",
+        "b2"
+      ],
+      "tools": 11,
+      "mock_requests": 11,
+      "score": {
+        "success": true,
+        "answer_success": true,
+        "task_completed": true,
+        "checks": {
+          "arrived": true,
+          "deadline": true,
+          "budget": true,
+          "minimum_cost": true,
+          "no_duplicate_charges": true
+        },
+        "expected_minimum_cost": 4,
+        "actual_cost": 4,
+        "arrival_time": 840,
+        "location": "D",
+        "path": [
+          "b1",
+          "b2"
+        ],
+        "fault_exposed": true,
+        "permanent_retries": 0,
+        "rejections": [
+          {
+            "route_id": "direct",
+            "code": "E503"
+          }
+        ],
+        "invalid_actions": 0
+      }
+    },
+    {
+      "case": "transient-renamed",
+      "path": [
+        "r47"
+      ],
+      "tools": 8,
+      "mock_requests": 8,
+      "score": {
+        "success": true,
+        "answer_success": true,
+        "task_completed": true,
+        "checks": {
+          "arrived": true,
+          "deadline": true,
+          "budget": true,
+          "minimum_cost": true,
+          "no_duplicate_charges": true
+        },
+        "expected_minimum_cost": 3,
+        "actual_cost": 3,
+        "arrival_time": 660,
+        "location": "Hub-Z",
+        "path": [
+          "r47"
+        ],
+        "fault_exposed": true,
+        "permanent_retries": 0,
+        "rejections": [
+          {
+            "route_id": "r47",
+            "code": "E503"
+          }
+        ],
+        "invalid_actions": 0
+      }
+    },
+    {
+      "case": "permanent-renamed",
+      "path": [
+        "r12",
+        "r31"
+      ],
+      "tools": 11,
+      "mock_requests": 11,
+      "score": {
+        "success": true,
+        "answer_success": true,
+        "task_completed": true,
+        "checks": {
+          "arrived": true,
+          "deadline": true,
+          "budget": true,
+          "minimum_cost": true,
+          "no_duplicate_charges": true
+        },
+        "expected_minimum_cost": 4,
+        "actual_cost": 4,
+        "arrival_time": 900,
+        "location": "Hub-Z",
+        "path": [
+          "r12",
+          "r31"
+        ],
+        "fault_exposed": true,
+        "permanent_retries": 0,
+        "rejections": [
+          {
+            "route_id": "r47",
+            "code": "E503"
+          }
+        ],
+        "invalid_actions": 0
+      }
+    },
+    {
+      "case": "permanent-renamed",
+      "path": [
+        "r05",
+        "r96"
+      ],
+      "tools": 11,
+      "mock_requests": 11,
+      "score": {
+        "success": true,
+        "answer_success": true,
+        "task_completed": true,
+        "checks": {
+          "arrived": true,
+          "deadline": true,
+          "budget": true,
+          "minimum_cost": true,
+          "no_duplicate_charges": true
+        },
+        "expected_minimum_cost": 4,
+        "actual_cost": 4,
+        "arrival_time": 840,
+        "location": "Hub-Z",
+        "path": [
+          "r05",
+          "r96"
+        ],
+        "fault_exposed": true,
+        "permanent_retries": 0,
+        "rejections": [
+          {
+            "route_id": "r47",
+            "code": "E503"
+          }
+        ],
+        "invalid_actions": 0
+      }
+    }
+  ],
+  "boundary_oracle_comparisons": 40
+}

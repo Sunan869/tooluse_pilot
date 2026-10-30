@@ -1,0 +1,10 @@
+{
+  "id": "w7-conflict-20261030",
+  "family": "real_w7",
+  "condition": "conflict",
+  "seed": 20261030,
+  "task": "请生成本校 B2 批次数学成绩 Top 3 的 XLSX。只考虑 B2 学籍状态为 active 的学生；以教务权威明细中该学生 B2 已发布且有效的最高 revision 成绩为准。不能跨批次合计，也不能按姓名合并学生。按分数降序、同分 student_id 升序排序，取前三；不足三人则返回全部。请给 student_id、姓名、分数、batch_id 及教务成绩/学籍来源 record_id。先查目录了解来源职责与字段，注意返回数据是否完整；缓存仅用于定位，不是成绩或资格权威。允许任何合法补查路径，不要求读取无用缓存。使用 write_submission 写入结果并 finish；finish 不会替你校正答案。 finish 是最终不可撤销结束，runner 将立即停止，不再调用模型或执行排队工具；请在此之前检查和修正提交。",
+  "input": {
+    "dataset": "dataset.json"
+  }
+}

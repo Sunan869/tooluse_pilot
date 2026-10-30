@@ -1,0 +1,13 @@
+﻿case,family,condition,GPT_business_correct,GPT_completed,GPT_success,GPT_requests,GPT_tools,GPT_budget_exhausted,GPT_invalid_actions,GPT_API_errors,GPT_recovery_success,GPT_fault_exposed,GPT_cache_read,GPT_coverage_complete,GPT_revision_current,Qwen_repeat1_business_correct,Qwen_repeat1_success,Qwen_repeat1_completed,Qwen_repeat1_requests,Qwen_repeat1_tools,Qwen_repeat1_fault_exposed,paired_business_difference,request_models,response_models,wire_hosts
+w7-20261030-clean,7,clean,True,True,True,5,6,False,0,0,False,,False,True,,False,False,True,21,30,,1,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w7-20261030-coverage,7,coverage,True,True,True,6,8,False,0,0,False,,False,True,,True,True,True,17,25,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w7-20261030-conflict,7,conflict,True,True,True,5,6,False,0,0,False,,False,True,,True,True,True,24,31,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w7-20261031-clean,7,clean,True,True,True,5,6,False,0,0,False,,False,True,,False,False,True,7,14,,1,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w7-20261031-coverage,7,coverage,True,True,True,6,8,False,0,0,False,,False,True,,True,False,False,25,31,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w7-20261031-conflict,7,conflict,True,True,True,4,5,False,0,0,False,,False,True,,False,False,True,19,21,,1,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w8-20261030-static,8,static,True,True,True,8,8,False,0,0,False,,False,True,True,True,True,True,12,13,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w8-20261030-dynamic,8,dynamic,True,True,True,11,11,False,0,0,False,,False,True,True,True,True,True,8,11,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w8-20261031-static,8,static,True,True,True,8,8,False,0,0,False,,False,True,True,True,True,True,15,16,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w8-20261031-dynamic,8,dynamic,True,True,True,11,11,False,0,0,False,,False,True,True,True,True,True,7,10,,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w9-fixed-transient,9,transient,True,True,True,7,11,False,0,0,True,True,False,,,False,False,True,8,10,False,1,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"
+w9-fixed-permanent,9,permanent,True,True,True,8,12,False,0,0,True,True,False,,,True,True,True,7,10,False,0,"[""gpt-6-astra""]","[""openai.gpt-6-astra""]","[""api.tokenops.ai""]"

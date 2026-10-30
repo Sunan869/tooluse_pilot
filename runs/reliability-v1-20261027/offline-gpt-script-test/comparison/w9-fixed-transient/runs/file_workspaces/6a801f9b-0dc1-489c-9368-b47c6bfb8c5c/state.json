@@ -1,0 +1,37 @@
+{
+  "package": {
+    "package_id": "Parcel-7",
+    "location": "Hub-Z",
+    "virtual_time": "11:00",
+    "destination": "Hub-Z",
+    "deadline": "16:00",
+    "budget": 4,
+    "total_cost": 3,
+    "hubs": [
+      "Hub-K",
+      "Hub-R",
+      "Hub-M",
+      "Hub-Z"
+    ],
+    "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+  },
+  "charges": [
+    {
+      "entry_id": "L001",
+      "route_id": "r47",
+      "origin": "Hub-K",
+      "destination": "Hub-Z",
+      "departure": 600,
+      "arrival": 660,
+      "amount": 3
+    }
+  ],
+  "fault_attempts": 1,
+  "rejections": [
+    {
+      "route_id": "r47",
+      "code": "E503"
+    }
+  ],
+  "finished": true
+}

@@ -1,0 +1,24 @@
+{
+  "family": "state_change",
+  "seed": 6,
+  "task": "Reconcile the order and settle using the latest authoritative version. A reporting replica may lag; changes may occur concurrently. Handle recoverable version conflicts without duplicate settlement.",
+  "environment": {
+    "order_id": "PO-85211",
+    "initial_version": 8,
+    "initial_amount": 1160,
+    "updated_version": 9,
+    "updated_amount": 1310
+  },
+  "trigger": {
+    "event": "external_order_update",
+    "after": "first_read"
+  },
+  "oracle": {
+    "settle_version": 9,
+    "settle_amount": 1310
+  },
+  "wrong_pattern": "Reuse stale amount/version without a refresh",
+  "id": "state_change-multi_source-6",
+  "schema_version": "0.1",
+  "profile": "multi_source"
+}

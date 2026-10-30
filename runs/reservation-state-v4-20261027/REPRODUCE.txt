@@ -1,0 +1,15 @@
+This is NEW reservation-state-v4, case 4. Do not rerun the old diamond-v2 GPT task.
+USER-EXECUTED GPT ONLY (agent has not executed):
+& 'E:\文档类\信通院\tooluser_pilot\runs\reservation-state-v4-20261027\run-gpt-batch.ps1' -Cases 4
+Use your existing MODEL_BASE_URL and MODEL_API_KEY in the terminal. Do not send keys. Existing gpt alias must remain gpt-6-astra; script aborts if changed. New timestamp+UUID output, 25 actual API attempts including retries / 80 tools. Python writes UTF-8 JSON directly. Return generated case-4 directory path (result.json, usage.sqlite, stdout/stderr and nested artifact with XLSX/report/run_result).
+
+OFFLINE REPLAY from project root; NO MODEL CALLS:
+$env:PYTHONUTF8='1'
+$env:PYTHONDONTWRITEBYTECODE='1'
+$tag='VERIFY_'+[guid]::NewGuid().ToString('N')
+python runs/reservation-state-v4-20261027/audit_case.py 4 1 $tag
+python runs/reservation-state-v4-20261027/audit_case.py 4 2 $tag
+Expected replay_mismatches [], api_errors [], candidate hash true, independent_expected [17084,6,H,4063], wrong final saved summary/decisions. Separate audit files and replay directories preserve original evidence.
+
+Evidence: FINAL-SUMMARY.json; provenance.json; both case-4-attempt-* directories; references/case-4/reference-result.json; PIPELINE-VALIDATION-v2.json; BOUNDARY-VALIDATION.json; UNCHANGED-CODE-SUITE-RESULTS.txt; reservation-code.patch. The isolated code/tooluse_pilot/reservation_task.py implements the new family. Core source is byte-identical to the 126-test validated V3 code. Four semantic tests passed again on V4.
+No further model runs are needed before the user's GPT comparison. Stored configs contain only a dummy SDK placeholder, not copied secrets. No files were uploaded.

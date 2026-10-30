@@ -1,0 +1,1584 @@
+{
+  "model_calls": 0,
+  "stages": [
+    {
+      "round": 0,
+      "summary": [
+        "18858",
+        "7",
+        "G",
+        "3006"
+      ],
+      "decisions": [
+        [
+          "A",
+          2603,
+          1,
+          "selected"
+        ],
+        [
+          "B",
+          2743,
+          1,
+          "selected"
+        ],
+        [
+          "C",
+          2249,
+          1,
+          "selected"
+        ],
+        [
+          "D",
+          2831,
+          1,
+          "selected"
+        ],
+        [
+          "E",
+          2724,
+          1,
+          "selected"
+        ],
+        [
+          "F",
+          2702,
+          1,
+          "selected"
+        ],
+        [
+          "G",
+          3006,
+          1,
+          "selected"
+        ],
+        [
+          "H",
+          1912,
+          0,
+          "budget"
+        ],
+        [
+          "I",
+          2172,
+          0,
+          "budget"
+        ],
+        [
+          "J",
+          2355,
+          0,
+          "group_cap"
+        ],
+        [
+          "K",
+          3514,
+          0,
+          "dependency"
+        ],
+        [
+          "L",
+          2587,
+          0,
+          "dependency"
+        ],
+        [
+          "M",
+          4734,
+          0,
+          "inactive"
+        ],
+        [
+          "N",
+          2519,
+          0,
+          "city"
+        ],
+        [
+          "O",
+          1818,
+          0,
+          "budget"
+        ],
+        [
+          "P",
+          1695,
+          0,
+          "group_cap"
+        ],
+        [
+          "Q",
+          1524,
+          0,
+          "budget"
+        ]
+      ]
+    },
+    {
+      "round": 1,
+      "summary": [
+        "17084",
+        "6",
+        "H",
+        "4063"
+      ],
+      "decisions": [
+        [
+          "H",
+          4063,
+          1,
+          "selected"
+        ],
+        [
+          "F",
+          2702,
+          1,
+          "retained"
+        ],
+        [
+          "E",
+          2724,
+          1,
+          "retained"
+        ],
+        [
+          "I",
+          2172,
+          0,
+          "city"
+        ],
+        [
+          "A",
+          2603,
+          1,
+          "retained"
+        ],
+        [
+          "B",
+          2743,
+          1,
+          "retained"
+        ],
+        [
+          "C",
+          2249,
+          1,
+          "retained"
+        ],
+        [
+          "D",
+          2831,
+          0,
+          "cancelled"
+        ],
+        [
+          "G",
+          3006,
+          0,
+          "dependency"
+        ],
+        [
+          "J",
+          2355,
+          0,
+          "dependency"
+        ],
+        [
+          "K",
+          4267,
+          0,
+          "group_cap"
+        ],
+        [
+          "L",
+          2587,
+          0,
+          "dependency"
+        ],
+        [
+          "M",
+          4734,
+          0,
+          "inactive"
+        ],
+        [
+          "N",
+          2519,
+          0,
+          "group_cap"
+        ],
+        [
+          "O",
+          1818,
+          0,
+          "group_cap"
+        ],
+        [
+          "P",
+          1695,
+          0,
+          "budget"
+        ],
+        [
+          "Q",
+          1524,
+          0,
+          "budget"
+        ]
+      ]
+    },
+    {
+      "round": 2,
+      "summary": [
+        "15449",
+        "7",
+        "B",
+        "2743"
+      ],
+      "decisions": [
+        [
+          "H",
+          4063,
+          0,
+          "dependency"
+        ],
+        [
+          "F",
+          2702,
+          1,
+          "retained"
+        ],
+        [
+          "E",
+          3405,
+          0,
+          "cancelled"
+        ],
+        [
+          "O",
+          1919,
+          1,
+          "selected"
+        ],
+        [
+          "I",
+          2172,
+          0,
+          "city"
+        ],
+        [
+          "P",
+          1582,
+          1,
+          "selected"
+        ],
+        [
+          "A",
+          2603,
+          1,
+          "retained"
+        ],
+        [
+          "Q",
+          1651,
+          1,
+          "selected"
+        ],
+        [
+          "B",
+          2743,
+          1,
+          "retained"
+        ],
+        [
+          "C",
+          2249,
+          1,
+          "retained"
+        ],
+        [
+          "D",
+          2831,
+          0,
+          "cancelled"
+        ],
+        [
+          "G",
+          3006,
+          0,
+          "dependency"
+        ],
+        [
+          "J",
+          2355,
+          0,
+          "dependency"
+        ],
+        [
+          "K",
+          4267,
+          0,
+          "dependency"
+        ],
+        [
+          "L",
+          2587,
+          0,
+          "dependency"
+        ],
+        [
+          "M",
+          4734,
+          0,
+          "inactive"
+        ],
+        [
+          "N",
+          3206,
+          0,
+          "budget"
+        ]
+      ]
+    }
+  ],
+  "reference_score": {
+    "success": true,
+    "checks": {
+      "result": true,
+      "decisions": true,
+      "report": true,
+      "round0_delivered": true,
+      "round1_delivered": true,
+      "round2_received": true,
+      "final_saved": true,
+      "finished": true
+    },
+    "expected": [
+      "15449",
+      "7",
+      "B",
+      "2743"
+    ],
+    "actual": [
+      "15449",
+      "7",
+      "B",
+      "2743"
+    ],
+    "invalid_actions": 0,
+    "tool_calls": 47,
+    "round": 2
+  },
+  "reference_tool_calls": 47,
+  "reference_calls": [
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Orders"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Price",
+            "Qty",
+            "Beijing",
+            "Shenzhen",
+            "Status",
+            "Group"
+          ],
+          [
+            "A",
+            137,
+            17,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "C",
+            173,
+            11,
+            1,
+            1,
+            "active",
+            "Green"
+          ],
+          [
+            "E",
+            227,
+            9,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "G",
+            167,
+            16,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "I",
+            181,
+            12,
+            1,
+            0,
+            "active",
+            "Green"
+          ],
+          [
+            "K",
+            251,
+            10,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "M",
+            263,
+            18,
+            1,
+            1,
+            "inactive",
+            "Red"
+          ],
+          [
+            "B",
+            211,
+            13,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "D",
+            149,
+            19,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "F",
+            193,
+            14,
+            1,
+            1,
+            "active",
+            "Green"
+          ],
+          [
+            "H",
+            239,
+            8,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "J",
+            157,
+            15,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "L",
+            199,
+            13,
+            1,
+            1,
+            "active",
+            "Green"
+          ],
+          [
+            "N",
+            229,
+            11,
+            0,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "O",
+            101,
+            18,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "P",
+            113,
+            15,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "Q",
+            127,
+            12,
+            1,
+            1,
+            "active",
+            "Green"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Corrections"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Quantity"
+          ],
+          [
+            "A",
+            19
+          ],
+          [
+            "C",
+            13
+          ],
+          [
+            "E",
+            12
+          ],
+          [
+            "G",
+            18
+          ],
+          [
+            "K",
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Policy"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Max per order",
+            4500
+          ],
+          [
+            "Cities",
+            "Beijing"
+          ],
+          [
+            "Budget",
+            19800
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Priority"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Rank"
+          ],
+          [
+            "A",
+            200
+          ],
+          [
+            "B",
+            195
+          ],
+          [
+            "C",
+            190
+          ],
+          [
+            "D",
+            185
+          ],
+          [
+            "E",
+            180
+          ],
+          [
+            "F",
+            175
+          ],
+          [
+            "G",
+            170
+          ],
+          [
+            "H",
+            165
+          ],
+          [
+            "I",
+            160
+          ],
+          [
+            "J",
+            155
+          ],
+          [
+            "K",
+            150
+          ],
+          [
+            "L",
+            145
+          ],
+          [
+            "M",
+            140
+          ],
+          [
+            "N",
+            135
+          ],
+          [
+            "O",
+            130
+          ],
+          [
+            "P",
+            125
+          ],
+          [
+            "Q",
+            120
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Limits"
+      },
+      "response": {
+        "rows": [
+          [
+            "Group",
+            "Capacity"
+          ],
+          [
+            "Red",
+            8500
+          ],
+          [
+            "Blue",
+            8000
+          ],
+          [
+            "Green",
+            7500
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Dependencies"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Requires"
+          ],
+          [
+            "D",
+            "A"
+          ],
+          [
+            "D",
+            "B"
+          ],
+          [
+            "E",
+            "B"
+          ],
+          [
+            "F",
+            "C"
+          ],
+          [
+            "G",
+            "D"
+          ],
+          [
+            "G",
+            "E"
+          ],
+          [
+            "H",
+            "E"
+          ],
+          [
+            "H",
+            "F"
+          ],
+          [
+            "J",
+            "G"
+          ],
+          [
+            "K",
+            "H"
+          ],
+          [
+            "L",
+            "F"
+          ],
+          [
+            "L",
+            "I"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Commitments"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Amount"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Withdrawn"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Stage"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Current",
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "write_decisions",
+      "args": {
+        "rows_json": "[[\"A\", 2603, 1, \"selected\"], [\"B\", 2743, 1, \"selected\"], [\"C\", 2249, 1, \"selected\"], [\"D\", 2831, 1, \"selected\"], [\"E\", 2724, 1, \"selected\"], [\"F\", 2702, 1, \"selected\"], [\"G\", 3006, 1, \"selected\"], [\"H\", 1912, 0, \"budget\"], [\"I\", 2172, 0, \"budget\"], [\"J\", 2355, 0, \"group_cap\"], [\"K\", 3514, 0, \"dependency\"], [\"L\", 2587, 0, \"dependency\"], [\"M\", 4734, 0, \"inactive\"], [\"N\", 2519, 0, \"city\"], [\"O\", 1818, 0, \"budget\"], [\"P\", 1695, 0, \"group_cap\"], [\"Q\", 1524, 0, \"budget\"]]"
+      },
+      "response": {
+        "written": 17
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B2",
+        "value": "18858"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B3",
+        "value": "7"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B4",
+        "value": "G"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B5",
+        "value": "3006"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_report",
+      "args": {
+        "text": "Total: 18858; Count: 7; Winner: G; Amount: 3006."
+      },
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "save_workbook",
+      "args": {},
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "receive_update",
+      "args": {},
+      "response": {
+        "round": 1,
+        "changed_sheets": [
+          "Commitments",
+          "Withdrawn",
+          "Stage",
+          "Policy",
+          "Corrections",
+          "Limits",
+          "Priority"
+        ],
+        "instruction": "Keep surviving commitments at locked amounts, release cancelled/dependent commitments recursively, reserve survivors before processing new orders. Read changed sheets and save complete delivery."
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Commitments"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Amount"
+          ],
+          [
+            "A",
+            2603
+          ],
+          [
+            "B",
+            2743
+          ],
+          [
+            "C",
+            2249
+          ],
+          [
+            "D",
+            2831
+          ],
+          [
+            "E",
+            2724
+          ],
+          [
+            "F",
+            2702
+          ],
+          [
+            "G",
+            3006
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Withdrawn"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID"
+          ],
+          [
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Stage"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Current",
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Policy"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Max per order",
+            4500
+          ],
+          [
+            "Cities",
+            "Shenzhen"
+          ],
+          [
+            "Budget",
+            18000
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Corrections"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Quantity"
+          ],
+          [
+            "A",
+            23
+          ],
+          [
+            "C",
+            16
+          ],
+          [
+            "E",
+            15
+          ],
+          [
+            "G",
+            18
+          ],
+          [
+            "K",
+            17
+          ],
+          [
+            "H",
+            17
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Limits"
+      },
+      "response": {
+        "rows": [
+          [
+            "Group",
+            "Capacity"
+          ],
+          [
+            "Red",
+            7800
+          ],
+          [
+            "Blue",
+            11000
+          ],
+          [
+            "Green",
+            6700
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Priority"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Rank"
+          ],
+          [
+            "A",
+            200
+          ],
+          [
+            "B",
+            195
+          ],
+          [
+            "C",
+            190
+          ],
+          [
+            "D",
+            185
+          ],
+          [
+            "E",
+            210
+          ],
+          [
+            "F",
+            215
+          ],
+          [
+            "G",
+            170
+          ],
+          [
+            "H",
+            220
+          ],
+          [
+            "I",
+            205
+          ],
+          [
+            "J",
+            155
+          ],
+          [
+            "K",
+            150
+          ],
+          [
+            "L",
+            145
+          ],
+          [
+            "M",
+            140
+          ],
+          [
+            "N",
+            135
+          ],
+          [
+            "O",
+            130
+          ],
+          [
+            "P",
+            125
+          ],
+          [
+            "Q",
+            120
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "write_decisions",
+      "args": {
+        "rows_json": "[[\"H\", 4063, 1, \"selected\"], [\"F\", 2702, 1, \"retained\"], [\"E\", 2724, 1, \"retained\"], [\"I\", 2172, 0, \"city\"], [\"A\", 2603, 1, \"retained\"], [\"B\", 2743, 1, \"retained\"], [\"C\", 2249, 1, \"retained\"], [\"D\", 2831, 0, \"cancelled\"], [\"G\", 3006, 0, \"dependency\"], [\"J\", 2355, 0, \"dependency\"], [\"K\", 4267, 0, \"group_cap\"], [\"L\", 2587, 0, \"dependency\"], [\"M\", 4734, 0, \"inactive\"], [\"N\", 2519, 0, \"group_cap\"], [\"O\", 1818, 0, \"group_cap\"], [\"P\", 1695, 0, \"budget\"], [\"Q\", 1524, 0, \"budget\"]]"
+      },
+      "response": {
+        "written": 17
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B2",
+        "value": "17084"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B3",
+        "value": "6"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B4",
+        "value": "H"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B5",
+        "value": "4063"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_report",
+      "args": {
+        "text": "Total: 17084; Count: 6; Winner: H; Amount: 4063."
+      },
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "save_workbook",
+      "args": {},
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "receive_update",
+      "args": {},
+      "response": {
+        "round": 2,
+        "changed_sheets": [
+          "Commitments",
+          "Withdrawn",
+          "Stage",
+          "Policy",
+          "Corrections",
+          "Limits",
+          "Priority"
+        ],
+        "instruction": "Keep surviving commitments at locked amounts, release cancelled/dependent commitments recursively, reserve survivors before processing new orders. Read changed sheets and save complete delivery."
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Commitments"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Amount"
+          ],
+          [
+            "H",
+            4063
+          ],
+          [
+            "F",
+            2702
+          ],
+          [
+            "E",
+            2724
+          ],
+          [
+            "A",
+            2603
+          ],
+          [
+            "B",
+            2743
+          ],
+          [
+            "C",
+            2249
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Withdrawn"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID"
+          ],
+          [
+            "D"
+          ],
+          [
+            "E"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Stage"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Current",
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Policy"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Max per order",
+            4500
+          ],
+          [
+            "Cities",
+            "Shenzhen"
+          ],
+          [
+            "Budget",
+            18500
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Corrections"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Quantity"
+          ],
+          [
+            "A",
+            30
+          ],
+          [
+            "C",
+            20
+          ],
+          [
+            "E",
+            15
+          ],
+          [
+            "G",
+            18
+          ],
+          [
+            "K",
+            17
+          ],
+          [
+            "H",
+            17
+          ],
+          [
+            "B",
+            20
+          ],
+          [
+            "F",
+            22
+          ],
+          [
+            "N",
+            14
+          ],
+          [
+            "O",
+            19
+          ],
+          [
+            "P",
+            14
+          ],
+          [
+            "Q",
+            13
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Limits"
+      },
+      "response": {
+        "rows": [
+          [
+            "Group",
+            "Capacity"
+          ],
+          [
+            "Red",
+            7800
+          ],
+          [
+            "Blue",
+            12000
+          ],
+          [
+            "Green",
+            6700
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Priority"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Rank"
+          ],
+          [
+            "A",
+            200
+          ],
+          [
+            "B",
+            195
+          ],
+          [
+            "C",
+            190
+          ],
+          [
+            "D",
+            185
+          ],
+          [
+            "E",
+            210
+          ],
+          [
+            "F",
+            215
+          ],
+          [
+            "G",
+            170
+          ],
+          [
+            "H",
+            220
+          ],
+          [
+            "I",
+            205
+          ],
+          [
+            "J",
+            155
+          ],
+          [
+            "K",
+            150
+          ],
+          [
+            "L",
+            145
+          ],
+          [
+            "M",
+            140
+          ],
+          [
+            "N",
+            135
+          ],
+          [
+            "O",
+            210
+          ],
+          [
+            "P",
+            205
+          ],
+          [
+            "Q",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "write_decisions",
+      "args": {
+        "rows_json": "[[\"H\", 4063, 0, \"dependency\"], [\"F\", 2702, 1, \"retained\"], [\"E\", 3405, 0, \"cancelled\"], [\"O\", 1919, 1, \"selected\"], [\"I\", 2172, 0, \"city\"], [\"P\", 1582, 1, \"selected\"], [\"A\", 2603, 1, \"retained\"], [\"Q\", 1651, 1, \"selected\"], [\"B\", 2743, 1, \"retained\"], [\"C\", 2249, 1, \"retained\"], [\"D\", 2831, 0, \"cancelled\"], [\"G\", 3006, 0, \"dependency\"], [\"J\", 2355, 0, \"dependency\"], [\"K\", 4267, 0, \"dependency\"], [\"L\", 2587, 0, \"dependency\"], [\"M\", 4734, 0, \"inactive\"], [\"N\", 3206, 0, \"budget\"]]"
+      },
+      "response": {
+        "written": 17
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B2",
+        "value": "15449"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B3",
+        "value": "7"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B4",
+        "value": "B"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B5",
+        "value": "2743"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_report",
+      "args": {
+        "text": "Total: 15449; Count: 7; Winner: B; Amount: 2743."
+      },
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "save_workbook",
+      "args": {},
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "finish",
+      "args": {},
+      "response": {
+        "ok": true
+      }
+    }
+  ],
+  "checks": [
+    "stale output rejected round 0",
+    "early finish rejected round 0",
+    "stale output rejected round 1",
+    "early finish rejected round 1"
+  ],
+  "boundary_comparisons": 6
+}

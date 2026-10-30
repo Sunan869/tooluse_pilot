@@ -1,0 +1,318 @@
+{
+  "snapshot_id": "W7-SNAPSHOT-001",
+  "target_batch": "B2",
+  "enrollment": [
+    {
+      "record_id": "e-s07",
+      "student_id": "s07",
+      "name": "吴桐",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s02",
+      "student_id": "s02",
+      "name": "陈晨",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s06",
+      "student_id": "s06",
+      "name": "许安",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s01",
+      "student_id": "s01",
+      "name": "陈晨",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s08",
+      "student_id": "s08",
+      "name": "孙晴",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s03",
+      "student_id": "s03",
+      "name": "林悦",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s05",
+      "student_id": "s05",
+      "name": "赵宁",
+      "batch_id": "B2",
+      "status": "active"
+    },
+    {
+      "record_id": "e-s04",
+      "student_id": "s04",
+      "name": "周航",
+      "batch_id": "B2",
+      "status": "inactive"
+    }
+  ],
+  "grades": [
+    {
+      "record_id": "g-B1-s08-r1",
+      "student_id": "s08",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 96,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B1-s06-r1",
+      "student_id": "s06",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 89,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s07-r1",
+      "student_id": "s07",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 88,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s02-r1",
+      "student_id": "s02",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 99,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s06-r2",
+      "student_id": "s06",
+      "batch_id": "B2",
+      "revision": 2,
+      "score": 91,
+      "published": true,
+      "valid": true,
+      "supersedes": "g-B2-s06-r1"
+    },
+    {
+      "record_id": "g-B2-s06-r1",
+      "student_id": "s06",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 89,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s02-r2",
+      "student_id": "s02",
+      "batch_id": "B2",
+      "revision": 2,
+      "score": 86,
+      "published": true,
+      "valid": true,
+      "supersedes": "g-B2-s02-r1"
+    },
+    {
+      "record_id": "g-B1-s01-r1",
+      "student_id": "s01",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 100,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B1-s02-r1",
+      "student_id": "s02",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 55,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s04-r1",
+      "student_id": "s04",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 99,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s05-r1",
+      "student_id": "s05",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 90,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s08-r1",
+      "student_id": "s08",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 91,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B1-s03-r1",
+      "student_id": "s03",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 60,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B1-s07-r1",
+      "student_id": "s07",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 100,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B1-s05-r1",
+      "student_id": "s05",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 93,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s03-r1",
+      "student_id": "s03",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 95,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B1-s04-r1",
+      "student_id": "s04",
+      "batch_id": "B1",
+      "revision": 1,
+      "score": 98,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    },
+    {
+      "record_id": "g-B2-s01-r1",
+      "student_id": "s01",
+      "batch_id": "B2",
+      "revision": 1,
+      "score": 92,
+      "published": true,
+      "valid": true,
+      "supersedes": null
+    }
+  ],
+  "cache": [
+    {
+      "record_id": "c-s08",
+      "student_id": "s08",
+      "name": "孙晴",
+      "batch_id": "B2",
+      "score": 91,
+      "score_record_id": "g-B2-s08-r1",
+      "as_of_revision": 1
+    },
+    {
+      "record_id": "c-s05",
+      "student_id": "s05",
+      "name": "赵宁",
+      "batch_id": "B2",
+      "score": 90,
+      "score_record_id": "g-B2-s05-r1",
+      "as_of_revision": 1
+    },
+    {
+      "record_id": "c-s02",
+      "student_id": "s02",
+      "name": "陈晨",
+      "batch_id": "B2",
+      "score": 86,
+      "score_record_id": "g-B2-s02-r2",
+      "as_of_revision": 2
+    },
+    {
+      "record_id": "c-s03",
+      "student_id": "s03",
+      "name": "林悦",
+      "batch_id": "B2",
+      "score": 95,
+      "score_record_id": "g-B2-s03-r1",
+      "as_of_revision": 1
+    },
+    {
+      "record_id": "c-s04",
+      "student_id": "s04",
+      "name": "周航",
+      "batch_id": "B2",
+      "score": 99,
+      "score_record_id": "g-B2-s04-r1",
+      "as_of_revision": 1
+    },
+    {
+      "record_id": "c-s07",
+      "student_id": "s07",
+      "name": "吴桐",
+      "batch_id": "B2",
+      "score": 88,
+      "score_record_id": "g-B2-s07-r1",
+      "as_of_revision": 1
+    },
+    {
+      "record_id": "c-s01",
+      "student_id": "s01",
+      "name": "陈晨",
+      "batch_id": "B2",
+      "score": 92,
+      "score_record_id": "g-B2-s01-r1",
+      "as_of_revision": 1
+    },
+    {
+      "record_id": "c-s06",
+      "student_id": "s06",
+      "name": "许安",
+      "batch_id": "B2",
+      "score": 91,
+      "score_record_id": "g-B2-s06-r2",
+      "as_of_revision": 2
+    }
+  ]
+}

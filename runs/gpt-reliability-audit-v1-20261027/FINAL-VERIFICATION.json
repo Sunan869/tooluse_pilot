@@ -1,0 +1,8 @@
+{
+  "original_GPT_files_unchanged": 98,
+  "Qwen_delivery_files_unchanged": 910,
+  "replayed_tool_calls": 100,
+  "verified_requests": 84,
+  "new_model_calls": 0,
+  "first_audit_attempt": "Import path error occurred before any case replay; fixed only isolated audit import path and then completed all12."
+}

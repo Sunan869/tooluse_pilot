@@ -1,0 +1,20 @@
+{
+  "family": "compound_settlement",
+  "id": "compound_settlement-5",
+  "seed": 5,
+  "task": "Compare reporting replica with authoritative order before settlement. An external writer can race settlement. Recover a version conflict, settle exactly once, and avoid duplicate charges.",
+  "environment": {
+    "replica": {
+      "version": 1,
+      "amount": 4685
+    },
+    "initial_primary": {
+      "version": 2,
+      "amount": 4758
+    },
+    "raced_primary": {
+      "version": 3,
+      "amount": 4799
+    }
+  }
+}

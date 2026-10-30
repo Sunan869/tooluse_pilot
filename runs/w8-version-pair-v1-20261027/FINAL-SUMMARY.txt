@@ -1,0 +1,25 @@
+W8: no GPT handoff justified.
+Actual Flash attempts: 32; API errors: 0; exactly replayed tools: 40; other model calls: 0.
+
+run | requests | tools | correct | completed | budget_exhausted
+case-dynamic-attempt-1 | 8 | 11 | True | True | False
+case-static-attempt-1 | 10 | 13 | True | True | False
+case-static-shuffle-attempt-1 | 14 | 16 | False | True | False
+
+Failed static baseline; dynamic-shuffle was not started. No selective reruns to fish for a failure.
+Main static passed 10 requests/13 tools; main dynamic passed 8/11.
+Dynamic tool 3 returned R1 data with current R2 and stale=true; tool 4 queried status; tool 5 reread R2 grades; correct R2 submission followed.
+Shuffled static failed 14/16 despite complete evidence, omitting s01/92 for s08/91. This is not a dynamic effect and has not been claimed reproducible.
+Successful finish immediately terminates runner; no next API request or remaining queued tools. Missing/stale finish is recoverable. Wrong submission can be overwritten before finish. Answer correctness and task completion are distinct.
+Original W7 evidence and W8 frozen hashes verified unchanged.
+A single visible score update adds refresh work but retains the same ranking computation; this experiment does not establish a harder planning requirement.
+
+Offline reproduction from project root (no API):
+$env:PYTHONUTF8='1'; $env:PYTHONDONTWRITEBYTECODE='1'
+python runs/w8-version-pair-v1-20261027/test_w8.py
+python runs/w8-version-pair-v1-20261027/audit.py case-dynamic-attempt-1 audit-new-unique-name
+Use an unused audit directory name. Original result is read only.
+Reference: offline-validation/SUMMARY.json (4 complete scripted runners; terminal stop/budget checks).
+Source: code/tooluse_pilot/w8_task.py, code/tooluse_pilot/executable_runner.py. Minimal diff: IMPLEMENTATION.patch.
+Frozen rule: EXPERIMENT-SPEC.txt. Detailed trigger evidence: DYNAMIC-TIMELINE.json.
+If continuing, replace simple reranking with a small action-dependent planning graph whose valid continuation changes once. Keep one trigger, reachable state queries, reversible preparation and independent final-state checks. Do not merely add rows, repeated revisions or reduce budgets.

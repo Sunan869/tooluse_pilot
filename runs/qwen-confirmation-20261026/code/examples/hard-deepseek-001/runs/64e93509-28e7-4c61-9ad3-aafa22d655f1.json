@@ -1,0 +1,318 @@
+{
+  "run_id": "64e93509-28e7-4c61-9ad3-aafa22d655f1",
+  "model_alias": "deepseek",
+  "provider": "deepseek_via_tokenops",
+  "model": "deepseek-v4-flash-0731",
+  "mode": "structured",
+  "requests": 4,
+  "tool_calls": 17,
+  "state": "api_error",
+  "estimated_cost": null,
+  "currency": null,
+  "score": {
+    "total": 0,
+    "result_score": 0,
+    "process_score": 0,
+    "error": "output missing"
+  },
+  "usage_db": "runs/usage.sqlite",
+  "events": [
+    {
+      "event": "model_response",
+      "attempt": 1,
+      "request_id": "ebfd851604ec43069973a6cbcd06e0a5",
+      "tool_calls": 1,
+      "usage": {
+        "prompt_tokens": 895,
+        "completion_tokens": 28,
+        "total_tokens": 923,
+        "cached_tokens": 0,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "name": "list_sheets",
+      "ok": true,
+      "tool_call_id": "call_ef1df0e113654a7b842df782"
+    },
+    {
+      "event": "model_response",
+      "attempt": 2,
+      "request_id": "62573afc743c4c24a5d38ac817f35a7a",
+      "tool_calls": 8,
+      "usage": {
+        "prompt_tokens": 973,
+        "completion_tokens": 525,
+        "total_tokens": 1498,
+        "cached_tokens": 0,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_456db9a3344649d29514b247"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_039c5b9ec1dc4683b73f3899"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_ecb7fc34b4e945f5b99ecf22"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_9dfc1c91026d48e7a1686920"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_6ec62a72cda94c3c84c83a66"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_7d7e02841a71410aa65a11b1"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_d41518d604784ef0abe7e7e0"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_6224f475a4ce48d3a0d606e5"
+    },
+    {
+      "event": "model_response",
+      "attempt": 3,
+      "request_id": "ee9923de6c6d4da895c04579bf76a1e1",
+      "tool_calls": 8,
+      "usage": {
+        "prompt_tokens": 19581,
+        "completion_tokens": 545,
+        "total_tokens": 20126,
+        "cached_tokens": 0,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_728d3d3ba6ee4437afcc94b3"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_0d1aaa83bf1c48edb6f001b1"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_813d8d49cc0043b083ce25b0"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_f5f96b0889c64bccb9e22d6a"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_890ab871b1984a4ab5b55adc"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_b01a439a95b34f5590489ae9"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_f2beeac4e9484aeba2203f7e"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_315f92abed394792b77ce87e"
+    },
+    {
+      "event": "api_error",
+      "attempt": 4,
+      "error": "Request timed out."
+    }
+  ],
+  "calls": [
+    {
+      "tool": "list_sheets",
+      "args": {},
+      "result_size": 8
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Orders",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 100
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Payments",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 138
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Suppliers",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 26
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Rules",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 12
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Amendments",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 26
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Aliases",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 13
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Holds",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 12
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Notes",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 4
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Orders",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Payments",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Suppliers",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Rules",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Amendments",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Aliases",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Holds",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Notes",
+        "offset": 500,
+        "limit": 500
+      },
+      "result_size": 0
+    }
+  ]
+}

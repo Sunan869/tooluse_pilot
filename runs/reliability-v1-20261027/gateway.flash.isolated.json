@@ -1,0 +1,20 @@
+{
+  "timeout_sec": 300,
+  "retry_limit": 2,
+  "models": {
+    "qwen": {
+      "provider": "local_openai_compatible",
+      "model": "Qwen3.8-Flash-Next-AWQ-INT4",
+      "api_type": "chat_completions",
+      "api_key": "unused",
+      "base_url_env": "PILOT_FLASH_BASE_URL",
+      "request_options": {
+        "extra_body": {
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      }
+    }
+  }
+}

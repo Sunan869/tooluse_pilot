@@ -1,0 +1,45 @@
+{
+  "run_id": "0aeaa14f-049f-4e0e-b099-cb710d469d2b",
+  "candidate_id": "file-procurement-2",
+  "model": "dummy",
+  "protocol": "responses",
+  "state": "api_error",
+  "requests": 1,
+  "tool_calls": 0,
+  "score": {
+    "success": false,
+    "checks": {
+      "workbook_changed_on_disk": false,
+      "vendor": false,
+      "price": false,
+      "eligible_count": false,
+      "report_vendor": false,
+      "report_price": false,
+      "finished": false
+    },
+    "tool_calls": 0,
+    "invalid_actions": 0
+  },
+  "invalid_tool_actions": 0,
+  "profile": null,
+  "estimated_cost": null,
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 1,
+      "retry_index": 0,
+      "error": "network unavailable",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    }
+  ],
+  "calls": [],
+  "usage_db": "C:\\Users\\Administrator\\AppData\\Local\\Packages\\sandbox.{71908575-dd7d-412b-8083-760b7a513302}\\AC\\Temp\\tmptqa1k7ag\\usage.sqlite",
+  "artifact_dir": "runs\\file_workspaces\\f78b35e3-c31d-434a-bb74-ef7e01bbaf06"
+}

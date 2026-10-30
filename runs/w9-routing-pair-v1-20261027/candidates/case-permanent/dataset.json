@@ -1,0 +1,65 @@
+{
+  "package_id": "P",
+  "start": "W",
+  "destination": "D",
+  "start_time": 540,
+  "deadline": 960,
+  "budget": 4,
+  "hubs": [
+    "W",
+    "A",
+    "B",
+    "D"
+  ],
+  "fault_route": "direct",
+  "routes": [
+    {
+      "route_id": "direct",
+      "origin": "W",
+      "destination": "D",
+      "departure": 600,
+      "arrival": 660,
+      "cost": 3
+    },
+    {
+      "route_id": "a1",
+      "origin": "W",
+      "destination": "A",
+      "departure": 600,
+      "arrival": 720,
+      "cost": 1
+    },
+    {
+      "route_id": "a2",
+      "origin": "A",
+      "destination": "D",
+      "departure": 660,
+      "arrival": 780,
+      "cost": 1
+    },
+    {
+      "route_id": "a3",
+      "origin": "A",
+      "destination": "D",
+      "departure": 840,
+      "arrival": 900,
+      "cost": 3
+    },
+    {
+      "route_id": "b1",
+      "origin": "W",
+      "destination": "B",
+      "departure": 600,
+      "arrival": 660,
+      "cost": 2
+    },
+    {
+      "route_id": "b2",
+      "origin": "B",
+      "destination": "D",
+      "departure": 720,
+      "arrival": 840,
+      "cost": 2
+    }
+  ]
+}

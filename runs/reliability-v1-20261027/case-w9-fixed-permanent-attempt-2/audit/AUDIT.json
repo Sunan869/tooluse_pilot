@@ -1,0 +1,72 @@
+{
+  "run": "case-w9-fixed-permanent-attempt-2",
+  "family": 9,
+  "condition": "permanent",
+  "case_id": "w9-permanent-renamed",
+  "business_correct": true,
+  "task_completed": false,
+  "success": false,
+  "budget_exhausted": true,
+  "requests": 25,
+  "api_errors": 0,
+  "tools": 27,
+  "invalid_actions": 0,
+  "recoverable_rejections": 0,
+  "recovered_after_rejection_success": false,
+  "fault_exposed": false,
+  "coverage_complete": null,
+  "revision_current": null,
+  "labels_observable_not_causal": [
+    "budget_exhaustion",
+    "not_completed"
+  ],
+  "gold": {
+    "minimum_cost": 4,
+    "optimal_paths": [
+      {
+        "path": [
+          "r12",
+          "r31"
+        ],
+        "arrival": 900,
+        "cost": 4
+      },
+      {
+        "path": [
+          "r05",
+          "r96"
+        ],
+        "arrival": 840,
+        "cost": 4
+      }
+    ],
+    "all_feasible_paths": [
+      {
+        "path": [
+          "r12",
+          "r31"
+        ],
+        "arrival": 900,
+        "cost": 4
+      },
+      {
+        "path": [
+          "r05",
+          "r96"
+        ],
+        "arrival": 840,
+        "cost": 4
+      }
+    ]
+  },
+  "actual": {
+    "path": [
+      "r12",
+      "r31"
+    ],
+    "cost": 4
+  },
+  "result_sha256": "89ff028237c3ee53231e0f99f85d66b528aeb97628f4089dcf978866934eaf64",
+  "candidate_sha256": "994954d1aa60756093a66f65fa6058a54b69535ee3ab0a2347b9f9e331b2ba3e",
+  "dataset_sha256": "704e191e23f680708fafd4cfa5f3e21b781e2cfd27db80ee39eeeee4ddc45e72"
+}

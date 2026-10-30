@@ -1,0 +1,4 @@
+total: 25000
+count: 3
+winner: Alpha
+amount: 8000

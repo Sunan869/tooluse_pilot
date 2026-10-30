@@ -1,0 +1,47 @@
+{
+  "replayed_tool_calls": 80,
+  "mismatches": [],
+  "replayed_score": {
+    "success": false,
+    "checks": {
+      "initial_delivered": false,
+      "update_received": false,
+      "requirements": false,
+      "result": false,
+      "report": false,
+      "revised_saved": false,
+      "finished": false
+    },
+    "expected": [
+      "73800",
+      "17",
+      "Order08",
+      "9100"
+    ],
+    "actual": [
+      "93800",
+      "19",
+      "Order17",
+      "10000"
+    ],
+    "invalid_actions": 10,
+    "tool_calls": 70
+  },
+  "api_errors": [
+    {
+      "event": "api_attempt",
+      "turn": 6,
+      "attempt": 6,
+      "retry_index": 0,
+      "error": "Request timed out.",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    }
+  ],
+  "classification": "initial_stage_calculation_and_filtering_failure; one recovered transport timeout; confirm independently"
+}

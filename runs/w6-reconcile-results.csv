@@ -1,0 +1,4 @@
+﻿"Seed","State","Success","Requests","ToolCalls","InvalidActions","Checks","ArtifactDir"
+"0","finished","True","9","22","0","{""initial_delivered"":true,""update_received"":true,""requirements"":true,""result"":true,""report"":true,""revised_saved"":true,""finished"":true}","runs\file_workspaces\02ecf25c-0190-4a61-b6a2-12ea37dc947b"
+"1","finished","True","8","21","0","{""initial_delivered"":true,""update_received"":true,""requirements"":true,""result"":true,""report"":true,""revised_saved"":true,""finished"":true}","runs\file_workspaces\637f93bf-f6a6-4c88-ac0d-597991bf2562"
+"2","max_requests","False","25","57","9","{""initial_delivered"":false,""update_received"":false,""requirements"":false,""result"":false,""report"":false,""revised_saved"":false,""finished"":false}","runs\file_workspaces\1432b4ba-df8f-4b26-b347-95e96228de27"

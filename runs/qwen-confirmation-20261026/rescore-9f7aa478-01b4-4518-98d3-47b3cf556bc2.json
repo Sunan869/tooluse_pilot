@@ -1,0 +1,59 @@
+{
+  "schema_version": "w6-offline-rescore-v1",
+  "candidate_id": "w6-reconcile-2",
+  "original_score": {
+    "success": false,
+    "checks": {
+      "initial_delivered": true,
+      "update_received": true,
+      "requirements": true,
+      "result": true,
+      "report": false,
+      "revised_saved": true,
+      "finished": true
+    },
+    "expected": [
+      "11800",
+      "3",
+      "Delta",
+      "7800"
+    ],
+    "actual": [
+      "11800",
+      "3",
+      "Delta",
+      "7800"
+    ],
+    "invalid_actions": 0,
+    "tool_calls": 20
+  },
+  "revised_score": {
+    "success": true,
+    "checks": {
+      "initial_delivered": true,
+      "update_received": true,
+      "requirements": true,
+      "result": true,
+      "report": true,
+      "revised_saved": true,
+      "finished": true
+    }
+  },
+  "changed_checks": {
+    "report": {
+      "original": false,
+      "revised": true
+    }
+  },
+  "evidence_sha256": {
+    "candidate.json": "fa31ef8b79c4afc928858ae424b52fa86a2f4a11f7d11899c56e9100a8b40144",
+    "run_result.json": "cb0183a30db658604ebc0302fad3b7164250ee2813104979408e828141208dfd",
+    "reconciliation.xlsx": "3616903e472cf14b35756d6d5ce6b5d88f8a50d674860a5b3b572c669fee1622",
+    "report.txt": "69ca87d39fe0186bfec92dca7040b5716ba616e400c52e8af4f64605ff7c1dbb"
+  },
+  "limitations": [
+    "Historical stage checks remain as recorded; no hidden runtime state is reconstructed.",
+    "An offline rescore is not a new model execution."
+  ],
+  "model_requests_executed": 0
+}

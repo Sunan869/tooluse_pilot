@@ -1,0 +1,873 @@
+{
+  "case": "allocation-v1-1",
+  "initial": {
+    "summary": [
+      "13200",
+      "3",
+      "A",
+      "4800"
+    ],
+    "decisions": [
+      [
+        "A",
+        4800,
+        1,
+        "selected"
+      ],
+      [
+        "B",
+        3600,
+        1,
+        "selected"
+      ],
+      [
+        "C",
+        4800,
+        1,
+        "selected"
+      ],
+      [
+        "D",
+        3300,
+        0,
+        "group_cap"
+      ],
+      [
+        "E",
+        2800,
+        0,
+        "group_cap"
+      ],
+      [
+        "F",
+        2800,
+        0,
+        "budget"
+      ],
+      [
+        "G",
+        10000,
+        0,
+        "per_order"
+      ],
+      [
+        "H",
+        2400,
+        0,
+        "dependency"
+      ],
+      [
+        "I",
+        1000,
+        0,
+        "inactive"
+      ],
+      [
+        "J",
+        2600,
+        0,
+        "city"
+      ]
+    ]
+  },
+  "revised": {
+    "summary": [
+      "10400",
+      "2",
+      "A",
+      "7200"
+    ],
+    "decisions": [
+      [
+        "E",
+        4200,
+        0,
+        "dependency"
+      ],
+      [
+        "F",
+        2800,
+        0,
+        "dependency"
+      ],
+      [
+        "H",
+        2400,
+        0,
+        "dependency"
+      ],
+      [
+        "A",
+        7200,
+        1,
+        "selected"
+      ],
+      [
+        "B",
+        3600,
+        0,
+        "group_cap"
+      ],
+      [
+        "C",
+        3200,
+        1,
+        "selected"
+      ],
+      [
+        "D",
+        3300,
+        0,
+        "city"
+      ],
+      [
+        "G",
+        6000,
+        0,
+        "group_cap"
+      ],
+      [
+        "I",
+        1000,
+        0,
+        "inactive"
+      ],
+      [
+        "J",
+        2600,
+        0,
+        "city"
+      ]
+    ]
+  },
+  "reference_score": {
+    "success": true,
+    "checks": {
+      "result": true,
+      "decisions": true,
+      "report": true,
+      "initial_delivered": true,
+      "update_received": true,
+      "requirements": true,
+      "revised_saved": true,
+      "finished": true
+    },
+    "expected": [
+      "10400",
+      "2",
+      "A",
+      "7200"
+    ],
+    "actual": [
+      "10400",
+      "2",
+      "A",
+      "7200"
+    ],
+    "invalid_actions": 0,
+    "tool_calls": 28
+  },
+  "reference_tool_calls": 28,
+  "reference_calls": [
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Orders"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Price",
+            "Qty",
+            "Beijing",
+            "Shenzhen",
+            "Status",
+            "Group"
+          ],
+          [
+            "A",
+            1200,
+            3,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "C",
+            1600,
+            2,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "E",
+            700,
+            5,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "G",
+            2000,
+            2,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "I",
+            500,
+            2,
+            1,
+            1,
+            "inactive",
+            "Red"
+          ],
+          [
+            "B",
+            900,
+            4,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "D",
+            1100,
+            3,
+            1,
+            0,
+            "active",
+            "Blue"
+          ],
+          [
+            "F",
+            1400,
+            2,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "H",
+            600,
+            4,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "J",
+            1300,
+            2,
+            0,
+            1,
+            "active",
+            "Blue"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Corrections"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Quantity"
+          ],
+          [
+            "A",
+            4
+          ],
+          [
+            "C",
+            3
+          ],
+          [
+            "E",
+            4
+          ],
+          [
+            "G",
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Policy"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Max per order",
+            8000
+          ],
+          [
+            "Cities",
+            "Beijing"
+          ],
+          [
+            "Budget",
+            14500
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Priority"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Rank"
+          ],
+          [
+            "A",
+            100
+          ],
+          [
+            "B",
+            95
+          ],
+          [
+            "C",
+            90
+          ],
+          [
+            "D",
+            85
+          ],
+          [
+            "E",
+            80
+          ],
+          [
+            "F",
+            75
+          ],
+          [
+            "G",
+            70
+          ],
+          [
+            "H",
+            65
+          ],
+          [
+            "I",
+            60
+          ],
+          [
+            "J",
+            55
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Limits"
+      },
+      "response": {
+        "rows": [
+          [
+            "Group",
+            "Capacity"
+          ],
+          [
+            "Red",
+            8500
+          ],
+          [
+            "Blue",
+            8000
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Dependencies"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Requires"
+          ],
+          [
+            "B",
+            "A"
+          ],
+          [
+            "E",
+            "B"
+          ],
+          [
+            "F",
+            "C"
+          ],
+          [
+            "H",
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B2",
+        "value": "13200"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B3",
+        "value": "3"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B4",
+        "value": "A"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B5",
+        "value": "4800"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_decisions",
+      "args": {
+        "rows_json": "[[\"A\", 4800, 1, \"selected\"], [\"B\", 3600, 1, \"selected\"], [\"C\", 4800, 1, \"selected\"], [\"D\", 3300, 0, \"group_cap\"], [\"E\", 2800, 0, \"group_cap\"], [\"F\", 2800, 0, \"budget\"], [\"G\", 10000, 0, \"per_order\"], [\"H\", 2400, 0, \"dependency\"], [\"I\", 1000, 0, \"inactive\"], [\"J\", 2600, 0, \"city\"]]"
+      },
+      "response": {
+        "written": 10
+      }
+    },
+    {
+      "tool": "write_report",
+      "args": {
+        "text": "Total: 13200; Count: 3; Winner: A; Amount: 4800."
+      },
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "save_workbook",
+      "args": {},
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "receive_update",
+      "args": {},
+      "response": {
+        "changed_sheets": [
+          "Policy",
+          "Corrections",
+          "Limits",
+          "Priority"
+        ],
+        "instruction": "Re-read changed sheets and recompute every decision from scratch; prior selections reserve no capacity."
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Orders"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Price",
+            "Qty",
+            "Beijing",
+            "Shenzhen",
+            "Status",
+            "Group"
+          ],
+          [
+            "A",
+            1200,
+            3,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "C",
+            1600,
+            2,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "E",
+            700,
+            5,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "G",
+            2000,
+            2,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "I",
+            500,
+            2,
+            1,
+            1,
+            "inactive",
+            "Red"
+          ],
+          [
+            "B",
+            900,
+            4,
+            1,
+            1,
+            "active",
+            "Red"
+          ],
+          [
+            "D",
+            1100,
+            3,
+            1,
+            0,
+            "active",
+            "Blue"
+          ],
+          [
+            "F",
+            1400,
+            2,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "H",
+            600,
+            4,
+            1,
+            1,
+            "active",
+            "Blue"
+          ],
+          [
+            "J",
+            1300,
+            2,
+            0,
+            1,
+            "active",
+            "Blue"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Corrections"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Quantity"
+          ],
+          [
+            "A",
+            6
+          ],
+          [
+            "C",
+            2
+          ],
+          [
+            "E",
+            6
+          ],
+          [
+            "G",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Policy"
+      },
+      "response": {
+        "rows": [
+          [
+            "Key",
+            "Value"
+          ],
+          [
+            "Max per order",
+            8000
+          ],
+          [
+            "Cities",
+            "Beijing,Shenzhen"
+          ],
+          [
+            "Budget",
+            15000
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Priority"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Rank"
+          ],
+          [
+            "A",
+            100
+          ],
+          [
+            "B",
+            95
+          ],
+          [
+            "C",
+            90
+          ],
+          [
+            "D",
+            85
+          ],
+          [
+            "E",
+            110
+          ],
+          [
+            "F",
+            105
+          ],
+          [
+            "G",
+            70
+          ],
+          [
+            "H",
+            102
+          ],
+          [
+            "I",
+            60
+          ],
+          [
+            "J",
+            55
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Limits"
+      },
+      "response": {
+        "rows": [
+          [
+            "Group",
+            "Capacity"
+          ],
+          [
+            "Red",
+            10000
+          ],
+          [
+            "Blue",
+            7000
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "read_sheet",
+      "args": {
+        "sheet": "Dependencies"
+      },
+      "response": {
+        "rows": [
+          [
+            "ID",
+            "Requires"
+          ],
+          [
+            "B",
+            "A"
+          ],
+          [
+            "E",
+            "B"
+          ],
+          [
+            "F",
+            "C"
+          ],
+          [
+            "H",
+            "D"
+          ]
+        ]
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B2",
+        "value": "10400"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B3",
+        "value": "2"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B4",
+        "value": "A"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_summary",
+      "args": {
+        "cell": "B5",
+        "value": "7200"
+      },
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "tool": "write_decisions",
+      "args": {
+        "rows_json": "[[\"E\", 4200, 0, \"dependency\"], [\"F\", 2800, 0, \"dependency\"], [\"H\", 2400, 0, \"dependency\"], [\"A\", 7200, 1, \"selected\"], [\"B\", 3600, 0, \"group_cap\"], [\"C\", 3200, 1, \"selected\"], [\"D\", 3300, 0, \"city\"], [\"G\", 6000, 0, \"group_cap\"], [\"I\", 1000, 0, \"inactive\"], [\"J\", 2600, 0, \"city\"]]"
+      },
+      "response": {
+        "written": 10
+      }
+    },
+    {
+      "tool": "write_report",
+      "args": {
+        "text": "Total: 10400; Count: 2; Winner: A; Amount: 7200."
+      },
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "save_workbook",
+      "args": {},
+      "response": {
+        "saved": true
+      }
+    },
+    {
+      "tool": "finish",
+      "args": {},
+      "response": {
+        "ok": true
+      }
+    }
+  ],
+  "budget_boundary_probes": [
+    0,
+    4800,
+    8000,
+    14500,
+    100000
+  ],
+  "stale_decisions_rejected": true
+}

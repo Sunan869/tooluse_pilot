@@ -1,0 +1,1067 @@
+{
+  "run_id": "2d7ba90f-b89d-42f8-9831-b871c0a44f7b",
+  "candidate_id": "w7-coverage-20261028",
+  "model": "Qwen3.8-Flash-Next-AWQ-INT4",
+  "protocol": "chat_completions",
+  "state": "finished",
+  "requests": 10,
+  "tool_calls": 14,
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "finished": true,
+    "evidence_valid": true,
+    "coverage_complete": true,
+    "coverage": {
+      "enrollment": {
+        "seen": 8,
+        "required": 8
+      },
+      "grades": {
+        "seen": 10,
+        "required": 10
+      }
+    },
+    "strict_process_success": true,
+    "invalid_actions": 0,
+    "expected": [
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ],
+      [
+        "s06",
+        "\u8bb8\u5b89",
+        91,
+        "B2",
+        "g-B2-s06-r2",
+        "e-s06"
+      ]
+    ],
+    "actual": [
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ],
+      [
+        "s06",
+        "\u8bb8\u5b89",
+        91,
+        "B2",
+        "g-B2-s06-r2",
+        "e-s06"
+      ]
+    ]
+  },
+  "invalid_tool_actions": 0,
+  "profile": null,
+  "estimated_cost": null,
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 1,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 782,
+        "completion_tokens": 14,
+        "total_tokens": 796,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "directory",
+      "tool_call_id": "chatcmpl-tool-a5e768369ffdbc61",
+      "arguments": "{}",
+      "result": {
+        "ok": true,
+        "result": {
+          "snapshot_id": "W7-SNAPSHOT-001",
+          "target_batch": "B2",
+          "rules": "enrollment determines eligibility and name. grades determines score: target batch, published=true, valid=true, highest revision per student_id. Superseded old versions remain in source. Join by student_id and batch_id, never name. Cache is advisory and may be stale. Rank score descending, student_id ascending, top 3.",
+          "sources": {
+            "enrollment": {
+              "total_rows": 8,
+              "fields": [
+                "record_id",
+                "student_id",
+                "name",
+                "batch_id",
+                "status"
+              ],
+              "authority": true
+            },
+            "grades": {
+              "total_rows": 18,
+              "fields": [
+                "record_id",
+                "student_id",
+                "batch_id",
+                "revision",
+                "score",
+                "published",
+                "valid",
+                "supersedes"
+              ],
+              "authority": true
+            },
+            "cache": {
+              "total_rows": 8,
+              "fields": [
+                "record_id",
+                "student_id",
+                "name",
+                "batch_id",
+                "score",
+                "score_record_id",
+                "as_of_revision"
+              ],
+              "authority": false
+            }
+          },
+          "pagination": "Follow next_cursor while has_more, keeping source and batch_id filter. get_record is an alternative. Snapshot is fixed.",
+          "submission_columns": [
+            "student_id",
+            "name",
+            "score",
+            "batch_id",
+            "grade_record_id",
+            "enrollment_record_id"
+          ]
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 2,
+      "attempt": 2,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 1106,
+        "completion_tokens": 79,
+        "total_tokens": 1185,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "read_rows",
+      "tool_call_id": "chatcmpl-tool-bf6696c019c542ac",
+      "arguments": "{\"source\": \"enrollment\", \"batch_id\": \"B2\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "rows": [
+            {
+              "record_id": "e-s03",
+              "student_id": "s03",
+              "name": "\u6797\u60a6",
+              "batch_id": "B2",
+              "status": "active"
+            },
+            {
+              "record_id": "e-s04",
+              "student_id": "s04",
+              "name": "\u5468\u822a",
+              "batch_id": "B2",
+              "status": "inactive"
+            },
+            {
+              "record_id": "e-s07",
+              "student_id": "s07",
+              "name": "\u5434\u6850",
+              "batch_id": "B2",
+              "status": "active"
+            },
+            {
+              "record_id": "e-s08",
+              "student_id": "s08",
+              "name": "\u5b59\u6674",
+              "batch_id": "B2",
+              "status": "active"
+            }
+          ],
+          "total_matching": 8,
+          "has_more": true,
+          "next_cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZW5yb2xsbWVudCIsICJCMiIsIDRd",
+          "source": "enrollment",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "read_rows",
+      "tool_call_id": "chatcmpl-tool-a6a8c2368d9afd72",
+      "arguments": "{\"source\": \"grades\", \"batch_id\": \"B2\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "rows": [
+            {
+              "record_id": "g-B2-s06-r1",
+              "student_id": "s06",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 89,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            },
+            {
+              "record_id": "g-B2-s05-r1",
+              "student_id": "s05",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 90,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            },
+            {
+              "record_id": "g-B2-s04-r1",
+              "student_id": "s04",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 99,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            },
+            {
+              "record_id": "g-B2-s02-r1",
+              "student_id": "s02",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 99,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            }
+          ],
+          "total_matching": 10,
+          "has_more": true,
+          "next_cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgNF0=",
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 3,
+      "attempt": 3,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 1837,
+        "completion_tokens": 181,
+        "total_tokens": 2018,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "read_rows",
+      "tool_call_id": "chatcmpl-tool-895316d15d57b659",
+      "arguments": "{\"source\": \"enrollment\", \"batch_id\": \"B2\", \"cursor\": \"WyJXNy1TTkFQU0hPVC0wMDEiLCAiZW5yb2xsbWVudCIsICJCMiIsIDRd\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "rows": [
+            {
+              "record_id": "e-s02",
+              "student_id": "s02",
+              "name": "\u9648\u6668",
+              "batch_id": "B2",
+              "status": "active"
+            },
+            {
+              "record_id": "e-s06",
+              "student_id": "s06",
+              "name": "\u8bb8\u5b89",
+              "batch_id": "B2",
+              "status": "active"
+            },
+            {
+              "record_id": "e-s05",
+              "student_id": "s05",
+              "name": "\u8d75\u5b81",
+              "batch_id": "B2",
+              "status": "active"
+            },
+            {
+              "record_id": "e-s01",
+              "student_id": "s01",
+              "name": "\u9648\u6668",
+              "batch_id": "B2",
+              "status": "active"
+            }
+          ],
+          "total_matching": 8,
+          "has_more": false,
+          "next_cursor": null,
+          "source": "enrollment",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "read_rows",
+      "tool_call_id": "chatcmpl-tool-80ace6bff194dbdf",
+      "arguments": "{\"source\": \"grades\", \"batch_id\": \"B2\", \"cursor\": \"WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgNF0=\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "rows": [
+            {
+              "record_id": "g-B2-s03-r1",
+              "student_id": "s03",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 95,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            },
+            {
+              "record_id": "g-B2-s06-r2",
+              "student_id": "s06",
+              "batch_id": "B2",
+              "revision": 2,
+              "score": 91,
+              "published": true,
+              "valid": true,
+              "supersedes": "g-B2-s06-r1"
+            },
+            {
+              "record_id": "g-B2-s08-r1",
+              "student_id": "s08",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 91,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            },
+            {
+              "record_id": "g-B2-s02-r2",
+              "student_id": "s02",
+              "batch_id": "B2",
+              "revision": 2,
+              "score": 86,
+              "published": true,
+              "valid": true,
+              "supersedes": "g-B2-s02-r1"
+            }
+          ],
+          "total_matching": 10,
+          "has_more": true,
+          "next_cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgOF0=",
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 4,
+      "attempt": 4,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 2646,
+        "completion_tokens": 90,
+        "total_tokens": 2736,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "read_rows",
+      "tool_call_id": "chatcmpl-tool-8d423b10ab47faf4",
+      "arguments": "{\"batch_id\": \"B2\", \"cursor\": \"WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgOF0=\", \"source\": \"grades\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "rows": [
+            {
+              "record_id": "g-B2-s07-r1",
+              "student_id": "s07",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 88,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            },
+            {
+              "record_id": "g-B2-s01-r1",
+              "student_id": "s01",
+              "batch_id": "B2",
+              "revision": 1,
+              "score": 92,
+              "published": true,
+              "valid": true,
+              "supersedes": null
+            }
+          ],
+          "total_matching": 10,
+          "has_more": false,
+          "next_cursor": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 5,
+      "attempt": 5,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 2932,
+        "completion_tokens": 92,
+        "total_tokens": 3024,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_record",
+      "tool_call_id": "chatcmpl-tool-bbc64265c916111d",
+      "arguments": "{\"source\": \"grades\", \"record_id\": \"g-B2-s05-r2\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": false,
+          "record": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_record",
+      "tool_call_id": "chatcmpl-tool-93d4b4b1a719a530",
+      "arguments": "{\"source\": \"grades\", \"record_id\": \"g-B2-s03-r2\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": false,
+          "record": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 6,
+      "attempt": 6,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 3134,
+        "completion_tokens": 92,
+        "total_tokens": 3226,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_record",
+      "tool_call_id": "chatcmpl-tool-bfac3c53f15ffeaa",
+      "arguments": "{\"record_id\": \"g-B2-s01-r2\", \"source\": \"grades\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": false,
+          "record": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_record",
+      "tool_call_id": "chatcmpl-tool-9ba19447d181f4e2",
+      "arguments": "{\"record_id\": \"g-B2-s08-r2\", \"source\": \"grades\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": false,
+          "record": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 7,
+      "attempt": 7,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 3336,
+        "completion_tokens": 92,
+        "total_tokens": 3428,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_record",
+      "tool_call_id": "chatcmpl-tool-94e5d66406751b89",
+      "arguments": "{\"record_id\": \"g-B2-s07-r2\", \"source\": \"grades\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": false,
+          "record": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_record",
+      "tool_call_id": "chatcmpl-tool-9e1d92df33109981",
+      "arguments": "{\"record_id\": \"g-B2-s04-r2\", \"source\": \"grades\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": false,
+          "record": null,
+          "source": "grades",
+          "authority": true,
+          "snapshot_id": "W7-SNAPSHOT-001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 8,
+      "attempt": 8,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 3538,
+        "completion_tokens": 110,
+        "total_tokens": 3648,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "write_submission",
+      "tool_call_id": "chatcmpl-tool-ab5aa392dfa17cbc",
+      "arguments": "{\"rows_json\": \"[[\\\"s03\\\",\\\"\u6797\u60a6\\\",95,\\\"B2\\\",\\\"g-B2-s03-r1\\\",\\\"e-s03\\\"],[\\\"s01\\\",\\\"\u9648\u6668\\\",92,\\\"B2\\\",\\\"g-B2-s01-r1\\\",\\\"e-s01\\\"],[\\\"s06\\\",\\\"\u8bb8\u5b89\\\",91,\\\"B2\\\",\\\"g-B2-s06-r2\\\",\\\"e-s06\\\"]]\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "saved": "submission.xlsx",
+          "rows": 3
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 9,
+      "attempt": 9,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 3686,
+        "completion_tokens": 14,
+        "total_tokens": 3700,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "finish",
+      "tool_call_id": "chatcmpl-tool-881662894735ebed",
+      "arguments": "{}",
+      "result": {
+        "ok": true,
+        "result": {
+          "finished": true
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 10,
+      "attempt": 10,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": 3730,
+        "completion_tokens": 378,
+        "total_tokens": 4108,
+        "cached_tokens": null,
+        "reasoning_tokens": 0
+      }
+    }
+  ],
+  "calls": [
+    {
+      "tool": "directory",
+      "arguments": {},
+      "result": {
+        "snapshot_id": "W7-SNAPSHOT-001",
+        "target_batch": "B2",
+        "rules": "enrollment determines eligibility and name. grades determines score: target batch, published=true, valid=true, highest revision per student_id. Superseded old versions remain in source. Join by student_id and batch_id, never name. Cache is advisory and may be stale. Rank score descending, student_id ascending, top 3.",
+        "sources": {
+          "enrollment": {
+            "total_rows": 8,
+            "fields": [
+              "record_id",
+              "student_id",
+              "name",
+              "batch_id",
+              "status"
+            ],
+            "authority": true
+          },
+          "grades": {
+            "total_rows": 18,
+            "fields": [
+              "record_id",
+              "student_id",
+              "batch_id",
+              "revision",
+              "score",
+              "published",
+              "valid",
+              "supersedes"
+            ],
+            "authority": true
+          },
+          "cache": {
+            "total_rows": 8,
+            "fields": [
+              "record_id",
+              "student_id",
+              "name",
+              "batch_id",
+              "score",
+              "score_record_id",
+              "as_of_revision"
+            ],
+            "authority": false
+          }
+        },
+        "pagination": "Follow next_cursor while has_more, keeping source and batch_id filter. get_record is an alternative. Snapshot is fixed.",
+        "submission_columns": [
+          "student_id",
+          "name",
+          "score",
+          "batch_id",
+          "grade_record_id",
+          "enrollment_record_id"
+        ]
+      }
+    },
+    {
+      "tool": "read_rows",
+      "arguments": {
+        "source": "enrollment",
+        "batch_id": "B2"
+      },
+      "result": {
+        "rows": [
+          {
+            "record_id": "e-s03",
+            "student_id": "s03",
+            "name": "\u6797\u60a6",
+            "batch_id": "B2",
+            "status": "active"
+          },
+          {
+            "record_id": "e-s04",
+            "student_id": "s04",
+            "name": "\u5468\u822a",
+            "batch_id": "B2",
+            "status": "inactive"
+          },
+          {
+            "record_id": "e-s07",
+            "student_id": "s07",
+            "name": "\u5434\u6850",
+            "batch_id": "B2",
+            "status": "active"
+          },
+          {
+            "record_id": "e-s08",
+            "student_id": "s08",
+            "name": "\u5b59\u6674",
+            "batch_id": "B2",
+            "status": "active"
+          }
+        ],
+        "total_matching": 8,
+        "has_more": true,
+        "next_cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZW5yb2xsbWVudCIsICJCMiIsIDRd",
+        "source": "enrollment",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "read_rows",
+      "arguments": {
+        "source": "grades",
+        "batch_id": "B2"
+      },
+      "result": {
+        "rows": [
+          {
+            "record_id": "g-B2-s06-r1",
+            "student_id": "s06",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 89,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          },
+          {
+            "record_id": "g-B2-s05-r1",
+            "student_id": "s05",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 90,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          },
+          {
+            "record_id": "g-B2-s04-r1",
+            "student_id": "s04",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 99,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          },
+          {
+            "record_id": "g-B2-s02-r1",
+            "student_id": "s02",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 99,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          }
+        ],
+        "total_matching": 10,
+        "has_more": true,
+        "next_cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgNF0=",
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "read_rows",
+      "arguments": {
+        "source": "enrollment",
+        "batch_id": "B2",
+        "cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZW5yb2xsbWVudCIsICJCMiIsIDRd"
+      },
+      "result": {
+        "rows": [
+          {
+            "record_id": "e-s02",
+            "student_id": "s02",
+            "name": "\u9648\u6668",
+            "batch_id": "B2",
+            "status": "active"
+          },
+          {
+            "record_id": "e-s06",
+            "student_id": "s06",
+            "name": "\u8bb8\u5b89",
+            "batch_id": "B2",
+            "status": "active"
+          },
+          {
+            "record_id": "e-s05",
+            "student_id": "s05",
+            "name": "\u8d75\u5b81",
+            "batch_id": "B2",
+            "status": "active"
+          },
+          {
+            "record_id": "e-s01",
+            "student_id": "s01",
+            "name": "\u9648\u6668",
+            "batch_id": "B2",
+            "status": "active"
+          }
+        ],
+        "total_matching": 8,
+        "has_more": false,
+        "next_cursor": null,
+        "source": "enrollment",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "read_rows",
+      "arguments": {
+        "source": "grades",
+        "batch_id": "B2",
+        "cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgNF0="
+      },
+      "result": {
+        "rows": [
+          {
+            "record_id": "g-B2-s03-r1",
+            "student_id": "s03",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 95,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          },
+          {
+            "record_id": "g-B2-s06-r2",
+            "student_id": "s06",
+            "batch_id": "B2",
+            "revision": 2,
+            "score": 91,
+            "published": true,
+            "valid": true,
+            "supersedes": "g-B2-s06-r1"
+          },
+          {
+            "record_id": "g-B2-s08-r1",
+            "student_id": "s08",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 91,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          },
+          {
+            "record_id": "g-B2-s02-r2",
+            "student_id": "s02",
+            "batch_id": "B2",
+            "revision": 2,
+            "score": 86,
+            "published": true,
+            "valid": true,
+            "supersedes": "g-B2-s02-r1"
+          }
+        ],
+        "total_matching": 10,
+        "has_more": true,
+        "next_cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgOF0=",
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "read_rows",
+      "arguments": {
+        "batch_id": "B2",
+        "cursor": "WyJXNy1TTkFQU0hPVC0wMDEiLCAiZ3JhZGVzIiwgIkIyIiwgOF0=",
+        "source": "grades"
+      },
+      "result": {
+        "rows": [
+          {
+            "record_id": "g-B2-s07-r1",
+            "student_id": "s07",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 88,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          },
+          {
+            "record_id": "g-B2-s01-r1",
+            "student_id": "s01",
+            "batch_id": "B2",
+            "revision": 1,
+            "score": 92,
+            "published": true,
+            "valid": true,
+            "supersedes": null
+          }
+        ],
+        "total_matching": 10,
+        "has_more": false,
+        "next_cursor": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "get_record",
+      "arguments": {
+        "source": "grades",
+        "record_id": "g-B2-s05-r2"
+      },
+      "result": {
+        "found": false,
+        "record": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "get_record",
+      "arguments": {
+        "source": "grades",
+        "record_id": "g-B2-s03-r2"
+      },
+      "result": {
+        "found": false,
+        "record": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "get_record",
+      "arguments": {
+        "record_id": "g-B2-s01-r2",
+        "source": "grades"
+      },
+      "result": {
+        "found": false,
+        "record": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "get_record",
+      "arguments": {
+        "record_id": "g-B2-s08-r2",
+        "source": "grades"
+      },
+      "result": {
+        "found": false,
+        "record": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "get_record",
+      "arguments": {
+        "record_id": "g-B2-s07-r2",
+        "source": "grades"
+      },
+      "result": {
+        "found": false,
+        "record": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "get_record",
+      "arguments": {
+        "record_id": "g-B2-s04-r2",
+        "source": "grades"
+      },
+      "result": {
+        "found": false,
+        "record": null,
+        "source": "grades",
+        "authority": true,
+        "snapshot_id": "W7-SNAPSHOT-001"
+      }
+    },
+    {
+      "tool": "write_submission",
+      "arguments": {
+        "rows_json": "[[\"s03\",\"\u6797\u60a6\",95,\"B2\",\"g-B2-s03-r1\",\"e-s03\"],[\"s01\",\"\u9648\u6668\",92,\"B2\",\"g-B2-s01-r1\",\"e-s01\"],[\"s06\",\"\u8bb8\u5b89\",91,\"B2\",\"g-B2-s06-r2\",\"e-s06\"]]"
+      },
+      "result": {
+        "saved": "submission.xlsx",
+        "rows": 3
+      }
+    },
+    {
+      "tool": "finish",
+      "arguments": {},
+      "result": {
+        "finished": true
+      }
+    }
+  ],
+  "usage_db": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\w7-paired-v1-20261027\\case-coverage-shuffle-attempt-1\\usage.sqlite",
+  "artifact_dir": "runs\\file_workspaces\\5ba15956-5f48-437d-bd93-2619ffe40bce"
+}

@@ -1,0 +1,95 @@
+{
+  "replay_mismatches": [],
+  "replay_score": {
+    "success": false,
+    "checks": {
+      "result": true,
+      "decisions": true,
+      "report": true,
+      "initial_delivered": true,
+      "update_received": true,
+      "requirements": true,
+      "revised_saved": true,
+      "finished": true
+    },
+    "expected": [
+      "10400",
+      "2",
+      "A",
+      "7200"
+    ],
+    "actual": [
+      "10400",
+      "2",
+      "A",
+      "7200"
+    ],
+    "invalid_actions": 3,
+    "tool_calls": 49
+  },
+  "tool_errors": [
+    {
+      "index": 17,
+      "tool": "receive_update",
+      "error": "stage_one_failed: result, decisions, report"
+    },
+    {
+      "index": 25,
+      "tool": "receive_update",
+      "error": "stage_one_failed: decisions"
+    },
+    {
+      "index": 36,
+      "tool": "receive_update",
+      "error": "stage_one_failed: decisions"
+    }
+  ],
+  "api_errors": [
+    {
+      "event": "api_attempt",
+      "turn": 19,
+      "attempt": 19,
+      "retry_index": 0,
+      "error": "Request timed out.",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 19,
+      "attempt": 20,
+      "retry_index": 1,
+      "error": "Request timed out.",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    }
+  ],
+  "independent_expected": [
+    "10400",
+    "2",
+    "A",
+    "7200"
+  ],
+  "actual": [
+    "10400",
+    "2",
+    "A",
+    "7200"
+  ],
+  "stage": "revised",
+  "decisions_mismatches": [],
+  "decision_row_count_matches": true,
+  "source_candidate_hash_matches": true,
+  "requests": 24,
+  "tool_calls": 52
+}

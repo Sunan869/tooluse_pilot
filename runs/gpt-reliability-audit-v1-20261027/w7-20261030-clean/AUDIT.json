@@ -1,0 +1,75 @@
+{
+  "run": "w7-20261030-clean",
+  "family": 7,
+  "condition": "clean",
+  "case_id": "w7-clean-20261030",
+  "business_correct": true,
+  "task_completed": true,
+  "success": true,
+  "budget_exhausted": false,
+  "requests": 5,
+  "api_errors": 0,
+  "tools": 6,
+  "invalid_actions": 0,
+  "recoverable_rejections": 0,
+  "recovered_after_rejection_success": false,
+  "fault_exposed": null,
+  "coverage_complete": true,
+  "revision_current": null,
+  "labels_observable_not_causal": [],
+  "gold": [
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ],
+    [
+      "s06",
+      "许安",
+      91,
+      "B2",
+      "g-B2-s06-r2",
+      "e-s06"
+    ]
+  ],
+  "actual": [
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ],
+    [
+      "s06",
+      "许安",
+      91,
+      "B2",
+      "g-B2-s06-r2",
+      "e-s06"
+    ]
+  ],
+  "result_sha256": "66e0b8dec8268e9c1fc00c1ed83fb0c40711f48218aeb2ba8718d24fd96f6bde",
+  "candidate_sha256": "5b4d1d7d65927119318ab4dea9b1d824b239e4bfaf82d76f0907a654a0336244",
+  "dataset_sha256": "6aea382e0db6a10331159fe6c1f4b75c537e9099d622ef7042a63f15131f6a2b"
+}

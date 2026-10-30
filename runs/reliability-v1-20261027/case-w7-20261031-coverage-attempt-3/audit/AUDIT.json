@@ -1,0 +1,77 @@
+{
+  "run": "case-w7-20261031-coverage-attempt-3",
+  "family": 7,
+  "condition": "coverage",
+  "case_id": "w7-coverage-20261031",
+  "business_correct": false,
+  "task_completed": true,
+  "success": false,
+  "budget_exhausted": false,
+  "requests": 16,
+  "api_errors": 0,
+  "tools": 19,
+  "invalid_actions": 0,
+  "recoverable_rejections": 0,
+  "recovered_after_rejection_success": false,
+  "fault_exposed": null,
+  "coverage_complete": true,
+  "revision_current": null,
+  "labels_observable_not_causal": [
+    "selection_or_order"
+  ],
+  "gold": [
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ],
+    [
+      "s06",
+      "许安",
+      91,
+      "B2",
+      "g-B2-s06-r2",
+      "e-s06"
+    ]
+  ],
+  "actual": [
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ],
+    [
+      "s08",
+      "孙晴",
+      91,
+      "B2",
+      "g-B2-s08-r1",
+      "e-s08"
+    ]
+  ],
+  "result_sha256": "c7859e6c30994cbf2b5305f75f093b3f8381d9e24d100d6e8184ee83f76ac9df",
+  "candidate_sha256": "8abcf4f682696a4d15ce29b05af53a228dff0be888568f89ecbc7c1dd8f86ff1",
+  "dataset_sha256": "302270b66c9ca5e4e8e686ba12432b090ba37c45e7fa7af40f045854b1feee6b"
+}

@@ -1,0 +1,4 @@
+Total: 16500
+Count: 4
+Winner: A
+Amount: 4800

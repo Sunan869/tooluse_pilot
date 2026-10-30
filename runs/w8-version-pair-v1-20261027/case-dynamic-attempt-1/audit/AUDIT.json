@@ -1,0 +1,72 @@
+{
+  "run": "case-dynamic-attempt-1",
+  "answer_success": true,
+  "stop_reason": "task_completed",
+  "task_completed": true,
+  "budget_exhausted": false,
+  "coverage_complete": true,
+  "evidence_valid": true,
+  "api_attempts": 8,
+  "wire_requests": 8,
+  "successful_responses": 8,
+  "api_errors": 0,
+  "tools_replayed_exactly": 11,
+  "invalid_actions": 0,
+  "expected": [
+    [
+      "s05",
+      "赵宁",
+      96,
+      "B2",
+      "g-B2-s05-r2",
+      "e-s05"
+    ],
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ]
+  ],
+  "actual": [
+    [
+      "s05",
+      "赵宁",
+      96,
+      "B2",
+      "g-B2-s05-r2",
+      "e-s05"
+    ],
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ]
+  ],
+  "response_models": [
+    "Qwen3.8-Flash-Next-AWQ-INT4"
+  ],
+  "dataset_sha256": "4e21dedd081b96add0ac52bfdf60d213634fb5cbf192f8f0dfe031929e7d2358",
+  "candidate_sha256": "8108265b0a1235c769e83081a4a0089708d0dd44442a3c1a281fc714965dbb85"
+}

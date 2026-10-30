@@ -1,0 +1,21 @@
+{
+  "initial_red": {
+    "tests": 7,
+    "expected_failures": 6
+  },
+  "w7_tests": {
+    "executed_with_inherited_duplicates": 19,
+    "unique_tests": 12,
+    "passed": true
+  },
+  "boundary_variants": 100,
+  "complete_mock_runner_cases": 6,
+  "legacy_regression": {
+    "tests": 126,
+    "passed": true,
+    "cwd": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\w7-paired-v1-20261027\\code",
+    "command": "python -m unittest discover -s tests -q"
+  },
+  "note": "An initial legacy test command from repository root imported the old root package and failed; rerun from the isolated code directory passed. Production model launcher explicitly puts isolated code first.",
+  "frozen_manifest_verified": true
+}

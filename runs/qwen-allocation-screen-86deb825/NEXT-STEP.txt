@@ -1,0 +1,4 @@
+Only case-0 is Qwen-screened and independently repeated. Case-1 has offline validation only.
+User GPT command: & "E:\文档类\信通院\tooluser_pilot\runs\allocation-batch-v1-20261026\run-gpt-batch.ps1" -Cases 0
+Do not use -Cases 0,1 as if both were screened. Existing gpt alias maps to gpt-6-astra; user executes with their existing credentials. No GPT requests were made by this agent.
+Evidence: 48 successful Qwen API attempts, 0 transport errors, 99 tool calls replayed exactly. First run selects D incorrectly; second run rejects D for city instead of group_cap. Both fail stage-one file requirements; second summary/report recovered.

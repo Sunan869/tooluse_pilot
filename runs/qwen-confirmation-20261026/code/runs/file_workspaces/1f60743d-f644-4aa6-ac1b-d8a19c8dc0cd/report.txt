@@ -1,0 +1,13 @@
+Summary Report (revised after Policy and Corrections update)
+- Total: 11000
+- Count: 3
+- Winner: Gamma
+- Winner amount: 6600
+
+Eligible orders (active, present in all required cities Beijing & Shenzhen, value <= 8000 max):
+- Delta: 2600 x 1 = 2600
+- Gamma: 2200 x 3 = 6600
+- Beta: 1800 x 1 = 1800
+Excluded:
+- Alpha: Shenzhen=0 (missing required city)
+- Dormant: inactive status

@@ -1,0 +1,43 @@
+{
+  "source_commit": "b63ab366d369dfd1a7915cdbfb5c0e42086c87e5",
+  "seed": 20261026,
+  "reference": {
+    "success": true,
+    "checks": {
+      "initial_delivered": true,
+      "update_received": true,
+      "requirements": true,
+      "result": true,
+      "report": true,
+      "revised_saved": true,
+      "finished": true
+    },
+    "expected": [
+      "11000",
+      "3",
+      "Gamma",
+      "6600"
+    ],
+    "actual": [
+      "11000",
+      "3",
+      "Gamma",
+      "6600"
+    ],
+    "invalid_actions": 0,
+    "tool_calls": 20
+  },
+  "regression_tests": 19,
+  "new_model_requests": 3,
+  "blocker": "Existing Qwen endpoint request failed on all 3 attempts; infrastructure failure, not model failure.",
+  "planned_budget": {
+    "max_requests": 25,
+    "max_tools": 100
+  },
+  "reproduction": "From code snapshot: python -m tooluse_pilot.cli run-candidate ../candidate/candidate.json --config <existing-Qwen-config> --model <existing-Qwen-alias> --db ../usage.sqlite --max-requests 25 --max-tools 100",
+  "tool_calls": 0,
+  "state": "api_error",
+  "artifact_dir": "runs\\qwen-confirmation-20261026\\code\\runs\\file_workspaces\\cd955dce-e602-4362-8124-f010471aba45",
+  "qwen_config": "gateway.local.example.json",
+  "qwen_alias": "qwen"
+}

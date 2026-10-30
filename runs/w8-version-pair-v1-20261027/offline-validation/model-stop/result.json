@@ -1,0 +1,85 @@
+{
+  "run_id": "2c0b644d-a34f-4a4d-9183-a5a5c3f36f96",
+  "candidate_id": "w8-static-20261027",
+  "model": "Qwen3.8-Flash-Next-AWQ-INT4",
+  "protocol": "chat_completions",
+  "state": "model_stopped",
+  "requests": 1,
+  "tool_calls": 0,
+  "score": {
+    "success": false,
+    "answer_success": false,
+    "finished": false,
+    "evidence_valid": false,
+    "coverage_complete": false,
+    "coverage": {
+      "enrollment": {
+        "seen": 0,
+        "required": 8
+      },
+      "grades": {
+        "seen": 0,
+        "required": 10
+      }
+    },
+    "strict_process_success": false,
+    "invalid_actions": 0,
+    "expected": [
+      [
+        "s03",
+        "\u6797\u60a6",
+        95,
+        "B2",
+        "g-B2-s03-r1",
+        "e-s03"
+      ],
+      [
+        "s01",
+        "\u9648\u6668",
+        92,
+        "B2",
+        "g-B2-s01-r1",
+        "e-s01"
+      ],
+      [
+        "s06",
+        "\u8bb8\u5b89",
+        91,
+        "B2",
+        "g-B2-s06-r2",
+        "e-s06"
+      ]
+    ],
+    "actual": [],
+    "task_completed": false,
+    "answer_correct": false,
+    "saved_revision": null,
+    "current_revision": "R1",
+    "revision_current": false
+  },
+  "invalid_tool_actions": 0,
+  "profile": null,
+  "estimated_cost": null,
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 1,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    }
+  ],
+  "calls": [],
+  "usage_db": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\w8-version-pair-v1-20261027\\offline-validation\\model-stop\\usage.sqlite",
+  "stop_reason": "model_stopped",
+  "budget_exhausted": false,
+  "task_completed": false,
+  "artifact_dir": "runs\\file_workspaces\\f2e3ea84-b218-4e2f-ad75-1f311fdcf69a"
+}

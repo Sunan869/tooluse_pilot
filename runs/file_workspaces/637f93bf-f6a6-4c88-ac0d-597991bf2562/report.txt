@@ -1,0 +1,4 @@
+Total: 11000
+Count: 3
+Winner: Gamma
+Amount: 6600

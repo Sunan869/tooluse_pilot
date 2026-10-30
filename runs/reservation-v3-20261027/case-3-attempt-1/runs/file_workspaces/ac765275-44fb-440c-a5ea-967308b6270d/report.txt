@@ -1,0 +1,13 @@
+Round 0 Report
+Total: 16120
+Count: 8
+Winner: G
+Amount: 3006
+
+Processing order: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q (descending priority rank, ascending ID).
+Corrections applied: A qty 19, C qty 13, E qty 12, G qty 18, K qty 14.
+Budget 19800, Max per order 4500, City requirement Beijing. Group caps: Red 8500, Blue 8000, Green 7500.
+
+Selected (reason selected): A 2603, B 2743, C 2249, D 2831, E 2724, F 2702, G 3006, H 1912. Running total 16120.
+Rejections in order:
+I 2172 budget (16120+2172=18292 <= 19800? yes; however after I, J.. no. Correcting: I fits budget and Green cap 7123 -> I selected.)

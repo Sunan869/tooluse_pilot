@@ -1,0 +1,715 @@
+{
+  "run_id": "b9b1ae28-84d2-44c1-bd42-b8ae583b094e",
+  "candidate_id": "w9-permanent",
+  "model": "Qwen3.8-Flash-Next-AWQ-INT4",
+  "protocol": "chat_completions",
+  "state": "task_completed",
+  "requests": 11,
+  "tool_calls": 11,
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "task_completed": true,
+    "checks": {
+      "arrived": true,
+      "deadline": true,
+      "budget": true,
+      "minimum_cost": true,
+      "no_duplicate_charges": true
+    },
+    "expected_minimum_cost": 4,
+    "actual_cost": 4,
+    "arrival_time": 900,
+    "location": "D",
+    "path": [
+      "a1",
+      "a3"
+    ],
+    "fault_exposed": true,
+    "permanent_retries": 0,
+    "rejections": [
+      {
+        "route_id": "direct",
+        "code": "E503"
+      }
+    ],
+    "invalid_actions": 0
+  },
+  "invalid_tool_actions": 0,
+  "profile": null,
+  "estimated_cost": null,
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 1,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_package",
+      "tool_call_id": "t0",
+      "arguments": "{}",
+      "result": {
+        "ok": true,
+        "result": {
+          "package_id": "P",
+          "location": "W",
+          "virtual_time": "09:00",
+          "destination": "D",
+          "deadline": "16:00",
+          "budget": 4,
+          "total_cost": 0,
+          "hubs": [
+            "W",
+            "A",
+            "B",
+            "D"
+          ],
+          "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 2,
+      "attempt": 2,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "list_routes",
+      "tool_call_id": "t1",
+      "arguments": "{\"origin\": \"W\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "origin": "W",
+          "complete": true,
+          "total": 3,
+          "routes": [
+            {
+              "route_id": "direct",
+              "origin": "W",
+              "destination": "D",
+              "departure": "10:00",
+              "arrival": "11:00",
+              "cost": 3
+            },
+            {
+              "route_id": "a1",
+              "origin": "W",
+              "destination": "A",
+              "departure": "10:00",
+              "arrival": "12:00",
+              "cost": 1
+            },
+            {
+              "route_id": "b1",
+              "origin": "W",
+              "destination": "B",
+              "departure": "10:00",
+              "arrival": "11:00",
+              "cost": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 3,
+      "attempt": 3,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "send_leg",
+      "tool_call_id": "t2",
+      "arguments": "{\"route_id\": \"direct\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "success": false,
+          "code": "E503",
+          "moved": false,
+          "charged": 0,
+          "incident_id": "I001",
+          "message": "Dispatch unavailable. No movement or charge. inspect_incident can determine incident status."
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 4,
+      "attempt": 4,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "inspect_incident",
+      "tool_call_id": "t3",
+      "arguments": "{\"incident_id\": \"I001\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "found": true,
+          "incident_id": "I001",
+          "route_id": "direct",
+          "kind": "permanent",
+          "status": "permanent_for_episode",
+          "moved": false,
+          "charged": 0
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 5,
+      "attempt": 5,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "list_routes",
+      "tool_call_id": "t4",
+      "arguments": "{\"origin\": \"A\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "origin": "A",
+          "complete": true,
+          "total": 2,
+          "routes": [
+            {
+              "route_id": "a2",
+              "origin": "A",
+              "destination": "D",
+              "departure": "11:00",
+              "arrival": "13:00",
+              "cost": 1
+            },
+            {
+              "route_id": "a3",
+              "origin": "A",
+              "destination": "D",
+              "departure": "14:00",
+              "arrival": "15:00",
+              "cost": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 6,
+      "attempt": 6,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "list_routes",
+      "tool_call_id": "t5",
+      "arguments": "{\"origin\": \"B\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "origin": "B",
+          "complete": true,
+          "total": 1,
+          "routes": [
+            {
+              "route_id": "b2",
+              "origin": "B",
+              "destination": "D",
+              "departure": "12:00",
+              "arrival": "14:00",
+              "cost": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 7,
+      "attempt": 7,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "send_leg",
+      "tool_call_id": "t6",
+      "arguments": "{\"route_id\": \"a1\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "success": true,
+          "location": "A",
+          "virtual_time": "12:00",
+          "charged": 1,
+          "total_cost": 1,
+          "ledger_entry_id": "L001"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 8,
+      "attempt": 8,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "send_leg",
+      "tool_call_id": "t7",
+      "arguments": "{\"route_id\": \"a3\"}",
+      "result": {
+        "ok": true,
+        "result": {
+          "success": true,
+          "location": "D",
+          "virtual_time": "15:00",
+          "charged": 3,
+          "total_cost": 4,
+          "ledger_entry_id": "L002"
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 9,
+      "attempt": 9,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_package",
+      "tool_call_id": "t8",
+      "arguments": "{}",
+      "result": {
+        "ok": true,
+        "result": {
+          "package_id": "P",
+          "location": "D",
+          "virtual_time": "15:00",
+          "destination": "D",
+          "deadline": "16:00",
+          "budget": 4,
+          "total_cost": 4,
+          "hubs": [
+            "W",
+            "A",
+            "B",
+            "D"
+          ],
+          "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 10,
+      "attempt": 10,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "get_ledger",
+      "tool_call_id": "t9",
+      "arguments": "{}",
+      "result": {
+        "ok": true,
+        "result": {
+          "charges": [
+            {
+              "entry_id": "L001",
+              "route_id": "a1",
+              "origin": "W",
+              "destination": "A",
+              "departure": 600,
+              "arrival": 720,
+              "amount": 1
+            },
+            {
+              "entry_id": "L002",
+              "route_id": "a3",
+              "origin": "A",
+              "destination": "D",
+              "departure": 840,
+              "arrival": 900,
+              "amount": 3
+            }
+          ],
+          "total_cost": 4,
+          "complete": true
+        }
+      }
+    },
+    {
+      "event": "api_attempt",
+      "turn": 11,
+      "attempt": 11,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    },
+    {
+      "event": "tool_call",
+      "tool": "finish",
+      "tool_call_id": "t10",
+      "arguments": "{}",
+      "result": {
+        "ok": true,
+        "result": {
+          "finished": true,
+          "package": {
+            "package_id": "P",
+            "location": "D",
+            "virtual_time": "15:00",
+            "destination": "D",
+            "deadline": "16:00",
+            "budget": 4,
+            "total_cost": 4,
+            "hubs": [
+              "W",
+              "A",
+              "B",
+              "D"
+            ],
+            "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+          }
+        }
+      }
+    }
+  ],
+  "calls": [
+    {
+      "tool": "get_package",
+      "arguments": {},
+      "result": {
+        "package_id": "P",
+        "location": "W",
+        "virtual_time": "09:00",
+        "destination": "D",
+        "deadline": "16:00",
+        "budget": 4,
+        "total_cost": 0,
+        "hubs": [
+          "W",
+          "A",
+          "B",
+          "D"
+        ],
+        "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+      }
+    },
+    {
+      "tool": "list_routes",
+      "arguments": {
+        "origin": "W"
+      },
+      "result": {
+        "origin": "W",
+        "complete": true,
+        "total": 3,
+        "routes": [
+          {
+            "route_id": "direct",
+            "origin": "W",
+            "destination": "D",
+            "departure": "10:00",
+            "arrival": "11:00",
+            "cost": 3
+          },
+          {
+            "route_id": "a1",
+            "origin": "W",
+            "destination": "A",
+            "departure": "10:00",
+            "arrival": "12:00",
+            "cost": 1
+          },
+          {
+            "route_id": "b1",
+            "origin": "W",
+            "destination": "B",
+            "departure": "10:00",
+            "arrival": "11:00",
+            "cost": 2
+          }
+        ]
+      }
+    },
+    {
+      "tool": "send_leg",
+      "arguments": {
+        "route_id": "direct"
+      },
+      "result": {
+        "success": false,
+        "code": "E503",
+        "moved": false,
+        "charged": 0,
+        "incident_id": "I001",
+        "message": "Dispatch unavailable. No movement or charge. inspect_incident can determine incident status."
+      }
+    },
+    {
+      "tool": "inspect_incident",
+      "arguments": {
+        "incident_id": "I001"
+      },
+      "result": {
+        "found": true,
+        "incident_id": "I001",
+        "route_id": "direct",
+        "kind": "permanent",
+        "status": "permanent_for_episode",
+        "moved": false,
+        "charged": 0
+      }
+    },
+    {
+      "tool": "list_routes",
+      "arguments": {
+        "origin": "A"
+      },
+      "result": {
+        "origin": "A",
+        "complete": true,
+        "total": 2,
+        "routes": [
+          {
+            "route_id": "a2",
+            "origin": "A",
+            "destination": "D",
+            "departure": "11:00",
+            "arrival": "13:00",
+            "cost": 1
+          },
+          {
+            "route_id": "a3",
+            "origin": "A",
+            "destination": "D",
+            "departure": "14:00",
+            "arrival": "15:00",
+            "cost": 3
+          }
+        ]
+      }
+    },
+    {
+      "tool": "list_routes",
+      "arguments": {
+        "origin": "B"
+      },
+      "result": {
+        "origin": "B",
+        "complete": true,
+        "total": 1,
+        "routes": [
+          {
+            "route_id": "b2",
+            "origin": "B",
+            "destination": "D",
+            "departure": "12:00",
+            "arrival": "14:00",
+            "cost": 2
+          }
+        ]
+      }
+    },
+    {
+      "tool": "send_leg",
+      "arguments": {
+        "route_id": "a1"
+      },
+      "result": {
+        "success": true,
+        "location": "A",
+        "virtual_time": "12:00",
+        "charged": 1,
+        "total_cost": 1,
+        "ledger_entry_id": "L001"
+      }
+    },
+    {
+      "tool": "send_leg",
+      "arguments": {
+        "route_id": "a3"
+      },
+      "result": {
+        "success": true,
+        "location": "D",
+        "virtual_time": "15:00",
+        "charged": 3,
+        "total_cost": 4,
+        "ledger_entry_id": "L002"
+      }
+    },
+    {
+      "tool": "get_package",
+      "arguments": {},
+      "result": {
+        "package_id": "P",
+        "location": "D",
+        "virtual_time": "15:00",
+        "destination": "D",
+        "deadline": "16:00",
+        "budget": 4,
+        "total_cost": 4,
+        "hubs": [
+          "W",
+          "A",
+          "B",
+          "D"
+        ],
+        "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+      }
+    },
+    {
+      "tool": "get_ledger",
+      "arguments": {},
+      "result": {
+        "charges": [
+          {
+            "entry_id": "L001",
+            "route_id": "a1",
+            "origin": "W",
+            "destination": "A",
+            "departure": 600,
+            "arrival": 720,
+            "amount": 1
+          },
+          {
+            "entry_id": "L002",
+            "route_id": "a3",
+            "origin": "A",
+            "destination": "D",
+            "departure": 840,
+            "arrival": 900,
+            "amount": 3
+          }
+        ],
+        "total_cost": 4,
+        "complete": true
+      }
+    },
+    {
+      "tool": "finish",
+      "arguments": {},
+      "result": {
+        "finished": true,
+        "package": {
+          "package_id": "P",
+          "location": "D",
+          "virtual_time": "15:00",
+          "destination": "D",
+          "deadline": "16:00",
+          "budget": 4,
+          "total_cost": 4,
+          "hubs": [
+            "W",
+            "A",
+            "B",
+            "D"
+          ],
+          "rules": "Queries do not advance time. Any hub may be queried. Successful sends wait until departure and arrive atomically; failures do not move or charge. Cannot board an already departed leg. Incident status can be inspected. finish is terminal and does not grade correctness."
+        }
+      }
+    }
+  ],
+  "usage_db": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\w9-routing-pair-v1-20261027\\offline-validation\\permanent-path0\\usage.sqlite",
+  "stop_reason": "task_completed",
+  "budget_exhausted": false,
+  "task_completed": true,
+  "artifact_dir": "runs\\file_workspaces\\0de6d560-fd36-49ab-9ac7-c1bc0f77ffb1"
+}

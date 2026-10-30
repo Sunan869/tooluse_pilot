@@ -1,0 +1,8 @@
+Run from this evidence directory/code, using the existing project gateway.local.example.json.
+Set LOCAL_MODEL_BASE_URL to the previously authorized existing Qwen endpoint for this process only.
+python -m tooluse_pilot.cli run-candidate ../candidate-expanded/candidate.json --config ../../../gateway.local.example.json --model qwen --db ../fresh-usage.sqlite --max-requests 25 --max-tools 80
+The runner creates a UUID workspace under code/runs/file_workspaces; retain its run_result.json, workbook and report.
+Do not change proxy, credentials, or security settings. Network requests in this execution environment require formal escalation approval.
+Source snapshot: b63ab366d369dfd1a7915cdbfb5c0e42086c87e5, plus local Winner amount parser fix and 3 regression tests. 22 W6 tests passed.
+Expanded candidate: seed 20261027; 24 appended orders Order00..Order23, seeded random prices/quantity/city flags and corrections. Retained input workbook is authoritative. Independent expected values are in expanded-independent-oracle.json.
+Run reference only on a fresh copy; it mutates workbook and report. Never run reference directly on retained candidate inputs.

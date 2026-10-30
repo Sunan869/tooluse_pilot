@@ -1,0 +1,4 @@
+Total: 15669
+Count: 6
+Winner: D
+Amount: 2831

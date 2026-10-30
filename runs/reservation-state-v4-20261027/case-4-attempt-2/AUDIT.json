@@ -1,0 +1,180 @@
+{
+  "replay_mismatches": [],
+  "replay_score": {
+    "success": false,
+    "checks": {
+      "result": false,
+      "decisions": false,
+      "report": false,
+      "round0_delivered": false,
+      "round1_delivered": false,
+      "round2_received": false,
+      "final_saved": false,
+      "finished": false
+    },
+    "expected": [
+      "17084",
+      "6",
+      "H",
+      "4063"
+    ],
+    "actual": [
+      "17534",
+      "7",
+      "B",
+      "2743"
+    ],
+    "invalid_actions": 3,
+    "tool_calls": 44,
+    "round": 0
+  },
+  "tool_errors": [
+    {
+      "index": 24,
+      "tool": "receive_update",
+      "error": "round_0_failed: result, decisions, report"
+    },
+    {
+      "index": 30,
+      "tool": "receive_update",
+      "error": "round_0_failed: result, decisions, report"
+    },
+    {
+      "index": 39,
+      "tool": "receive_update",
+      "error": "round_0_failed: result, decisions, report"
+    }
+  ],
+  "api_errors": [],
+  "independent_expected": [
+    "17084",
+    "6",
+    "H",
+    "4063"
+  ],
+  "actual": [
+    "17534",
+    "7",
+    "B",
+    "2743"
+  ],
+  "stage": "round-0",
+  "decisions_mismatches": [
+    {
+      "expected": [
+        "H",
+        4063,
+        1,
+        "selected"
+      ],
+      "actual": [
+        "H",
+        4063,
+        0,
+        "budget"
+      ]
+    },
+    {
+      "expected": [
+        "E",
+        2724,
+        1,
+        "retained"
+      ],
+      "actual": [
+        "I",
+        2172,
+        0,
+        "city"
+      ]
+    },
+    {
+      "expected": [
+        "I",
+        2172,
+        0,
+        "city"
+      ],
+      "actual": [
+        "A",
+        2603,
+        1,
+        "retained"
+      ]
+    },
+    {
+      "expected": [
+        "A",
+        2603,
+        1,
+        "retained"
+      ],
+      "actual": [
+        "E",
+        2724,
+        1,
+        "retained"
+      ]
+    },
+    {
+      "expected": [
+        "K",
+        4267,
+        0,
+        "group_cap"
+      ],
+      "actual": [
+        "K",
+        4267,
+        0,
+        "dependency"
+      ]
+    },
+    {
+      "expected": [
+        "N",
+        2519,
+        0,
+        "group_cap"
+      ],
+      "actual": [
+        "N",
+        2519,
+        0,
+        "city"
+      ]
+    },
+    {
+      "expected": [
+        "O",
+        1818,
+        0,
+        "group_cap"
+      ],
+      "actual": [
+        "O",
+        1818,
+        1,
+        "selected"
+      ]
+    },
+    {
+      "expected": [
+        "P",
+        1695,
+        0,
+        "budget"
+      ],
+      "actual": [
+        "P",
+        1695,
+        1,
+        "selected"
+      ]
+    }
+  ],
+  "decision_row_count_matches": true,
+  "source_candidate_hash_matches": true,
+  "requests": 25,
+  "tool_calls": 47
+}

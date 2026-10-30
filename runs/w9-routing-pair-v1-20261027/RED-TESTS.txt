@@ -1,0 +1,59 @@
+EEEE.EE
+======================================================================
+ERROR: test_both_permanent_recovery_routes (__main__.Tests.test_both_permanent_recovery_routes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w9-routing-pair-v1-20261027\test_w9.py", line 18, in test_both_permanent_recovery_routes
+    e,d=self.make('permanent');e.call('send_leg',{'route_id':'direct'});self.assertEqual(e.call('inspect_incident',{'incident_id':'I001'})['status'],'permanent_for_episode')
+                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'status'
+
+======================================================================
+ERROR: test_identical_initial_failure_no_effect (__main__.Tests.test_identical_initial_failure_no_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w9-routing-pair-v1-20261027\test_w9.py", line 13, in test_identical_initial_failure_no_effect
+    a,d=self.make('transient');b,_=self.make('permanent');before=a.call('get_package',{});x=a.call('send_leg',{'route_id':'direct'});y=b.call('send_leg',{'route_id':'direct'});self.assertEqual(x,y);self.assertEqual(x['code'],'E503');self.assertEqual(before,a.call('get_package',{}));self.assertEqual(a.call('get_ledger',{})['charges'],[])
+                                                                                                                                                                                                                       ~^^^^^^^^
+KeyError: 'code'
+
+======================================================================
+ERROR: test_missed_connection_recoverable (__main__.Tests.test_missed_connection_recoverable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w9-routing-pair-v1-20261027\test_w9.py", line 22, in test_missed_connection_recoverable
+    e,d=self.make('permanent');e.call('send_leg',{'route_id':'a1'});r=e.call('send_leg',{'route_id':'a2'});self.assertEqual(r['code'],'MISSED_DEPARTURE');e.call('send_leg',{'route_id':'a3'});e.call('finish',{});self.assertTrue(e.score()['success']);self.assertFalse(e.score()['fault_exposed'])
+                                                                                                                            ~^^^^^^^^
+KeyError: 'code'
+
+======================================================================
+ERROR: test_no_exposure_and_suboptimal_separate (__main__.Tests.test_no_exposure_and_suboptimal_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w9-routing-pair-v1-20261027\test_w9.py", line 24, in test_no_exposure_and_suboptimal_separate
+    e,d=self.make('transient');e.call('send_leg',{'route_id':'b1'});e.call('send_leg',{'route_id':'b2'});e.call('finish',{});s=e.score();self.assertTrue(s['checks']['arrived']);self.assertFalse(s['checks']['minimum_cost']);self.assertFalse(s['fault_exposed'])
+                                                                                                                                                         ~^^^^^^^^^^
+KeyError: 'checks'
+
+======================================================================
+ERROR: test_reads_future_hubs_do_not_advance_time (__main__.Tests.test_reads_future_hubs_do_not_advance_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w9-routing-pair-v1-20261027\test_w9.py", line 26, in test_reads_future_hubs_do_not_advance_time
+    e,d=self.make('permanent');p=e.call('get_package',{});r=e.call('list_routes',{'origin':'A'});self.assertTrue(r['complete']);self.assertEqual(len(r['routes']),2);self.assertEqual(e.call('get_package',{}),p)
+                                                                                                                 ~^^^^^^^^^^^^
+KeyError: 'complete'
+
+======================================================================
+ERROR: test_transient_retry_and_duplicate_no_charge (__main__.Tests.test_transient_retry_and_duplicate_no_charge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\鏂囨。绫籠淇￠€氶櫌\tooluser_pilot\runs\w9-routing-pair-v1-20261027\test_w9.py", line 15, in test_transient_retry_and_duplicate_no_charge
+    e,d=self.make('transient');e.call('send_leg',{'route_id':'direct'});self.assertEqual(e.call('inspect_incident',{'incident_id':'I001'})['status'],'resolved');self.assertTrue(e.call('send_leg',{'route_id':'direct'})['success']);self.assertFalse(e.call('send_leg',{'route_id':'direct'})['success']);e.call('finish',{});self.assertTrue(e.score()['success']);self.assertEqual(e.score()['actual_cost'],3)
+                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'status'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.032s
+
+FAILED (errors=6)

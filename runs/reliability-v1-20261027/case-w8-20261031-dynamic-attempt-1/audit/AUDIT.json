@@ -1,0 +1,75 @@
+{
+  "run": "case-w8-20261031-dynamic-attempt-1",
+  "family": 8,
+  "condition": "dynamic",
+  "case_id": "w8-dynamic-20261031",
+  "business_correct": true,
+  "task_completed": true,
+  "success": true,
+  "budget_exhausted": false,
+  "requests": 7,
+  "api_errors": 0,
+  "tools": 10,
+  "invalid_actions": 0,
+  "recoverable_rejections": 0,
+  "recovered_after_rejection_success": false,
+  "fault_exposed": null,
+  "coverage_complete": true,
+  "revision_current": true,
+  "labels_observable_not_causal": [],
+  "gold": [
+    [
+      "s05",
+      "赵宁",
+      96,
+      "B2",
+      "g-B2-s05-r2",
+      "e-s05"
+    ],
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ]
+  ],
+  "actual": [
+    [
+      "s05",
+      "赵宁",
+      96,
+      "B2",
+      "g-B2-s05-r2",
+      "e-s05"
+    ],
+    [
+      "s03",
+      "林悦",
+      95,
+      "B2",
+      "g-B2-s03-r1",
+      "e-s03"
+    ],
+    [
+      "s01",
+      "陈晨",
+      92,
+      "B2",
+      "g-B2-s01-r1",
+      "e-s01"
+    ]
+  ],
+  "result_sha256": "c89f186642d8dd4f5df3d8c9acf2708930e064a3101c98584267923deb6ec93d",
+  "candidate_sha256": "b6700988ff9db274db4d70ed495bfffa91df49b1c14891f2314cd83573f60732",
+  "dataset_sha256": "302270b66c9ca5e4e8e686ba12432b090ba37c45e7fa7af40f045854b1feee6b"
+}

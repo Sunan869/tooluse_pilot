@@ -1,0 +1,74 @@
+FFFFF.F
+======================================================================
+FAIL: test_clean_sources_complete (__main__.W7Tests.test_clean_sources_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\文档类\信通院\tooluser_pilot\runs\w7-paired-v1-20261027\test_w7.py", line 18, in test_clean_sources_complete
+    self.assertEqual(len(r.get('rows',[])),18);self.assertFalse(r['has_more']);self.assertEqual(r['total_matching'],18)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 18
+
+======================================================================
+FAIL: test_correct_answer_without_reads_is_not_answer_failure (__main__.W7Tests.test_correct_answer_without_reads_is_not_answer_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\文档类\信通院\tooluser_pilot\runs\w7-paired-v1-20261027\test_w7.py", line 35, in test_correct_answer_without_reads_is_not_answer_failure
+    s=e.score();self.assertTrue(s['answer_success']);self.assertTrue(s['success']);self.assertFalse(s['coverage_complete'])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_coverage_complete_path_no_duplicates (__main__.W7Tests.test_coverage_complete_path_no_duplicates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\文档类\信通院\tooluser_pilot\runs\w7-paired-v1-20261027\test_w7.py", line 24, in test_coverage_complete_path_no_duplicates
+    r=e.call('read_rows',a);self.assertLessEqual(len(r.get('rows',[])),4);self.assertTrue('has_more' in r)
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_gold_ids_tie_and_batch (__main__.W7Tests.test_gold_ids_tie_and_batch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\文档类\信通院\tooluser_pilot\runs\w7-paired-v1-20261027\test_w7.py", line 15, in test_gold_ids_tie_and_batch
+    self.assertEqual(answer_rows(d),oracle(d))
+AssertionError: Lists differ: [] != [['s03', '林悦', 95, 'B2', 'g-B2-s03-r1', 'e[100 chars]06']]
+
+Second list contains 3 additional elements.
+First extra element 0:
+['s03', '林悦', 95, 'B2', 'g-B2-s03-r1', 'e-s03']
+
+- []
++ [['s03', '林悦', 95, 'B2', 'g-B2-s03-r1', 'e-s03'],
++  ['s01', '陈晨', 92, 'B2', 'g-B2-s01-r1', 'e-s01'],
++  ['s06', '许安', 91, 'B2', 'g-B2-s06-r2', 'e-s06']]
+
+======================================================================
+FAIL: test_only_cache_conflicts (__main__.W7Tests.test_only_cache_conflicts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\文档类\信通院\tooluser_pilot\runs\w7-paired-v1-20261027\test_w7.py", line 30, in test_only_cache_conflicts
+    e,d=self.make('conflict');r=e.call('read_rows',{'source':'cache'});self.assertEqual(len(r.get('rows',[])),8)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 8
+
+======================================================================
+FAIL: test_zero_and_unpublished_versions (__main__.W7Tests.test_zero_and_unpublished_versions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\文档类\信通院\tooluser_pilot\runs\w7-paired-v1-20261027\test_w7.py", line 44, in test_zero_and_unpublished_versions
+    self.assertEqual(oracle(d)[0][2],0);self.assertEqual(answer_rows(d),oracle(d))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [['s01', '陈晨', 0, 'B2', 'g-B2-s01-r1', 'e-s01']]
+
+Second list contains 1 additional elements.
+First extra element 0:
+['s01', '陈晨', 0, 'B2', 'g-B2-s01-r1', 'e-s01']
+
+- []
++ [['s01', '陈晨', 0, 'B2', 'g-B2-s01-r1', 'e-s01']]
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.027s
+
+FAILED (failures=6)

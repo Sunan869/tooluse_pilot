@@ -1,0 +1,245 @@
+{
+  "run_id": "f527ae2d-2681-4cc0-b516-45af62473069",
+  "model_alias": "gpt",
+  "provider": "openai_via_tokenops",
+  "model": "gpt-6-astra",
+  "mode": "structured",
+  "requests": 4,
+  "tool_calls": 10,
+  "state": "finished",
+  "estimated_cost": null,
+  "currency": null,
+  "score": {
+    "total": 100.0,
+    "result_score": 1.0,
+    "process_score": 1,
+    "expected_rows": 61,
+    "actual_rows": 61,
+    "correct_rows": 61,
+    "extra_rows": 0,
+    "duplicate_ids": false,
+    "revision_injected": true
+  },
+  "usage_db": "runs/usage.sqlite",
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "retry_index": 0,
+      "attempt": 1,
+      "status": "ok",
+      "error": null,
+      "request_id": "resp_b5kv46en3ly3wg7izdpxvxeujrsp4i2776t4ntlyha62fjtcu4aa",
+      "tool_calls": 1,
+      "usage": {
+        "prompt_tokens": 553,
+        "completion_tokens": 15,
+        "total_tokens": 568,
+        "cached_tokens": 0,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "name": "list_sheets",
+      "ok": true,
+      "tool_call_id": "call_432c5065f2da53f2b91239534de7ef91"
+    },
+    {
+      "event": "api_attempt",
+      "turn": 2,
+      "retry_index": 0,
+      "attempt": 2,
+      "status": "ok",
+      "error": null,
+      "request_id": "resp_waayqliyffndbut3uxzdnwhhnrzw64irj3r6oyrsnsok5mmqdl7q",
+      "tool_calls": 8,
+      "usage": {
+        "prompt_tokens": 617,
+        "completion_tokens": 168,
+        "total_tokens": 785,
+        "cached_tokens": 0,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_c82658f8d8f25724af51d7e4ca67571b"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_70cdf4b830c052fb8779540f51484c82"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_bf287a772d475a1aa3896f66576cdab0"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_c2e10047ca58578b8ec4fbde02d56676"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_7de8f90d33bd5a3aa861b61e25501445"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_673d9bdda215578c8ebd822c8193a079"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_f09ff748699f510698b7be154df7bba6"
+    },
+    {
+      "event": "tool_call",
+      "name": "read_rows",
+      "ok": true,
+      "tool_call_id": "call_8b4002a97b8352f7b2c6bebef28c7b02"
+    },
+    {
+      "event": "user_revision",
+      "after_turn": 2,
+      "asof": "2026-09-11"
+    },
+    {
+      "event": "api_attempt",
+      "turn": 3,
+      "retry_index": 0,
+      "attempt": 3,
+      "status": "ok",
+      "error": null,
+      "request_id": "resp_3zezwfinz4wy5pkox7xrcz4e4jiyukhvjpq2zpnrgvbqxgu7izca",
+      "tool_calls": 1,
+      "usage": {
+        "prompt_tokens": 18376,
+        "completion_tokens": 3331,
+        "total_tokens": 21707,
+        "cached_tokens": 18318,
+        "reasoning_tokens": 1143
+      }
+    },
+    {
+      "event": "tool_call",
+      "name": "write_csv",
+      "ok": true,
+      "tool_call_id": "call_f85d6f9960735b74953852436384d9ec"
+    },
+    {
+      "event": "api_attempt",
+      "turn": 4,
+      "retry_index": 0,
+      "attempt": 4,
+      "status": "ok",
+      "error": null,
+      "request_id": "resp_uu4hrtjw3fi5cfjshql5c6qxedxqbaio2qdcjd2ychuf26icagsa",
+      "tool_calls": 0,
+      "usage": {
+        "prompt_tokens": 21734,
+        "completion_tokens": 133,
+        "total_tokens": 21867,
+        "cached_tokens": 18374,
+        "reasoning_tokens": 0
+      }
+    }
+  ],
+  "calls": [
+    {
+      "tool": "list_sheets",
+      "args": {},
+      "result_size": 8
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Orders",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 100
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Payments",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 138
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Suppliers",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 26
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Rules",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 12
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Amendments",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 26
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Aliases",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 13
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Holds",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 12
+    },
+    {
+      "tool": "read_rows",
+      "args": {
+        "sheet": "Notes",
+        "offset": 0,
+        "limit": 500
+      },
+      "result_size": 4
+    },
+    {
+      "tool": "write_csv",
+      "args": {
+        "row_count": 61
+      },
+      "result_size": null
+    }
+  ]
+}

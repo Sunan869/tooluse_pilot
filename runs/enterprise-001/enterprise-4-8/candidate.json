@@ -1,0 +1,78 @@
+{
+  "id": "enterprise-4-8",
+  "family": "enterprise_settlement",
+  "seed": 4,
+  "task": "Reconcile the order register; process approved orders only after their dependencies are settled. Request missing approvals and leave those orders pending. The first commit may meet an optimistic-lock conflict; refresh and retry safely. Do not make duplicate settlements. Report final state using tools.",
+  "environment": {
+    "orders": [
+      {
+        "id": "ORD-001",
+        "amount": 441,
+        "depends_on": [],
+        "approved": true,
+        "version": 1
+      },
+      {
+        "id": "ORD-002",
+        "amount": 510,
+        "depends_on": [],
+        "approved": false,
+        "version": 1
+      },
+      {
+        "id": "ORD-003",
+        "amount": 305,
+        "depends_on": [
+          "ORD-001"
+        ],
+        "approved": true,
+        "version": 1
+      },
+      {
+        "id": "ORD-004",
+        "amount": 938,
+        "depends_on": [
+          "ORD-002"
+        ],
+        "approved": true,
+        "version": 1
+      },
+      {
+        "id": "ORD-005",
+        "amount": 605,
+        "depends_on": [
+          "ORD-003"
+        ],
+        "approved": false,
+        "version": 1
+      },
+      {
+        "id": "ORD-006",
+        "amount": 690,
+        "depends_on": [
+          "ORD-004"
+        ],
+        "approved": true,
+        "version": 1
+      },
+      {
+        "id": "ORD-007",
+        "amount": 358,
+        "depends_on": [
+          "ORD-005"
+        ],
+        "approved": true,
+        "version": 1
+      },
+      {
+        "id": "ORD-008",
+        "amount": 292,
+        "depends_on": [
+          "ORD-006"
+        ],
+        "approved": false,
+        "version": 1
+      }
+    ]
+  }
+}

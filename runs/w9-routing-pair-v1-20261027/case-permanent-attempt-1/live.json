@@ -1,0 +1,38 @@
+{
+  "pid": 19856,
+  "case": "permanent",
+  "attempt": "1",
+  "completed_requests": 7,
+  "successes": 7,
+  "errors": 0,
+  "status": "completed",
+  "updated_at": "2026-10-27T03:36:36.075035+00:00",
+  "current_request_started_at": "2026-10-27T03:36:35.465228+00:00",
+  "last_error": null,
+  "last_completed_at": "2026-10-27T03:36:36.072029+00:00",
+  "state": "task_completed",
+  "score": {
+    "success": true,
+    "answer_success": true,
+    "task_completed": true,
+    "checks": {
+      "arrived": true,
+      "deadline": true,
+      "budget": true,
+      "minimum_cost": true,
+      "no_duplicate_charges": true
+    },
+    "expected_minimum_cost": 4,
+    "actual_cost": 4,
+    "arrival_time": 900,
+    "location": "D",
+    "path": [
+      "a1",
+      "a3"
+    ],
+    "fault_exposed": false,
+    "permanent_retries": 0,
+    "rejections": [],
+    "invalid_actions": 0
+  }
+}

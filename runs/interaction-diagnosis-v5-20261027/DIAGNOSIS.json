@@ -1,0 +1,88 @@
+{
+  "status": "diagnostic phase complete; candidate implementation and model calls paused per latest user direction",
+  "audit": {
+    "model_label": "gpt-6-astra",
+    "requests": 14,
+    "tools": 49,
+    "invalid_actions": 0,
+    "api_errors": 0,
+    "replay_mismatches": [],
+    "three_rounds_all_rows_match_independent_oracle": true,
+    "round_summaries": [
+      [
+        "17084",
+        "6",
+        "H",
+        "4063"
+      ],
+      [
+        "15449",
+        "7",
+        "B",
+        "2743"
+      ],
+      [
+        "10067",
+        "5",
+        "B",
+        "2743"
+      ]
+    ],
+    "budget_headroom": {
+      "api_attempts": 11,
+      "tools": 31
+    },
+    "source_files_hash_verified": 9,
+    "original_results_unchanged": true,
+    "top_and_artifact_result_json_semantically_identical": true
+  },
+  "direct_observations": [
+    "GPT used one batched read response per round (11, 7, 6 read_sheet calls), then one batched write response (Decisions, four Summary cells, report), separate save, then advance/finish.",
+    "The three audited task variants completed in 10/10/14 requests and 29/29/49 tools, each with zero invalid actions and no retries. The observed request pattern is 4 times number of rounds plus 2; this describes these traces only.",
+    "read_sheet returns the whole named sheet. list_sheets exposes all sheets. write_decisions replaces the full decision table in one call.",
+    "Commitments re-exposes prior accepted IDs and locked amounts. receive_update explicitly lists changed sheets. Relevant history can be reconstructed from the current workbook.",
+    "Updates happen only through receive_update after a correct saved delivery. There are no observed concurrent changes between read and save, ambiguous side-effect outcomes, or rollback/reconciliation branches.",
+    "Actual model-facing tools offered no general Python/code execution or arithmetic solver; GPT did not use an external solver tool or access hidden reference answers in the recorded trajectory."
+  ],
+  "supported_inferences": [
+    "The current family is mainly a fully observed deterministic computation repeated behind stage gates. It does not require remembering hidden historical state: current sheets encode that state.",
+    "Batch interfaces reduce row count and rule additions to larger message contents, rather than necessarily creating more interaction or exploration decisions.",
+    "GPT did not evade stated requirements; it used a permitted low-interaction workflow. Making snapshots harder to read solely to force more calls would not by itself improve benchmark validity.",
+    "Qwen failures here establish weaknesses in these specific bounded tasks (calculation, eligibility, ordering, saving and artifact consistency), but are not a validated predictor of GPT difficulty.",
+    "Qwen screening remains useful for harness diagnostics and reproducible model-specific failures. It should not alone be treated as proof that a task warrants paid GPT testing."
+  ],
+  "not_established": [
+    "Internal reasoning strategy or subjective difficulty: old GPT run traces store tools and usage, not private reasoning.",
+    "General model ranking, failure probability, or unseen-task transfer from three selected GPT successes.",
+    "Equal inference settings: Flash was explicitly thinking=false; the current GPT config specifies no reasoning option, and historical defaults are not established by these artifacts.",
+    "Backend weights identity: request/ledger model labels are not independent authentication."
+  ],
+  "research_handoff_gaps": [
+    "Observable-state computation versus partial-observation information gathering",
+    "Adaptive choice of next tool based on outcomes versus fixed stage sequencing",
+    "Persistence and side effects versus freely replaceable output tables",
+    "Version changes, normal business conflicts and reconciliation versus model/API infrastructure errors",
+    "Visual or GUI perception-grounding demands versus text-only full-state tables; no screenshot candidate has been built"
+  ],
+  "actions_this_phase": {
+    "new_model_calls": 0,
+    "candidate_implementations": 0,
+    "research_web_calls": 0,
+    "new_code": [
+      "audit_gpt_v4.py (offline audit utility only)"
+    ],
+    "new_files": [
+      "audit-1/GPT-V4-AUDIT.json",
+      "audit-1/offline-replay/",
+      "audit-1/round-0-before-gate.xlsx",
+      "audit-1/round-1-before-gate.xlsx",
+      "audit-1/round-2-before-gate.xlsx",
+      "CROSS-CASE-EVIDENCE.json",
+      "DIAGNOSIS.json",
+      "SUMMARY.txt"
+    ],
+    "uploads_or_pushes": 0
+  },
+  "next_action_constraint": "Wait for paper/benchmark research conclusions and a clear direction before implementing or screening any new candidate; no GPT rerun requested.",
+  "verified_at": "2026-10-27T02:49:25.202566+00:00"
+}

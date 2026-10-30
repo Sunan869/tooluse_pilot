@@ -1,0 +1,434 @@
+{
+  "version": "report-fields-v2",
+  "model_calls": 0,
+  "original_hashes_verified": 27,
+  "results": {
+    "gpt": {
+      "source": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\gpt-29row-20261026-154836-5500c2c6\\result.json",
+      "original_score": {
+        "success": false,
+        "checks": {
+          "initial_delivered": true,
+          "update_received": true,
+          "requirements": true,
+          "result": true,
+          "report": true,
+          "revised_saved": true,
+          "finished": true
+        },
+        "expected": [
+          "36300",
+          "11",
+          "Delta",
+          "7800"
+        ],
+        "actual": [
+          "36300",
+          "11",
+          "Delta",
+          "7800"
+        ],
+        "invalid_actions": 1,
+        "tool_calls": 21
+      },
+      "original_invalid_actions": 1,
+      "historical_control_flow_replay_score_v2": {
+        "success": false,
+        "checks": {
+          "initial_delivered": true,
+          "update_received": true,
+          "requirements": true,
+          "result": true,
+          "report": true,
+          "revised_saved": true,
+          "finished": true
+        },
+        "expected": [
+          "36300",
+          "11",
+          "Delta",
+          "7800"
+        ],
+        "actual": [
+          "36300",
+          "11",
+          "Delta",
+          "7800"
+        ],
+        "invalid_actions": 1,
+        "tool_calls": 21
+      },
+      "rejections": [
+        {
+          "tool_index": 11,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: report_mismatch"
+          },
+          "v2_remaining_reasons": [],
+          "grader_false_rejection": true
+        }
+      ],
+      "successful_tool_replay_mismatches": [],
+      "grader_false_rejection_count": 1,
+      "remaining_model_invalid_actions": 0,
+      "final_deliverables_and_stage_checks_pass": true,
+      "independent_adjusted_verdict": true,
+      "note": "Original invalid actions and gate events are preserved. Adjusted verdict is an offline adjudication, not a rewritten run or new execution."
+    },
+    "qwen1": {
+      "source": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\qwen-confirmation-20261026\\qwen-expanded-1.json",
+      "original_score": {
+        "success": false,
+        "checks": {
+          "initial_delivered": false,
+          "update_received": false,
+          "requirements": false,
+          "result": false,
+          "report": false,
+          "revised_saved": false,
+          "finished": false
+        },
+        "expected": [
+          "73800",
+          "17",
+          "Order08",
+          "9100"
+        ],
+        "actual": [
+          "93800",
+          "19",
+          "Order17",
+          "10000"
+        ],
+        "invalid_actions": 10,
+        "tool_calls": 70
+      },
+      "original_invalid_actions": 10,
+      "historical_control_flow_replay_score_v2": {
+        "success": false,
+        "checks": {
+          "initial_delivered": false,
+          "update_received": false,
+          "requirements": false,
+          "result": false,
+          "report": false,
+          "revised_saved": false,
+          "finished": false
+        },
+        "expected": [
+          "73800",
+          "17",
+          "Order08",
+          "9100"
+        ],
+        "actual": [
+          "93800",
+          "19",
+          "Order17",
+          "10000"
+        ],
+        "invalid_actions": 10,
+        "tool_calls": 70
+      },
+      "rejections": [
+        {
+          "tool_index": 12,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 22,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 29,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 36,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 43,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 50,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 57,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 64,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 71,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 75,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        }
+      ],
+      "successful_tool_replay_mismatches": [],
+      "grader_false_rejection_count": 0,
+      "remaining_model_invalid_actions": 10,
+      "final_deliverables_and_stage_checks_pass": false,
+      "independent_adjusted_verdict": false,
+      "note": "Original invalid actions and gate events are preserved. Adjusted verdict is an offline adjudication, not a rewritten run or new execution."
+    },
+    "qwen2": {
+      "source": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\qwen-confirmation-20261026\\qwen-expanded-2.json",
+      "original_score": {
+        "success": false,
+        "checks": {
+          "initial_delivered": false,
+          "update_received": false,
+          "requirements": false,
+          "result": false,
+          "report": false,
+          "revised_saved": false,
+          "finished": false
+        },
+        "expected": [
+          "73800",
+          "17",
+          "Order08",
+          "9100"
+        ],
+        "actual": [
+          "66800",
+          "13",
+          "Order17",
+          "16100"
+        ],
+        "invalid_actions": 6,
+        "tool_calls": 52
+      },
+      "original_invalid_actions": 6,
+      "historical_control_flow_replay_score_v2": {
+        "success": false,
+        "checks": {
+          "initial_delivered": false,
+          "update_received": false,
+          "requirements": false,
+          "result": false,
+          "report": false,
+          "revised_saved": false,
+          "finished": false
+        },
+        "expected": [
+          "73800",
+          "17",
+          "Order08",
+          "9100"
+        ],
+        "actual": [
+          "66800",
+          "13",
+          "Order17",
+          "16100"
+        ],
+        "invalid_actions": 6,
+        "tool_calls": 52
+      },
+      "rejections": [
+        {
+          "tool_index": 12,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 23,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 30,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 38,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 45,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        },
+        {
+          "tool_index": 52,
+          "tool": "receive_update",
+          "arguments": {},
+          "historical_result": {
+            "ok": false,
+            "error": "stage_one_failed: summary_mismatch, report_mismatch"
+          },
+          "v2_remaining_reasons": [
+            "summary_mismatch",
+            "report_mismatch"
+          ],
+          "grader_false_rejection": false
+        }
+      ],
+      "successful_tool_replay_mismatches": [],
+      "grader_false_rejection_count": 0,
+      "remaining_model_invalid_actions": 6,
+      "final_deliverables_and_stage_checks_pass": false,
+      "independent_adjusted_verdict": false,
+      "note": "Original invalid actions and gate events are preserved. Adjusted verdict is an offline adjudication, not a rewritten run or new execution."
+    }
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "model_calls": 0,
+  "requested_model": "gpt-6-astra",
+  "state": "finished",
+  "requests": 10,
+  "tool_calls": 29,
+  "invalid_actions": 0,
+  "score": {
+    "success": true,
+    "checks": {
+      "result": true,
+      "decisions": true,
+      "report": true,
+      "initial_delivered": true,
+      "update_received": true,
+      "requirements": true,
+      "revised_saved": true,
+      "finished": true
+    },
+    "expected": [
+      "13000",
+      "4",
+      "E",
+      "4200"
+    ],
+    "actual": [
+      "13000",
+      "4",
+      "E",
+      "4200"
+    ],
+    "invalid_actions": 0,
+    "tool_calls": 29
+  },
+  "independent_initial": [
+    [
+      "13200",
+      "3",
+      "A",
+      "4800"
+    ],
+    [
+      [
+        "A",
+        4800,
+        1,
+        "selected"
+      ],
+      [
+        "B",
+        3600,
+        1,
+        "selected"
+      ],
+      [
+        "C",
+        4800,
+        1,
+        "selected"
+      ],
+      [
+        "D",
+        3300,
+        0,
+        "group_cap"
+      ],
+      [
+        "E",
+        2800,
+        0,
+        "group_cap"
+      ],
+      [
+        "F",
+        2800,
+        0,
+        "budget"
+      ],
+      [
+        "G",
+        10000,
+        0,
+        "per_order"
+      ],
+      [
+        "H",
+        2400,
+        0,
+        "budget"
+      ],
+      [
+        "I",
+        1000,
+        0,
+        "inactive"
+      ],
+      [
+        "J",
+        2600,
+        0,
+        "city"
+      ]
+    ]
+  ],
+  "independent_final": [
+    [
+      "13000",
+      "4",
+      "E",
+      "4200"
+    ],
+    [
+      [
+        "E",
+        4200,
+        1,
+        "selected"
+      ],
+      [
+        "F",
+        2800,
+        1,
+        "selected"
+      ],
+      [
+        "H",
+        2400,
+        1,
+        "selected"
+      ],
+      [
+        "A",
+        7200,
+        0,
+        "group_cap"
+      ],
+      [
+        "B",
+        3600,
+        1,
+        "selected"
+      ],
+      [
+        "C",
+        3200,
+        0,
+        "group_cap"
+      ],
+      [
+        "D",
+        3300,
+        0,
+        "city"
+      ],
+      [
+        "G",
+        6000,
+        0,
+        "group_cap"
+      ],
+      [
+        "I",
+        1000,
+        0,
+        "inactive"
+      ],
+      [
+        "J",
+        2600,
+        0,
+        "city"
+      ]
+    ]
+  ],
+  "replay_mismatches": [],
+  "original_files_unchanged": 7,
+  "candidate_hash_match": true,
+  "cause": "PowerShell 5.1 CP936 decoding of UTF-8 stdout exactly reproduces corrupted result.json; native runner artifact valid.",
+  "source_artifact": "E:\\\u6587\u6863\u7c7b\\\u4fe1\u901a\u9662\\tooluser_pilot\\runs\\gpt-allocation-v1-20261026-170534-5aa7539d\\case-0\\runs\\file_workspaces\\07530c32-37c9-4f5f-9424-709f9eb6a6c8"
+}

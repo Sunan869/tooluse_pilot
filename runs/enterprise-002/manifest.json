@@ -1,0 +1,31 @@
+{
+  "count": 5,
+  "results": [
+    {
+      "id": "enterprise-0-8",
+      "reference_success": true,
+      "mutant_rejected": true
+    },
+    {
+      "id": "enterprise-1-8",
+      "reference_success": true,
+      "mutant_rejected": true
+    },
+    {
+      "id": "enterprise-2-8",
+      "reference_success": true,
+      "mutant_rejected": true
+    },
+    {
+      "id": "enterprise-3-8",
+      "reference_success": true,
+      "mutant_rejected": true
+    },
+    {
+      "id": "enterprise-4-8",
+      "reference_success": true,
+      "mutant_rejected": true
+    }
+  ],
+  "paid_api_requests": 0
+}

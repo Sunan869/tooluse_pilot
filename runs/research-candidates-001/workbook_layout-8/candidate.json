@@ -1,0 +1,24 @@
+{
+  "family": "workbook_layout",
+  "seed": 8,
+  "task": "Read the named sales table, not the adjacent archived table.",
+  "environment": {
+    "target_cell": "R5C4",
+    "target_value": 58,
+    "archive_cell": "R5C5",
+    "archive_value": 65,
+    "target_table": "Current",
+    "distractor_table": "Archive"
+  },
+  "trigger": {
+    "event": "adjacent_same_shape_tables",
+    "after": "open_workbook"
+  },
+  "oracle": {
+    "selected_value": 58,
+    "source": "Current"
+  },
+  "wrong_pattern": "Take value from adjacent archived table",
+  "id": "workbook_layout-8",
+  "schema_version": "0.1"
+}

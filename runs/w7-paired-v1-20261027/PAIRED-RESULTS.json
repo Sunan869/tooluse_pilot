@@ -1,0 +1,580 @@
+{
+  "conclusion": "No admitted reproducible Coverage/Conflict mechanism failure. Do not request a GPT run for this batch.",
+  "runs": [
+    {
+      "run": "case-clean-attempt-1",
+      "answer_success": true,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 5,
+      "wire_requests": 5,
+      "successful_responses": 5,
+      "api_errors": 0,
+      "tools_replayed_exactly": 5,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "4e21dedd081b96add0ac52bfdf60d213634fb5cbf192f8f0dfe031929e7d2358",
+      "candidate_sha256": "b4473312da326d932ef2130879e055dc3b3c1cddb162b7481838b96b89815b8e"
+    },
+    {
+      "run": "case-clean-shuffle-attempt-1",
+      "answer_success": false,
+      "coverage_complete": true,
+      "evidence_valid": false,
+      "api_attempts": 5,
+      "wire_requests": 5,
+      "successful_responses": 5,
+      "api_errors": 0,
+      "tools_replayed_exactly": 5,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s08",
+          "孙晴",
+          91,
+          "B2",
+          "g-B2-s08-r1",
+          "e-s08"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "1b69ccb749f0c8eb5a97bc25e526c8d5e9fcd758bccc8a4521e555b58b766681",
+      "candidate_sha256": "27cebc302a445a7c8188861d69e1685427950d2d3cea85e4844eccacc61e10b9"
+    },
+    {
+      "run": "case-clean-shuffle-attempt-2",
+      "answer_success": true,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 11,
+      "wire_requests": 11,
+      "successful_responses": 11,
+      "api_errors": 0,
+      "tools_replayed_exactly": 17,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "1b69ccb749f0c8eb5a97bc25e526c8d5e9fcd758bccc8a4521e555b58b766681",
+      "candidate_sha256": "27cebc302a445a7c8188861d69e1685427950d2d3cea85e4844eccacc61e10b9"
+    },
+    {
+      "run": "case-conflict-attempt-1",
+      "answer_success": true,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 5,
+      "wire_requests": 5,
+      "successful_responses": 5,
+      "api_errors": 0,
+      "tools_replayed_exactly": 5,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "4e21dedd081b96add0ac52bfdf60d213634fb5cbf192f8f0dfe031929e7d2358",
+      "candidate_sha256": "7ab91901fdbac6991d264df6f88118810d6f1f8ede6cb294b5a1d781a262879b"
+    },
+    {
+      "run": "case-conflict-shuffle-attempt-1",
+      "answer_success": false,
+      "coverage_complete": true,
+      "evidence_valid": false,
+      "api_attempts": 5,
+      "wire_requests": 5,
+      "successful_responses": 5,
+      "api_errors": 0,
+      "tools_replayed_exactly": 5,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s08",
+          "孙晴",
+          91,
+          "B2",
+          "g-B2-s08-r1",
+          "e-s08"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "1b69ccb749f0c8eb5a97bc25e526c8d5e9fcd758bccc8a4521e555b58b766681",
+      "candidate_sha256": "25e1e5b2763b14b7a56ef918b9d6b515dac878138b48260c33018a3eb121c444"
+    },
+    {
+      "run": "case-conflict-shuffle-attempt-2",
+      "answer_success": false,
+      "coverage_complete": true,
+      "evidence_valid": false,
+      "api_attempts": 7,
+      "wire_requests": 7,
+      "successful_responses": 7,
+      "api_errors": 0,
+      "tools_replayed_exactly": 7,
+      "invalid_actions": 2,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s05",
+          "赵宁",
+          90,
+          "B2",
+          "g-B2-s05-r1",
+          "e-s05"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "1b69ccb749f0c8eb5a97bc25e526c8d5e9fcd758bccc8a4521e555b58b766681",
+      "candidate_sha256": "25e1e5b2763b14b7a56ef918b9d6b515dac878138b48260c33018a3eb121c444"
+    },
+    {
+      "run": "case-coverage-attempt-1",
+      "answer_success": true,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 24,
+      "wire_requests": 24,
+      "successful_responses": 24,
+      "api_errors": 0,
+      "tools_replayed_exactly": 28,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "4e21dedd081b96add0ac52bfdf60d213634fb5cbf192f8f0dfe031929e7d2358",
+      "candidate_sha256": "5171c5bc7d7d73bca9adaf236d1734de195b10b056ef5ca2ca7e661cd7dad9e3"
+    },
+    {
+      "run": "case-coverage-shuffle-attempt-1",
+      "answer_success": true,
+      "coverage_complete": true,
+      "evidence_valid": true,
+      "api_attempts": 10,
+      "wire_requests": 10,
+      "successful_responses": 10,
+      "api_errors": 0,
+      "tools_replayed_exactly": 14,
+      "invalid_actions": 0,
+      "expected": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "actual": [
+        [
+          "s03",
+          "林悦",
+          95,
+          "B2",
+          "g-B2-s03-r1",
+          "e-s03"
+        ],
+        [
+          "s01",
+          "陈晨",
+          92,
+          "B2",
+          "g-B2-s01-r1",
+          "e-s01"
+        ],
+        [
+          "s06",
+          "许安",
+          91,
+          "B2",
+          "g-B2-s06-r2",
+          "e-s06"
+        ]
+      ],
+      "response_models": [
+        "Qwen3.8-Flash-Next-AWQ-INT4"
+      ],
+      "dataset_sha256": "1b69ccb749f0c8eb5a97bc25e526c8d5e9fcd758bccc8a4521e555b58b766681",
+      "candidate_sha256": "f0a073f0dd53bfa4289115a21bd1b7b5974a4ab05bf591c61db489029a4f4303"
+    }
+  ],
+  "totals": {
+    "actual_api_attempts": 72,
+    "successful_responses": 72,
+    "api_errors": 0,
+    "exact_replayed_tools": 86,
+    "original_answer_passes": 5,
+    "original_answer_failures": 3,
+    "other_model_calls": 0
+  },
+  "findings": [
+    "Primary order: Clean, Coverage and Conflict all pass. Coverage costs 24 requests vs 5 Clean but recovers within budget.",
+    "Shuffled order: Coverage passes; Clean and Conflict initial failures have identical observed tools and responses and do not read cache. These cannot isolate a conflict effect.",
+    "Clean same-input repeat passes. Conflict repeat generates a correct revision after finish, which the terminal lock rejects. Counterfactual recovery replay passes, without modifying original score or logs.",
+    "All answer decisions independently checked using SQLite oracle; all tool outputs exactly replayed. No API errors.",
+    "Future revisions must allow resubmission/recovery or end the runner immediately at documented terminal action; do not treat late-recovery rejection as evidence of inability.",
+    "A future changed-snapshot experiment should hold row count and budget fixed, expose a version check and a reachable refresh path, and grade final correct state. No such new task or model run was started here."
+  ],
+  "remaining_limitations": [
+    "Eight runs are insufficient to estimate model-wide rates or GPT transfer.",
+    "Response model and request fields verify routing labels only; backend weights are not authenticated.",
+    "Simple authority-first strategy avoids advisory cache entirely, so this conflict manipulation is weak."
+  ],
+  "frozen_code_and_candidate_hashes_unchanged": true
+}

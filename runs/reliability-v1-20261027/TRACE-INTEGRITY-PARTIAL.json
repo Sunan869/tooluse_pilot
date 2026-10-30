@@ -1,0 +1,177 @@
+[
+  {
+    "run": "case-w7-20261030-clean-attempt-1",
+    "requests": 21,
+    "wire_entries": 21,
+    "responses": 21,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261030-clean-attempt-2",
+    "requests": 5,
+    "wire_entries": 5,
+    "responses": 5,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261030-clean-attempt-3",
+    "requests": 5,
+    "wire_entries": 5,
+    "responses": 5,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261030-conflict-attempt-1",
+    "requests": 24,
+    "wire_entries": 24,
+    "responses": 24,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261030-conflict-attempt-2",
+    "requests": 5,
+    "wire_entries": 5,
+    "responses": 5,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261030-coverage-attempt-1",
+    "requests": 17,
+    "wire_entries": 17,
+    "responses": 17,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261030-coverage-attempt-2",
+    "requests": 12,
+    "wire_entries": 12,
+    "responses": 12,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261031-clean-attempt-1",
+    "requests": 7,
+    "wire_entries": 7,
+    "responses": 7,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261031-clean-attempt-2",
+    "requests": 7,
+    "wire_entries": 7,
+    "responses": 7,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261031-conflict-attempt-1",
+    "requests": 19,
+    "wire_entries": 19,
+    "responses": 19,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261031-conflict-attempt-2",
+    "requests": 7,
+    "wire_entries": 7,
+    "responses": 7,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261031-coverage-attempt-1",
+    "requests": 25,
+    "wire_entries": 25,
+    "responses": 25,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w7-20261031-coverage-attempt-2",
+    "requests": 9,
+    "wire_entries": 9,
+    "responses": 9,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261030-dynamic-attempt-1",
+    "requests": 8,
+    "wire_entries": 8,
+    "responses": 8,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261030-dynamic-attempt-2",
+    "requests": 7,
+    "wire_entries": 7,
+    "responses": 7,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261030-static-attempt-1",
+    "requests": 12,
+    "wire_entries": 12,
+    "responses": 12,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261030-static-attempt-2",
+    "requests": 12,
+    "wire_entries": 12,
+    "responses": 12,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261031-dynamic-attempt-1",
+    "requests": 7,
+    "wire_entries": 7,
+    "responses": 7,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261031-dynamic-attempt-2",
+    "requests": 9,
+    "wire_entries": 9,
+    "responses": 9,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261031-static-attempt-1",
+    "requests": 15,
+    "wire_entries": 15,
+    "responses": 15,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w8-20261031-static-attempt-2",
+    "requests": 10,
+    "wire_entries": 10,
+    "responses": 10,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w9-fixed-permanent-attempt-1",
+    "requests": 7,
+    "wire_entries": 7,
+    "responses": 7,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w9-fixed-permanent-attempt-2",
+    "requests": 25,
+    "wire_entries": 25,
+    "responses": 25,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w9-fixed-transient-attempt-1",
+    "requests": 8,
+    "wire_entries": 8,
+    "responses": 8,
+    "terminal_last_event": "tool_call"
+  },
+  {
+    "run": "case-w9-fixed-transient-attempt-2",
+    "requests": 6,
+    "wire_entries": 6,
+    "responses": 6,
+    "terminal_last_event": "tool_call"
+  }
+]

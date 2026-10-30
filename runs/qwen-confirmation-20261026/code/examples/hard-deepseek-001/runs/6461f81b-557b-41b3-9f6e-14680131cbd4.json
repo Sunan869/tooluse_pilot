@@ -1,0 +1,27 @@
+{
+  "run_id": "6461f81b-557b-41b3-9f6e-14680131cbd4",
+  "model_alias": "gpt",
+  "provider": "openai_via_tokenops",
+  "model": "gpt-6-astra",
+  "mode": "structured",
+  "requests": 1,
+  "tool_calls": 0,
+  "state": "api_error",
+  "estimated_cost": null,
+  "currency": null,
+  "score": {
+    "total": 0,
+    "result_score": 0,
+    "process_score": 0,
+    "error": "output missing"
+  },
+  "usage_db": "runs/usage.sqlite",
+  "events": [
+    {
+      "event": "api_error",
+      "attempt": 1,
+      "error": "Error code: 500 - {'error': {'code': 2105, 'message': '内部错误', 'details': [{'code': 2105, 'message': 'pick account fail'}, {'code': 1, 'message': 'no valid instance for text API TextAPIChatCompletions'}], 'trace_id': 'e96b98e1e605475aaea5e4816b0ec093'}}"
+    }
+  ],
+  "calls": []
+}

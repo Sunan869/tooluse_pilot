@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "checks": {
+    "initial_delivered": true,
+    "update_received": true,
+    "requirements": true,
+    "result": true,
+    "report": true,
+    "finished": true
+  },
+  "tool_calls": 12,
+  "invalid_actions": 0
+}
+..............................................................................................................................
+----------------------------------------------------------------------
+Ran 126 tests in 14.792s
+
+OK

@@ -1,0 +1,72 @@
+{
+  "run": "case-permanent-attempt-1",
+  "condition": "permanent",
+  "renamed": false,
+  "success": true,
+  "independent_checks": {
+    "arrived": true,
+    "deadline": true,
+    "budget": true,
+    "minimum_cost": true,
+    "no_duplicate_charges": true
+  },
+  "oracle": {
+    "minimum_cost": 4,
+    "optimal_paths": [
+      {
+        "path": [
+          "a1",
+          "a3"
+        ],
+        "arrival": 900,
+        "cost": 4
+      },
+      {
+        "path": [
+          "b1",
+          "b2"
+        ],
+        "arrival": 840,
+        "cost": 4
+      }
+    ],
+    "all_feasible_paths": [
+      {
+        "path": [
+          "a1",
+          "a3"
+        ],
+        "arrival": 900,
+        "cost": 4
+      },
+      {
+        "path": [
+          "b1",
+          "b2"
+        ],
+        "arrival": 840,
+        "cost": 4
+      }
+    ]
+  },
+  "path": [
+    "a1",
+    "a3"
+  ],
+  "cost": 4,
+  "fault_exposed": false,
+  "permanent_retries": 0,
+  "rejections": [],
+  "api_attempts": 7,
+  "wire_requests": 7,
+  "successful_responses": 7,
+  "api_errors": 0,
+  "tools_replayed_exactly": 9,
+  "invalid_actions": 0,
+  "stop_reason": "task_completed",
+  "response_models": [
+    "Qwen3.8-Flash-Next-AWQ-INT4"
+  ],
+  "dataset_sha256": "5ef5f45695a3b80a96f86e1eb23a665ce885e22d5c5d69ab760d4f2c84bcfbae",
+  "candidate_sha256": "efbd5c532c9bd9f8475f480ddbd42c2677f007f3c5e4b76cb3ec07229a7d29ca"
+}

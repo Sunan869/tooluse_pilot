@@ -1,0 +1,298 @@
+{
+  "runs": [
+    {
+      "run": "case-w7-20261030-clean-attempt-1",
+      "ledger_requests": 21,
+      "wire_requests": 21,
+      "responses": 21,
+      "errors": 0,
+      "tools_replayed": 30
+    },
+    {
+      "run": "case-w7-20261030-coverage-attempt-1",
+      "ledger_requests": 17,
+      "wire_requests": 17,
+      "responses": 17,
+      "errors": 0,
+      "tools_replayed": 25
+    },
+    {
+      "run": "case-w7-20261030-conflict-attempt-1",
+      "ledger_requests": 24,
+      "wire_requests": 24,
+      "responses": 24,
+      "errors": 0,
+      "tools_replayed": 31
+    },
+    {
+      "run": "case-w7-20261031-clean-attempt-1",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 14
+    },
+    {
+      "run": "case-w7-20261031-coverage-attempt-1",
+      "ledger_requests": 25,
+      "wire_requests": 25,
+      "responses": 25,
+      "errors": 0,
+      "tools_replayed": 31
+    },
+    {
+      "run": "case-w7-20261031-conflict-attempt-1",
+      "ledger_requests": 19,
+      "wire_requests": 19,
+      "responses": 19,
+      "errors": 0,
+      "tools_replayed": 21
+    },
+    {
+      "run": "case-w8-20261030-static-attempt-1",
+      "ledger_requests": 12,
+      "wire_requests": 12,
+      "responses": 12,
+      "errors": 0,
+      "tools_replayed": 13
+    },
+    {
+      "run": "case-w8-20261030-dynamic-attempt-1",
+      "ledger_requests": 8,
+      "wire_requests": 8,
+      "responses": 8,
+      "errors": 0,
+      "tools_replayed": 11
+    },
+    {
+      "run": "case-w8-20261031-static-attempt-1",
+      "ledger_requests": 15,
+      "wire_requests": 15,
+      "responses": 15,
+      "errors": 0,
+      "tools_replayed": 16
+    },
+    {
+      "run": "case-w8-20261031-dynamic-attempt-1",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 10
+    },
+    {
+      "run": "case-w9-fixed-transient-attempt-1",
+      "ledger_requests": 8,
+      "wire_requests": 8,
+      "responses": 8,
+      "errors": 0,
+      "tools_replayed": 10
+    },
+    {
+      "run": "case-w9-fixed-permanent-attempt-1",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 10
+    },
+    {
+      "run": "case-w7-20261030-clean-attempt-2",
+      "ledger_requests": 5,
+      "wire_requests": 5,
+      "responses": 5,
+      "errors": 0,
+      "tools_replayed": 6
+    },
+    {
+      "run": "case-w7-20261030-coverage-attempt-2",
+      "ledger_requests": 12,
+      "wire_requests": 12,
+      "responses": 12,
+      "errors": 0,
+      "tools_replayed": 19
+    },
+    {
+      "run": "case-w7-20261030-conflict-attempt-2",
+      "ledger_requests": 5,
+      "wire_requests": 5,
+      "responses": 5,
+      "errors": 0,
+      "tools_replayed": 6
+    },
+    {
+      "run": "case-w7-20261031-clean-attempt-2",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 12
+    },
+    {
+      "run": "case-w7-20261031-coverage-attempt-2",
+      "ledger_requests": 9,
+      "wire_requests": 9,
+      "responses": 9,
+      "errors": 0,
+      "tools_replayed": 17
+    },
+    {
+      "run": "case-w7-20261031-conflict-attempt-2",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 13
+    },
+    {
+      "run": "case-w8-20261030-static-attempt-2",
+      "ledger_requests": 12,
+      "wire_requests": 12,
+      "responses": 12,
+      "errors": 0,
+      "tools_replayed": 13
+    },
+    {
+      "run": "case-w8-20261030-dynamic-attempt-2",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 9
+    },
+    {
+      "run": "case-w8-20261031-static-attempt-2",
+      "ledger_requests": 10,
+      "wire_requests": 10,
+      "responses": 10,
+      "errors": 0,
+      "tools_replayed": 12
+    },
+    {
+      "run": "case-w8-20261031-dynamic-attempt-2",
+      "ledger_requests": 9,
+      "wire_requests": 9,
+      "responses": 9,
+      "errors": 0,
+      "tools_replayed": 12
+    },
+    {
+      "run": "case-w9-fixed-transient-attempt-2",
+      "ledger_requests": 6,
+      "wire_requests": 6,
+      "responses": 6,
+      "errors": 0,
+      "tools_replayed": 9
+    },
+    {
+      "run": "case-w9-fixed-permanent-attempt-2",
+      "ledger_requests": 25,
+      "wire_requests": 25,
+      "responses": 25,
+      "errors": 0,
+      "tools_replayed": 27
+    },
+    {
+      "run": "case-w7-20261030-clean-attempt-3",
+      "ledger_requests": 5,
+      "wire_requests": 5,
+      "responses": 5,
+      "errors": 0,
+      "tools_replayed": 6
+    },
+    {
+      "run": "case-w7-20261030-coverage-attempt-3",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 9
+    },
+    {
+      "run": "case-w7-20261030-conflict-attempt-3",
+      "ledger_requests": 5,
+      "wire_requests": 5,
+      "responses": 5,
+      "errors": 0,
+      "tools_replayed": 6
+    },
+    {
+      "run": "case-w7-20261031-clean-attempt-3",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 8
+    },
+    {
+      "run": "case-w7-20261031-coverage-attempt-3",
+      "ledger_requests": 16,
+      "wire_requests": 16,
+      "responses": 16,
+      "errors": 0,
+      "tools_replayed": 19
+    },
+    {
+      "run": "case-w7-20261031-conflict-attempt-3",
+      "ledger_requests": 18,
+      "wire_requests": 18,
+      "responses": 18,
+      "errors": 0,
+      "tools_replayed": 27
+    },
+    {
+      "run": "case-w8-20261030-static-attempt-3",
+      "ledger_requests": 10,
+      "wire_requests": 10,
+      "responses": 10,
+      "errors": 0,
+      "tools_replayed": 12
+    },
+    {
+      "run": "case-w8-20261030-dynamic-attempt-3",
+      "ledger_requests": 9,
+      "wire_requests": 9,
+      "responses": 9,
+      "errors": 0,
+      "tools_replayed": 12
+    },
+    {
+      "run": "case-w8-20261031-static-attempt-3",
+      "ledger_requests": 11,
+      "wire_requests": 11,
+      "responses": 11,
+      "errors": 0,
+      "tools_replayed": 14
+    },
+    {
+      "run": "case-w8-20261031-dynamic-attempt-3",
+      "ledger_requests": 9,
+      "wire_requests": 9,
+      "responses": 9,
+      "errors": 0,
+      "tools_replayed": 12
+    },
+    {
+      "run": "case-w9-fixed-transient-attempt-3",
+      "ledger_requests": 9,
+      "wire_requests": 9,
+      "responses": 9,
+      "errors": 0,
+      "tools_replayed": 11
+    },
+    {
+      "run": "case-w9-fixed-permanent-attempt-3",
+      "ledger_requests": 7,
+      "wire_requests": 7,
+      "responses": 7,
+      "errors": 0,
+      "tools_replayed": 10
+    }
+  ],
+  "actual_api_requests": 397,
+  "API_errors": 0,
+  "exact_replayed_tools": 523,
+  "frozen_hashes_unchanged": true,
+  "historical_evidence_unchanged": true,
+  "real_GPT_calls": 0
+}

@@ -1,0 +1,8 @@
+total: 11800
+count: 3
+winner: Delta
+amount: 7800
+
+Revised using updated Policy and Corrections. Eligible orders must be active, include both Beijing and Shenzhen, and have an order amount no greater than 8000. Corrected quantities replace original quantities.
+Eligible values: Gamma = 2200 x 1 = 2200; Beta = 1800 x 1 = 1800; Delta = 2600 x 3 = 7800.
+Alpha excluded because Shenzhen is not included. Dormant excluded because it is inactive. Highest-value ties are resolved alphabetically by order ID.

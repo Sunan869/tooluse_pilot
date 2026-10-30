@@ -1,0 +1,9 @@
+{
+  "id": "w6-reconcile-2",
+  "family": "real_w6_reconciliation",
+  "scenario": 2,
+  "input": {
+    "workbook": "reconciliation.xlsx"
+  },
+  "task": "Read Orders, Corrections, Policy. Active orders only; correction quantity replaces original. Filter by all required cities and per-order maximum. Save Summary B2:B5 as sum of eligible values, count, highest-value order ID, highest order amount (ties alphabetical). Write report.txt explicitly containing total, count, winner, amount. Then call receive_update; Policy and Corrections change. Re-read them and revise ALL outputs, save again, finish."
+}

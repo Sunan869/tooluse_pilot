@@ -1,0 +1,41 @@
+{
+  "pid": 10684,
+  "case": "0",
+  "attempt": "2",
+  "completed_requests": 25,
+  "successes": 25,
+  "errors": 0,
+  "status": "completed",
+  "updated_at": "2026-10-26T08:58:51.269466+00:00",
+  "current_request_started_at": "2026-10-26T08:58:44.807138+00:00",
+  "last_error": null,
+  "last_completed_at": "2026-10-26T08:58:51.217729+00:00",
+  "state": "max_requests",
+  "score": {
+    "success": false,
+    "checks": {
+      "result": true,
+      "decisions": false,
+      "report": true,
+      "initial_delivered": false,
+      "update_received": false,
+      "requirements": false,
+      "revised_saved": false,
+      "finished": false
+    },
+    "expected": [
+      "13200",
+      "3",
+      "A",
+      "4800"
+    ],
+    "actual": [
+      "13200",
+      "3",
+      "A",
+      "4800"
+    ],
+    "invalid_actions": 6,
+    "tool_calls": 46
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "run_id": "6913ea4e-cb84-43e6-a8e6-d02d9ed7e228",
+  "candidate_id": "file-dynamic-3",
+  "model": "Qwen3.8-27B",
+  "protocol": "chat_completions",
+  "state": "finished",
+  "requests": 1,
+  "tool_calls": 0,
+  "score": {
+    "success": false,
+    "checks": {
+      "initial_delivered": false,
+      "update_received": false,
+      "requirements": false,
+      "result": false,
+      "report": false,
+      "finished": false
+    },
+    "tool_calls": 0,
+    "invalid_actions": 0
+  },
+  "invalid_tool_actions": 0,
+  "profile": null,
+  "estimated_cost": null,
+  "events": [
+    {
+      "event": "api_attempt",
+      "turn": 1,
+      "attempt": 1,
+      "retry_index": 0,
+      "error": null,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "cached_tokens": null,
+        "reasoning_tokens": null
+      }
+    }
+  ],
+  "calls": [],
+  "usage_db": "C:\\Users\\Administrator\\AppData\\Local\\Packages\\sandbox.{2d4565fc-e73d-494c-80b7-ebb33168805e}\\AC\\Temp\\tmpx27csp7c\\usage.sqlite",
+  "artifact_dir": "runs\\file_workspaces\\07abe2d4-16cb-4255-8ef9-bc557c203237"
+}

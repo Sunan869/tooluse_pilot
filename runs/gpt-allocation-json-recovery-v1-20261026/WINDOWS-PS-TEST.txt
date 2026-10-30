@@ -1,0 +1,1 @@
+﻿PASS: exact CP936 corruption reproduced; old JSON rejected; Python UTF8 output parsed with intact path; script syntax valid; console encoding unchanged; zero API calls. PS=5.1.26100.9444

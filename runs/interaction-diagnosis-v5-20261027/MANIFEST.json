@@ -1,0 +1,13 @@
+{
+  "audit_gpt_v4.py": "f1a9611e7cb9708f18d610dcaae07103229e83f586e00309b8042bebf0be2b0b",
+  "CROSS-CASE-EVIDENCE.json": "95f9683b5ee7c6ed7e12f28fab71a28e2fed354084ddc3d7be2cb02b8a917a0f",
+  "DIAGNOSIS.json": "721c987f9224b6c7d1a73a3616b42189cf810369de7d979266eb62be38528e8f",
+  "SUMMARY.txt": "247e480c398a1a5cae2165d4b23383220c8609b15f189aba7b2a92a0d941f4a1",
+  "audit-1\\GPT-V4-AUDIT.json": "ae2fe97e0175418d118538ad5c61edbb8ac73e07c2012049488175e343014747",
+  "audit-1\\round-0-before-gate.xlsx": "4f6cbcadd67b1516b60a549ef1c9daed73b6dc11ee358fb31643e2ece4c1eacf",
+  "audit-1\\round-1-before-gate.xlsx": "09b25feaf6c6ca62c9a451f62604390f6df8323fbaaa3f561efb874f8dfecb82",
+  "audit-1\\round-2-before-gate.xlsx": "98fc9f1d0253a6b846693ecfb04920b9d748aea9ac321d41bde94f62912945cf",
+  "audit-1\\offline-replay\\candidate.json": "d91e41ecc4fdc5f18e479125ae17ed94d80a5a774afb1b6e928469e8bbfa6a4d",
+  "audit-1\\offline-replay\\reconciliation.xlsx": "98fc9f1d0253a6b846693ecfb04920b9d748aea9ac321d41bde94f62912945cf",
+  "audit-1\\offline-replay\\report.txt": "1cc63ba6a0f6c616cc9a4428a9e77887d4c2605f165ca80fc19d1943119ecbbb"
+}
