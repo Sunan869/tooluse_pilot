@@ -9,6 +9,7 @@ import os
 import shutil
 from pathlib import Path
 from uuid import uuid4
+from datetime import datetime, timezone
 
 from openai import OpenAI
 from tooluse_pilot.sandbox import DockerTools
@@ -64,12 +65,14 @@ def run_case(client, model, case_dir, max_requests, max_tools, image):
             "input_sha256":checksum(inputs[0]),"events":[],"state":"max_requests",
             "requests":0,"tool_calls":0,"output_files":[]}
     docker=DockerTools(case_dir,image=image,timeout=120)
+    print(f"[start] {case_dir.name}, input={inputs[0].name}", flush=True)
     try:
         for turn in range(max_requests):
             response=client.chat.completions.create(
                 model=model,messages=messages,tools=TOOLS,tool_choice="auto",stream=False,
                 extra_body={"chat_template_kwargs":{"enable_thinking":False}})
             record["requests"]+=1
+            print(f"[turn {turn+1}/{max_requests}] requests={record[\"requests\"]}", flush=True)
             message=response.choices[0].message
             calls=message.tool_calls or []
             messages.append(message.model_dump(exclude_none=True))
@@ -95,10 +98,17 @@ def run_case(client, model, case_dir, max_requests, max_tools, image):
                 except Exception as exc:
                     result={"exit_code":1,"stderr":str(exc)[:500]}
                 record["events"].append({"turn":turn+1,"tool":call.function.name,
+                                         "arguments":args if isinstance(args,dict) else {},
                                          "exit_code":result.get("exit_code"),
-                                         "stderr":result.get("stderr","")[:500]})
+                                         "stdout":str(result.get("stdout",""))[:2500],
+                                         "stderr":str(result.get("stderr",""))[:1000]})
+                # Bound tool feedback in the model context but retain evidence in trace.
+                feedback={"exit_code":result.get("exit_code",1),
+                          "stdout":str(result.get("stdout",""))[:1500],
+                          "stderr":str(result.get("stderr",""))[:700]}
+                print(f"  {call.function.name} exit={feedback[\"exit_code\"]}", flush=True)
                 messages.append({"role":"tool","tool_call_id":call.id,
-                                 "content":json.dumps(result,ensure_ascii=False)})
+                                 "content":json.dumps(feedback,ensure_ascii=False)})
             if record["state"]=="max_tools":
                 break
         # Save only regular XLSX files in the isolated output folder.
