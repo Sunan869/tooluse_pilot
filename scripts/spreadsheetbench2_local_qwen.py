@@ -71,6 +71,8 @@ def run_case(client, model, case_dir, max_requests, max_tools, image, workflow_h
             "input_sha256":checksum(inputs[0]),"events":[],"state":"max_requests",
             "requests":0,"tool_calls":0,"output_files":[]}
     docker=DockerTools(case_dir,image=image,timeout=120)
+    record["first_output_turn"]=None
+    record["output_seen_during_run"]=False
     print(f"[start] {case_dir.name}, input={inputs[0].name}", flush=True)
     try:
         for turn in range(max_requests):
@@ -115,6 +117,12 @@ def run_case(client, model, case_dir, max_requests, max_tools, image, workflow_h
                 print(f"  {call.function.name} exit={feedback['exit_code']}", flush=True)
                 messages.append({"role":"tool","tool_call_id":call.id,
                                  "content":json.dumps(feedback,ensure_ascii=False)})
+            # Detect a real submitted workbook without treating it as correct.
+            submitted=list((docker.root/"output").glob("*.xlsx"))
+            if submitted:
+                record["output_seen_during_run"]=True
+                if record["first_output_turn"] is None:
+                    record["first_output_turn"]=turn+1
             if record["state"]=="max_tools":
                 break
         # Save only regular XLSX files in the isolated output folder.
@@ -129,6 +137,7 @@ def run_case(client, model, case_dir, max_requests, max_tools, image, workflow_h
             record["output_files"].append({"path":str(dest),"sha256":checksum(dest),
                                            "bytes":dest.stat().st_size})
         record["artifact_created"]=bool(record["output_files"])
+        record["input_unchanged"]=checksum(inputs[0])==record["input_sha256"]
         return record
     finally:
         docker.close()
