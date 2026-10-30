@@ -130,9 +130,39 @@ def stage(root, category, case_id, out):
     (out / "private" / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     return metadata
 
+
+def stage_selected(root, category, out, limit=5):
+    """Stage selected official tasks as individual, private-oracle workspaces."""
+    root = root.resolve()
+    selection = json.loads((root / "balanced_cases.json").read_text(encoding="utf-8"))
+    rows = [x for x in selection["cases"] if x["category"] == category][:limit]
+    if not rows:
+        raise ValueError(f"No eligible tasks selected in category {category}")
+    out = out.resolve()
+    if out.exists():
+        raise FileExistsError(f"Destination already exists: {out}")
+    # Validate all inputs and outputs before creating any directories.
+    official = load_tasks(root / "raw")
+    for item in rows:
+        exact = [x for x in official if x["id"] == item["id"] and x["category"] == category]
+        if len(exact) != 1 or not exact[0]["input_path"] or not exact[0]["gold_path"]:
+            raise ValueError(f"Unresolvable official task: {item['id']}")
+    out.mkdir(parents=True)
+    staged = []
+    try:
+        for i, item in enumerate(rows, 1):
+            destination = out / f"{i:02d}_{category}_{item['id']}"
+            staged.append({"workspace": str(destination), **stage(root, category, item["id"], destination)})
+        (out / "index.json").write_text(json.dumps(staged, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        shutil.rmtree(out)
+        raise
+    return {"category": category, "count": len(staged), "out": str(out),
+            "warning": "Do not use existing run-model; XLSX output and official grading are not integrated"}
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=["match", "stage", "select"])
+    parser.add_argument("action", choices=["match", "stage", "select", "stage-selected"])
     parser.add_argument("--root", type=Path, default=Path("datasets/spreadsheetbench2"))
     parser.add_argument("--per-category", type=int, default=5)
     parser.add_argument("--category", choices=sorted(CATEGORIES))
@@ -142,6 +172,10 @@ def main():
     if args.action == "match":
         result = match(args.root)
         print(json.dumps({k: v for k, v in result.items() if k != "cases"}, ensure_ascii=False, indent=2))
+    elif args.action == "stage-selected":
+        if not args.category or not args.out:
+            parser.error("stage-selected requires --category and --out")
+        print(json.dumps(stage_selected(args.root, args.category, args.out, args.per_category), ensure_ascii=False, indent=2))
     elif args.action == "select":
         selection = select_tasks(args.root, args.per_category)
         print(json.dumps({k: v for k, v in selection.items() if k != "cases"}, ensure_ascii=False, indent=2))
