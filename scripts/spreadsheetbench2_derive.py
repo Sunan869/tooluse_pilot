@@ -38,7 +38,7 @@ def formula_matches(actual, expected):
  # cells. Never claim general mathematical/formula equivalence.
  if actual==expected:return True
  if not isinstance(actual,str) or not isinstance(expected,str):return False
- m=re.fullmatch(r"=\\+?SUM\\(([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)\\)",expected,re.I)
+ m=re.fullmatch(r"=\+?SUM\(([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)\)",expected,re.I)
  if not m or m.group(1).upper()!=m.group(3).upper():return False
  col=m.group(1).upper();lo=int(m.group(2));hi=int(m.group(4))
  terms=[f"{col}{row}" for row in range(lo,hi+1)]
