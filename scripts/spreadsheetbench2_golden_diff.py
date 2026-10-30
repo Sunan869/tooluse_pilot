@@ -42,6 +42,9 @@ def compare(case, max_examples=60):
     changes=[]
     by_sheet=Counter()
     kinds=Counter()
+    value_categories=Counter()
+    value_by_sheet=Counter()
+    non_table_examples=[]
     value_examples=[]
     style_examples=[]
     try:
@@ -65,6 +68,19 @@ def compare(case, max_examples=60):
                 by_sheet[name]+=1
                 kind="value_or_formula" if value_changed else "style_only"
                 kinds[kind]+=1
+                if value_changed:
+                    table_related = (
+                        (isinstance(before,dict) and before.get("kind")=="DataTableFormula")
+                        or (isinstance(after,dict) and after.get("kind")=="DataTableFormula")
+                        or (isinstance(before,str) and before.startswith("=TABLE("))
+                        or (isinstance(after,str) and after.startswith("=TABLE("))
+                    )
+                    value_category = "excel_data_table_conversion" if table_related else "other_value_or_formula"
+                    value_categories[value_category]+=1
+                    value_by_sheet[name]+=1
+                    if not table_related and len(non_table_examples)<max_examples:
+                        non_table_examples.append({"sheet":name,"cell":old.cell(row,col).coordinate,
+                                                   "before":before,"after":after})
                 target = value_examples if value_changed else style_examples
                 if len(target)<max_examples:
                     target.append({"sheet":name,"cell":f"{old.cell(row,col).coordinate}",
@@ -73,11 +89,14 @@ def compare(case, max_examples=60):
         return {"case":str(case),"input":inputs[0].name,"golden":golds[0].name,
                 "total_changed_cells":sum(by_sheet.values()),
                 "by_sheet":dict(by_sheet),"change_kinds":dict(kinds),
+                "value_change_categories":dict(value_categories),
+                "value_changes_by_sheet":dict(value_by_sheet),
+                "non_data_table_examples":non_table_examples,
                 "examples":(value_examples + style_examples)[:max_examples],
                 "value_or_formula_examples":value_examples,
                 "style_only_examples":style_examples[:max(0,max_examples-len(value_examples))],
                 "examples_truncated":sum(by_sheet.values())>max_examples,
-                "notice":"This is a trusted-side structural diff, not official SpreadsheetBench grading or proof that every difference is required."}
+                "notice":"Excel data-table conversions and widespread style differences may reflect workbook conversion. This is not an official score or proof of necessary fixes."}
     finally:
         a.close();b.close()
 
