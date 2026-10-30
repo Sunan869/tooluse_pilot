@@ -72,6 +72,36 @@ def match(root):
     (root / "matched_cases.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return result
 
+
+def select_tasks(root, per_category=5):
+    """Balanced deterministic task selection, independent of structural shortlist."""
+    root = root.resolve()
+    tasks = load_tasks(root / "raw")
+    result = {"total_official": len(tasks), "per_category": per_category,
+              "categories": {}, "cases": []}
+    for category in sorted(CATEGORIES):
+        group = [t for t in tasks if t["category"] == category]
+        eligible = [t for t in group if t["input_path"] and t["gold_path"]
+                    and isinstance(t["instruction"], str) and t["instruction"].strip()
+                    and t["input_path"] != t["gold_path"]]
+        # Stable ordering and unique input workbooks for first-pass diversity.
+        unique = []
+        seen = set()
+        for item in sorted(eligible, key=lambda t: (t["id"], t["input_path"])):
+            if item["input_path"] not in seen:
+                unique.append(item)
+                seen.add(item["input_path"])
+        chosen = unique[:per_category]
+        result["categories"][category] = {
+            "official_tasks": len(group),
+            "eligible_tasks": len(eligible),
+            "unique_eligible_inputs": len(unique),
+            "selected": len(chosen)}
+        result["cases"].extend(chosen)
+    output = root / "balanced_cases.json"
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    return result
+
 def stage(root, category, case_id, out):
     root = root.resolve()
     rows = load_tasks(root / "raw")
@@ -102,17 +132,16 @@ def stage(root, category, case_id, out):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=["match", "stage"])
+    parser.add_argument("action", choices=["match", "stage", "select"])
     parser.add_argument("--root", type=Path, default=Path("datasets/spreadsheetbench2"))
-    parser.add_argument("--category", choices=sorted(CATEGORIES))
+    parser.add_argument("--per-category", type=int, default=5)\n    parser.add_argument("--category", choices=sorted(CATEGORIES))
     parser.add_argument("--id")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
     if args.action == "match":
         result = match(args.root)
         print(json.dumps({k: v for k, v in result.items() if k != "cases"}, ensure_ascii=False, indent=2))
-    else:
-        if not args.category or not args.id or not args.out:
+    elif args.action == "select":\n        selection = select_tasks(args.root, args.per_category)\n        print(json.dumps({k: v for k, v in selection.items() if k != "cases"}, ensure_ascii=False, indent=2))\n    else:\n        if not args.category or not args.id or not args.out:
             parser.error("stage requires --category --id --out")
         print(json.dumps(stage(args.root, args.category, args.id, args.out), ensure_ascii=False, indent=2))
 
