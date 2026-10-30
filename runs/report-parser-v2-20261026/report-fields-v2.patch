@@ -1,0 +1,42 @@
+--- a/tooluse_pilot/real_w6_reconciliation.py
++++ b/tooluse_pilot/real_w6_reconciliation.py
+@@ -40,15 +40,31 @@
+     return f"Total: {answer[0]}; Count: {answer[1]}; Winner: {answer[2]}; Amount: {answer[3]}."
+ 
+ def report_valid(text,answer):
+-    # Accept colon, equals sign, or plain whitespace separators, including newlines.
+-    # Every explicit occurrence must agree, so contradictory claims are rejected.
++    # Fields occupy a line/comma/semicolon segment, possibly as a compact list.
++    # Do not scan explanatory sentences for words such as "winner" or "amount".
+     labels=("total","count","winner","amount")
+-    for label,value in zip(labels,answer):
+-        pattern=r"(?i)(?<![A-Za-z])"+label+(r"(?!\s+amount\b)" if label=="winner" else "")+r"\s*(?::|=|\s)\s*"+(r"([A-Za-z0-9-]+)" if label=="winner" else r"(\d+)")
+-        matches=re.findall(pattern,text)
+-        if not matches or any(x.casefold()!=value.casefold() for x in matches):
+-            return False
+-    return True
++    fields={label:[] for label in labels}
++    names=r"winner\s+amount|total|count|winner|amount"
++    field=re.compile(r"("+names+r")(?:(?:\s*[:=]\s*)|\s+)([A-Za-z0-9-]+)(?=\s|$)",re.I)
++    explicit=re.compile(r"^(?:"+names+r")\s*[:=]",re.I)
++    for segment in re.split(r"[\r\n;,]",text):
++        segment=segment.strip().removesuffix(".").rstrip()
++        if not segment:continue
++        pos=0; parsed=[]
++        while pos<len(segment):
++            match=field.match(segment,pos)
++            if not match:break
++            label=re.sub(r"\s+"," ",match[1].lower())
++            parsed.append(("amount" if label=="winner amount" else label,match[2]))
++            pos=match.end()
++            while pos<len(segment) and segment[pos].isspace():pos+=1
++        if pos!=len(segment):
++            # Malformed explicit claims must not disappear beside correct ones.
++            if explicit.match(segment):return False
++            continue
++        for label,value in parsed:fields[label].append(value)
++    return all(fields[label] and all(value.casefold()==str(expected).casefold()
++               for value in fields[label]) for label,expected in zip(labels,answer))
+ 
+ def initial_diagnostics(expected,actual,text,save_called):
+     issues=[]

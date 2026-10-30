@@ -14,8 +14,10 @@ class DockerTools:
         self.root=Path(self.workspace.name)
         shutil.copytree(self.case/'input',self.root/'input')
         (self.root/'output').mkdir()
+        (self.root/'tmp').mkdir()
         os.chmod(self.root,0o777)
         os.chmod(self.root/'output',0o777)
+        os.chmod(self.root/'tmp',0o777)
         os.chmod(self.root/'input',0o755)
         for f in (self.root/'input').iterdir():
             if f.is_file():os.chmod(f,0o644)
@@ -26,12 +28,16 @@ class DockerTools:
         if not isinstance(code,str) or not code.strip() or len(code)>20000:raise ValueError('invalid script')
         cmd=['docker','run','--rm','--network','none','--read-only','--cap-drop','ALL',
              '--security-opt','no-new-privileges','--pids-limit','64','--memory','512m','--cpus','1',
-             '--user','65534:65534','--tmpfs','/tmp:rw,nosuid,noexec,size=32m',
+             '--user','65534:65534','-v',f'{self.root / "tmp"}:/tmp:rw',
              '-v',f'{self.root}:/work:rw','-w','/work',self.image]
         cmd+=['python','-c',code] if kind=='execute_python' else ['sh','-c',code]
         try:
-            p=subprocess.run(cmd,capture_output=True,text=True,timeout=self.timeout,check=False)
-            result={'exit_code':p.returncode,'stdout':p.stdout[-6000:],'stderr':p.stderr[-2000:]}
+            # Capture bytes and decode explicitly. Windows' subprocess reader threads
+            # must never implicitly choose the system GBK codepage.
+            p=subprocess.run(cmd,capture_output=True,text=False,timeout=self.timeout,check=False)
+            stdout=(p.stdout or b'').decode('utf-8',errors='replace')
+            stderr=(p.stderr or b'').decode('utf-8',errors='replace')
+            result={'exit_code':p.returncode,'stdout':stdout[-6000:],'stderr':stderr[-2000:]}
         except subprocess.TimeoutExpired:
             result={'exit_code':124,'stdout':'','stderr':'Docker command timed out'}
         self.calls.append({'tool':kind,'exit_code':result['exit_code']})

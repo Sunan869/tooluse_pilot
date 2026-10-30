@@ -1,0 +1,6 @@
+Total: 73800
+Count: 17
+Winner: Order08
+Amount: 9100
+
+Active orders only. Correction quantities replace original quantities. Required city: Beijing. Maximum per-order amount: 10000. Winner is the highest-value eligible order, with ties resolved alphabetically by order ID.
