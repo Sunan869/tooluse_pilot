@@ -26,7 +26,7 @@ TOOLS = [
 ]
 
 def make_client(base_url):
-    return OpenAI(base_url=base_url, api_key=os.getenv("LOCAL_MODEL_API_KEY", "not-needed"),
+    return OpenAI(base_url=base_url, api_key=os.getenv("MODEL_API_KEY") or os.getenv("LOCAL_MODEL_API_KEY", "not-needed"),
                   timeout=180, max_retries=0)
 
 def probe(client, model):
@@ -34,7 +34,7 @@ def probe(client, model):
         model=model, temperature=None, stream=False,
         messages=[{"role":"user", "content":"调用 execute_python 工具计算 2+3，不要直接给出答案。"}],
         tools=[TOOLS[0]], tool_choice="auto",
-        extra_body={"chat_template_kwargs":{"enable_thinking":False}})
+        **({"extra_body":{"chat_template_kwargs":{"enable_thinking":False}}} if model.lower().startswith("qwen") else {})
     calls = getattr(resp.choices[0].message, "tool_calls", None) or []
     return {"model":model, "tool_calls_supported":bool(calls),
             "tool_names":[call.function.name for call in calls],
@@ -149,8 +149,8 @@ def run_case(client, model, case_dir, max_requests, max_tools, image, workflow_h
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action",choices=["probe","run"])
-    parser.add_argument("--base-url",default="http://10.10.23.7:5610/v1")
-    parser.add_argument("--model",default="Qwen3.8-Flash-Next-AWQ-INT4")
+    parser.add_argument("--base-url",default=os.getenv("MODEL_BASE_URL","http://10.10.23.7:5610/v1"))
+    parser.add_argument("--model",default=os.getenv("MODEL_ID","Qwen3.8-Flash-Next-AWQ-INT4"))
     parser.add_argument("--batch",type=Path,default=Path("runs/ssb2-debugging-baseline"))
     parser.add_argument("--case",type=Path)
     parser.add_argument("--max-requests",type=int,default=25)
