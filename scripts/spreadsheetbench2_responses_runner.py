@@ -14,7 +14,7 @@ RESPONSE_TOOLS = [
     for t in TOOLS
 ]
 
-def run_case_responses(client,model,case_dir,max_requests,max_tools,image,workflow_hint=False):
+def run_case_responses(client,model,case_dir,max_requests,max_tools,image,workflow_hint=False,focus_hint=False):
     root=Path(case_dir).resolve()
     inputs=list((root/"input").glob("*.xlsx"))
     if len(inputs)!=1 or not (root/"instruction.md").is_file():
@@ -33,9 +33,15 @@ def run_case_responses(client,model,case_dir,max_requests,max_tools,image,workfl
         system+=(" Workflow guidance: inspect the workbook systematically, identify concrete suspect cells "
             "or formatting defects, apply justified edits, and save an output XLSX. "
             "Avoid endlessly inspecting the same area. Do not invent errors or change unrelated cells.")
-    history=[{"role":"user","content":(root/"instruction.md").read_text(encoding="utf-8")}]
+    instruction=(root/"instruction.md").read_text(encoding="utf-8")
+    if focus_hint:
+        instruction += ("\\n\\nDiagnostic focus (additional information, not the answer): "
+            "Prioritize auditing the cumulative calculations in the 'Ex 5 - M&A' worksheet. "
+            "Determine independently whether any amounts are double counted; if justified, "
+            "repair the formulas and save the workbook. Do not invent fixes.")
+    history=[{"role":"user","content":instruction}]
     report={"run_id":run_id,"model":model,"api_type":"responses",
-            "condition":"workflow_hint" if workflow_hint else "baseline",
+            "condition":"focus_hint" if focus_hint else ("workflow_hint" if workflow_hint else "baseline"),
             "workspace":str(root),"input_sha256":checksum(inputs[0]),
             "requests":0,"tool_calls":0,"state":"max_requests","events":[],
             "output_files":[],"first_output_turn":None,"output_seen_during_run":False}
