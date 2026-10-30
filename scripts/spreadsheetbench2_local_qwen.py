@@ -58,7 +58,7 @@ def run_case(client, model, case_dir, max_requests, max_tools, image):
     run_id=str(uuid4())
     instructions=(case_dir/"instruction.md").read_text(encoding="utf-8")
     messages=[
-        {"role":"system","content":"You are editing an Excel workbook. Inspect the provided input XLSX using Python/shell tools. Apply the user's requested changes, preserve unrelated content, and save the updated XLSX under output/ with the SAME filename as the input file. Never claim success unless the file exists. The workspace has input/ and output/ directories. Do not read private files or access the network."},
+        {"role":"system","content":"You are editing an Excel workbook. Inspect the provided input XLSX using Python/shell tools. Apply the user's requested changes, preserve unrelated content, and save the updated XLSX under output/ with the SAME filename as the input file. Never claim success unless the file exists. The workspace has input/ and output/ directories. Files saved under /work or /tmp persist across tool calls, but Python process variables do not. Inspect only relevant cells and formulas, avoid dumping entire sheets to stdout. Do not read private files or access the network."},
         {"role":"user","content":instructions}
     ]
     record={"run_id":run_id,"model":model,"workspace":str(case_dir),
