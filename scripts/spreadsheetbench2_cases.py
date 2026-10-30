@@ -134,14 +134,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["match", "stage", "select"])
     parser.add_argument("--root", type=Path, default=Path("datasets/spreadsheetbench2"))
-    parser.add_argument("--per-category", type=int, default=5)\n    parser.add_argument("--category", choices=sorted(CATEGORIES))
+    parser.add_argument("--per-category", type=int, default=5)
+    parser.add_argument("--category", choices=sorted(CATEGORIES))
     parser.add_argument("--id")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
     if args.action == "match":
         result = match(args.root)
         print(json.dumps({k: v for k, v in result.items() if k != "cases"}, ensure_ascii=False, indent=2))
-    elif args.action == "select":\n        selection = select_tasks(args.root, args.per_category)\n        print(json.dumps({k: v for k, v in selection.items() if k != "cases"}, ensure_ascii=False, indent=2))\n    else:\n        if not args.category or not args.id or not args.out:
+    elif args.action == "select":
+        selection = select_tasks(args.root, args.per_category)
+        print(json.dumps({k: v for k, v in selection.items() if k != "cases"}, ensure_ascii=False, indent=2))\n    else:
+        if not args.category or not args.id or not args.out:
             parser.error("stage requires --category --id --out")
         print(json.dumps(stage(args.root, args.category, args.id, args.out), ensure_ascii=False, indent=2))
 
