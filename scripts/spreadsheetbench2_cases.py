@@ -58,18 +58,23 @@ def match(root):
     candidates = {item["path"] for item in shortlist.get("cases", [])}
     tasks = load_tasks(root / "raw")
     selected = [item for item in tasks if item["input_path"] in candidates]
+    used_inputs = {item["input_path"] for item in selected}
     result = {
         "scanned_candidates": len(candidates),
         "official_tasks": len(tasks),
         "matched": len(selected),
-        "unmatched": sorted(candidates - {item["input_path"] for item in selected}),
+        "matched_input_workbooks": len(used_inputs),
+        "category_counts": {cat: sum(item["category"] == cat for item in selected)
+                            for cat in sorted(CATEGORIES)},
+        "missing_golden": sum(not item["gold_path"] for item in selected),
+        "unmatched": sorted(candidates - used_inputs),
         "cases": selected}
     (root / "matched_cases.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return result
 
 def stage(root, category, case_id, out):
     root = root.resolve()
-    rows = json.loads((root / "matched_cases.json").read_text(encoding="utf-8"))["cases"]
+    rows = load_tasks(root / "raw")
     matches = [x for x in rows if x["category"] == category and x["id"] == case_id]
     if len(matches) != 1:
         raise ValueError(f"Expected exactly one matching task, found {len(matches)}")
