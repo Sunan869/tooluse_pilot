@@ -5,6 +5,7 @@ an artifact/behavior baseline, NOT an official SpreadsheetBench score.
 """
 import argparse
 import json
+import os
 import shutil
 from pathlib import Path
 from spreadsheetbench2_local_qwen import make_client, run_case
@@ -16,8 +17,8 @@ def main():
     p.add_argument("--limit",type=int,default=5)
     p.add_argument("--max-requests",type=int,default=25)
     p.add_argument("--max-tools",type=int,default=60)
-    p.add_argument("--base-url",default="http://10.10.23.7:5610/v1")
-    p.add_argument("--model",default="Qwen3.8-Flash-Next-AWQ-INT4")
+    p.add_argument("--base-url",default=os.getenv("MODEL_BASE_URL","http://10.10.23.7:5610/v1"))
+    p.add_argument("--model",default=os.getenv("MODEL_ID","Qwen3.8-Flash-Next-AWQ-INT4"))
     p.add_argument("--workflow-hint",action="store_true",help="Assisted workflow condition; keep separate from baseline")
     p.add_argument("--sandbox-image",default="tooluse-pilot-sandbox:py311-openpyxl")
     a=p.parse_args()
