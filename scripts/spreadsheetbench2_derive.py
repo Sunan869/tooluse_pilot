@@ -24,10 +24,13 @@ def digest(path):
  with path.open("rb") as f:
   for chunk in iter(lambda:f.read(1024*1024),b""):h.update(chunk)
  return h.hexdigest()
+def normalized(value):
+ if value is None or isinstance(value,(str,int,float,bool)):return value
+ return {"type":type(value).__name__,"text":getattr(value,"text",None),"ref":getattr(value,"ref",None),"dt2D":getattr(value,"dt2D",None)}
 def values(path):
  w=load_workbook(path,read_only=False,data_only=False)
  try:
-  return {(s.title,c.coordinate):str(c.value) if c.value is not None else None
+  return {(s.title,c.coordinate):normalized(c.value)
     for s in w for c in s._cells.values()}
  finally:w.close()
 def validate(case,submission):
