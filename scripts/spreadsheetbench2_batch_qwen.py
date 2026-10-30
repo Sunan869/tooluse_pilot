@@ -18,6 +18,7 @@ def main():
     p.add_argument("--max-tools",type=int,default=60)
     p.add_argument("--base-url",default="http://10.10.23.7:5610/v1")
     p.add_argument("--model",default="Qwen3.8-Flash-Next-AWQ-INT4")
+    p.add_argument("--workflow-hint",action="store_true",help="Assisted workflow condition; keep separate from baseline")
     p.add_argument("--sandbox-image",default="tooluse-pilot-sandbox:py311-openpyxl")
     a=p.parse_args()
     if not 1 <= a.limit <= 5: p.error("--limit must be 1..5")
@@ -39,9 +40,10 @@ def main():
             (target/"output").mkdir()
             print(f"CASE {i}/{len(cases)}: {case.name}",flush=True)
             try:
-                report=run_case(client,a.model,target,a.max_requests,a.max_tools,a.sandbox_image)
+                report=run_case(client,a.model,target,a.max_requests,a.max_tools,a.sandbox_image,a.workflow_hint)
                 result={k:report.get(k) for k in ("run_id","state","requests","tool_calls","artifact_created","output_files")}
                 result["case"]=case.name
+                result["condition"]="workflow_hint" if a.workflow_hint else "baseline"
             except Exception as exc:
                 result={"case":case.name,"state":"runner_error","error":str(exc)[:500]}
             results.append(result)
