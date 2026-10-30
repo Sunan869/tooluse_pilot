@@ -61,6 +61,8 @@ def run_case_responses(client,model,case_dir,max_requests,max_tools,image,workfl
                     report["state"]="max_tools"
                     break
                 report["tool_calls"]+=1
+                args={"_raw_arguments":str(call.arguments or "")[:2000]}
+                exception_type=None
                 try:
                     args=json.loads(call.arguments or "{}")
                     if call.name=="execute_python" and set(args)=={"code"}:
@@ -70,13 +72,13 @@ def run_case_responses(client,model,case_dir,max_requests,max_tools,image,workfl
                     else:
                         result={"exit_code":1,"stdout":"","stderr":"Invalid tool call"}
                 except Exception as exc:
-                    args={}
+                    exception_type=type(exc).__name__
                     result={"exit_code":1,"stdout":"","stderr":str(exc)[:500]}
                 feedback={"exit_code":result.get("exit_code",1),
                     "stdout":str(result.get("stdout",""))[:1500],
                     "stderr":str(result.get("stderr",""))[:700]}
                 report["events"].append({"turn":turn,"tool":call.name,"arguments":args,
-                    "exit_code":feedback["exit_code"],
+                    "exit_code":feedback["exit_code"],"exception_type":exception_type,
                     "stdout":str(result.get("stdout",""))[:2500],
                     "stderr":str(result.get("stderr",""))[:1000]})
                 history.append({"type":"function_call_output","call_id":call.call_id,
