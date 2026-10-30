@@ -17,6 +17,20 @@ def normalize(value):
             "ref":getattr(value,"ref",None),
             "dt2D":getattr(value,"dt2D",None)}
 
+def style_signature(cell):
+    if cell is None:
+        return None
+    # Style IDs are workbook-local indexes, not comparable across two files.
+    # Compare the underlying actual style objects (fonts, fills, etc.).
+    return {
+        "font": str(cell.font),
+        "fill": str(cell.fill),
+        "border": str(cell.border),
+        "alignment": str(cell.alignment),
+        "number_format": cell.number_format,
+        "protection": str(cell.protection),
+    }
+
 def compare(case, max_examples=60):
     case=Path(case)
     inputs=list((case/"input").glob("*.xlsx"))
@@ -28,6 +42,8 @@ def compare(case, max_examples=60):
     changes=[]
     by_sheet=Counter()
     kinds=Counter()
+    value_examples=[]
+    style_examples=[]
     try:
         for name in sorted(set(a.sheetnames)|set(b.sheetnames)):
             if name not in a or name not in b:
@@ -41,22 +57,26 @@ def compare(case, max_examples=60):
                 x=old._cells.get((row,col));y=new._cells.get((row,col))
                 before=normalize(x.value) if x else None
                 after=normalize(y.value) if y else None
-                style_before=x.style_id if x else None
-                style_after=y.style_id if y else None
+                style_before=style_signature(x)
+                style_after=style_signature(y)
                 value_changed=before!=after
                 style_changed=style_before!=style_after
                 if not value_changed and not style_changed: continue
                 by_sheet[name]+=1
                 kind="value_or_formula" if value_changed else "style_only"
                 kinds[kind]+=1
-                if len(changes)<max_examples:
-                    changes.append({"sheet":name,"cell":f"{old.cell(row,col).coordinate}",
-                                    "kind":kind,"before":before,"after":after,
-                                    "style_changed":style_changed})
+                target = value_examples if value_changed else style_examples
+                if len(target)<max_examples:
+                    target.append({"sheet":name,"cell":f"{old.cell(row,col).coordinate}",
+                                   "kind":kind,"before":before,"after":after,
+                                   "style_changed":style_changed})
         return {"case":str(case),"input":inputs[0].name,"golden":golds[0].name,
                 "total_changed_cells":sum(by_sheet.values()),
                 "by_sheet":dict(by_sheet),"change_kinds":dict(kinds),
-                "examples":changes,"examples_truncated":sum(by_sheet.values())>len(changes),
+                "examples":(value_examples + style_examples)[:max_examples],
+                "value_or_formula_examples":value_examples,
+                "style_only_examples":style_examples[:max(0,max_examples-len(value_examples))],
+                "examples_truncated":sum(by_sheet.values())>max_examples,
                 "notice":"This is a trusted-side structural diff, not official SpreadsheetBench grading or proof that every difference is required."}
     finally:
         a.close();b.close()
