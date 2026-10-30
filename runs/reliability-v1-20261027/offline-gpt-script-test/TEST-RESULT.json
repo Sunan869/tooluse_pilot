@@ -1,8 +1,0 @@
-{
-  "real_model_calls": 0,
-  "mock_request_count": 85,
-  "cases": 12,
-  "passed": true,
-  "resume_additional_calls": 0,
-  "note": "OpenAI class replaced by in-process fake; offline.invalid was never contacted."
-}

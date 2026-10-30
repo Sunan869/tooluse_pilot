@@ -1,4 +1,0 @@
-Total: 66800
-Count: 13
-Winner: Order17
-Amount: 16100

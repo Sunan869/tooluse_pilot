@@ -1,8 +1,0 @@
-{
-  "id": "file-procurement-2",
-  "family": "real_file_procurement",
-  "task": "Use the XLSX workbook in the workspace. Only vendors serving both Beijing and Shenzhen, costing no more than 150000, qualify. Recommend the lowest-priced qualifying vendor (alphabetical tie-break). Write the vendor, price and eligible count to Decision!B4:B6, save the workbook, and write report.txt stating the recommended vendor and price. Call finish when complete.",
-  "input": {
-    "workbook": "procurement.xlsx"
-  }
-}

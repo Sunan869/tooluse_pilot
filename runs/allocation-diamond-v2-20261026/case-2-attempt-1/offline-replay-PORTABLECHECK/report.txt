@@ -1,4 +1,0 @@
-Total: 19800
-Count: 8
-Winner: K
-Amount: 3514

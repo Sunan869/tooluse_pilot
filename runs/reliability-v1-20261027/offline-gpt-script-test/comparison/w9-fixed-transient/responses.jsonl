@@ -1,8 +1,0 @@
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "get_package", "arguments": "{}", "call_id": "mock1", "id": "mock1"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "list_routes", "arguments": "{\"origin\": \"Hub-K\"}", "call_id": "mock2", "id": "mock2"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "send_leg", "arguments": "{\"route_id\": \"r47\"}", "call_id": "mock3", "id": "mock3"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "inspect_incident", "arguments": "{\"incident_id\": \"I001\"}", "call_id": "mock4", "id": "mock4"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "send_leg", "arguments": "{\"route_id\": \"r47\"}", "call_id": "mock5", "id": "mock5"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "get_package", "arguments": "{}", "call_id": "mock6", "id": "mock6"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "get_ledger", "arguments": "{}", "call_id": "mock7", "id": "mock7"}]}
-{"id": "offline-response", "model": "offline-mock-not-a-model-call", "output": [{"type": "function_call", "name": "finish", "arguments": "{}", "call_id": "mock8", "id": "mock8"}]}

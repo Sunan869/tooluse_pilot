@@ -1,7 +1,0 @@
-Before fix: 4 new regression test methods; 4 failure reports including actual GPT prose and malformed duplicate values.
-After fix: 4 new test methods passed; 22 existing W6 test methods passed.
-Offline verdict: GPT adjusted pass, historical invalid_actions=1 retained, 1 grader false rejection. Qwen 1/2 remain fail; invalid_actions 10/6 retained; no false rejections.
-All original-hashes.json entries verified unchanged, including original ZIP.
-No model calls.
-Commands: from code: python -m unittest discover -s tests -p test_report_fields_v2.py; python -m unittest discover -s tests -p "*w6*.py".
-Offline analysis script: analyze.py; replays use exclusive directories, do not overwrite/re-run in existing replay folders.

@@ -1,8 +1,0 @@
-{
-  "id": "multisheet-audit-0",
-  "family": "real_multisheet_audit",
-  "task": "Read Orders and Corrections in audit.xlsx. Group duplicate order IDs rather than adding duplicate rows. For corrected IDs use the corrected quantity; otherwise use the row quantity. Ignore inactive records. Compute total active order value, unique active order count, and highest-value active order ID (alphabetical tie break). Write to Summary B2:B4, save workbook and write report.txt with all three results; then finish.",
-  "input": {
-    "workbook": "audit.xlsx"
-  }
-}

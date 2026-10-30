@@ -1,4 +1,0 @@
-total=36300
-count=11
-winner=Delta
-amount=7800

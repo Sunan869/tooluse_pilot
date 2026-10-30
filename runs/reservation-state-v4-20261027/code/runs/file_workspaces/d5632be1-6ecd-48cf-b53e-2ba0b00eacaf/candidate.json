@@ -1,8 +1,0 @@
-{
-  "id": "file-dynamic-3",
-  "family": "real_file_dynamic",
-  "input": {
-    "workbook": "procurement.xlsx"
-  },
-  "task": "Using the workbook, recommend the lowest-priced Beijing supplier within the initial budget. Save Decision B4:B6 and report.txt first. Call receive_update for the later user requirements. Then revise all affected workbook and report values, save, and finish. Do not guess the revised requirements."
-}

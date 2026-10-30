@@ -1,6 +1,0 @@
-Stage Current: 2
-Total: 10067
-Count: 5
-Winner: B
-Amount: 2743
-Retained at locked amounts: B, O, P, Q. Newly selected: I. A, C, D, and E are permanently cancelled. F is released because C is absent and rejected for dependency. Group usage: Red 1582; Blue 4662; Green 3823. Every order is recorded once in descending rank and ascending ID order, using the first applicable reason.

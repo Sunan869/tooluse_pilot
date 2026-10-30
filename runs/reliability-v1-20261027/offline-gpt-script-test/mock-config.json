@@ -1,1 +1,0 @@
-{"base_url_env": "OFFLINE_STUB_URL", "models": {"gpt": {"model": "gpt-6-astra", "api_type": "responses", "api_key": "test-only-not-used"}}}

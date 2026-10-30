@@ -1,4 +1,0 @@
-Three controlled probes did not yield an admitted GPT-screening candidate.
-Recommended next decision: select the actual target workflow/interface before more model runs. Options include real spreadsheet UI/screenshot interaction (requires checking model vision capability and an authorized interface) or structured API planning. Do not assume those capabilities are available.
-Alternative: approve a bounded multi-instance reliability study and explicit GPT comparison budget, replacing the goal of selecting one Qwen failure as a GPT-hardness proxy.
-Or stop at current verified harness/oracles/negative evidence. No additional scale, seeds, model calls or external publication will be started under this closing experiment.

@@ -1,7 +1,0 @@
-Offline only; external model calls=0.
-Passed: 22 W6 regression methods; 4 report-parser-v2 methods; 1 executable-runner method; 2 file-isolation methods; 2 allocation/budget methods. Total 31 selected test methods.
-Two independent oracles agree on both stages of both cases. Each reference tool execution succeeds with 28 tools.
-Two end-to-end scripted mock Responses runs complete successfully in 8 requests / 28 tools each. These are not model performance results.
-10 additional budget-boundary probes agree. Two stale Decisions mutations rejected. Verification and offline re-adjudication successfully reproduced into fresh reproduction-check directories.
-PowerShell run-gpt-batch.ps1 syntax parsed successfully; script never executed.
-Budget test confirms retries included in actual max_requests (2 simulated timeouts => exactly 2 attempts).

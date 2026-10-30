@@ -1,9 +1,0 @@
-{
-  "classification": "premature_update_recovered",
-  "final_deliverables_correct": true,
-  "requests": 11,
-  "tool_calls": 22,
-  "invalid_actions": 1,
-  "error": "stage_one_failed: workbook_not_saved, summary_mismatch",
-  "not_final_computation_failure": true
-}

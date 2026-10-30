@@ -1,5 +1,0 @@
-{
-  "outcome": "valid initial-static-budget failure; not advanced for GPT",
-  "next": "reservation-state-v4-20261027",
-  "reason": "Start with populated commitments to test intended state mechanism immediately; no need to spend a second run confirming already-known initial allocation weakness."
-}
