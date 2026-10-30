@@ -14,8 +14,10 @@ class DockerTools:
         self.root=Path(self.workspace.name)
         shutil.copytree(self.case/'input',self.root/'input')
         (self.root/'output').mkdir()
+        (self.root/'tmp').mkdir()
         os.chmod(self.root,0o777)
         os.chmod(self.root/'output',0o777)
+        os.chmod(self.root/'tmp',0o777)
         os.chmod(self.root/'input',0o755)
         for f in (self.root/'input').iterdir():
             if f.is_file():os.chmod(f,0o644)
@@ -26,7 +28,7 @@ class DockerTools:
         if not isinstance(code,str) or not code.strip() or len(code)>20000:raise ValueError('invalid script')
         cmd=['docker','run','--rm','--network','none','--read-only','--cap-drop','ALL',
              '--security-opt','no-new-privileges','--pids-limit','64','--memory','512m','--cpus','1',
-             '--user','65534:65534','--tmpfs','/tmp:rw,nosuid,noexec,size=32m',
+             '--user','65534:65534','-v',f'{self.root / "tmp"}:/tmp:rw',
              '-v',f'{self.root}:/work:rw','-w','/work',self.image]
         cmd+=['python','-c',code] if kind=='execute_python' else ['sh','-c',code]
         try:
