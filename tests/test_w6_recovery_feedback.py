@@ -13,6 +13,14 @@ class RecoveryFeedbackTests(unittest.TestCase):
         self.assertFalse(report_valid("total=23000 count=4 winner=Alpha amount=8000; winner=Delta",correct))
         self.assertFalse(report_valid("total=23000 count=3 winner=Alpha amount=8000",correct))
 
+    def test_gpt_report_with_explanatory_amount_prose(self):
+        actual=("11800","3","Delta","7800")
+        text=("total: 11800\ncount: 3\nwinner: Delta\namount: 7800\n\n"
+              "Revised Policy. Eligible orders have an order amount no greater than 8000. "
+              "Gamma = 2200; Beta = 1800; Delta = 7800.")
+        self.assertTrue(report_valid(text,actual))
+        self.assertFalse(report_valid(text+"\nWinner: Alpha",actual))
+
     def test_gate_reports_missing_save_and_wrong_values(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)/"case";case=generate(2,root);env=Environment(case,root)
