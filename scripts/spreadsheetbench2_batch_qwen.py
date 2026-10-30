@@ -19,6 +19,7 @@ def main():
     p.add_argument("--max-tools",type=int,default=60)
     p.add_argument("--base-url",default=os.getenv("MODEL_BASE_URL","http://10.10.23.7:5610/v1"))
     p.add_argument("--model",default=os.getenv("MODEL_ID","Qwen3.8-Flash-Next-AWQ-INT4"))
+    p.add_argument("--api-type",choices=["chat_completions","responses"],default="chat_completions")
     p.add_argument("--workflow-hint",action="store_true",help="Assisted workflow condition; keep separate from baseline")
     p.add_argument("--sandbox-image",default="tooluse-pilot-sandbox:py311-openpyxl")
     a=p.parse_args()
@@ -30,6 +31,10 @@ def main():
     if out.exists(): p.error(f"Output already exists: {out}")
     out.mkdir(parents=True)
     client=make_client(a.base_url)
+    if a.api_type=="responses":
+        from spreadsheetbench2_responses_runner import run_case_responses as selected_runner
+    else:
+        selected_runner=run_case
     results=[]
     try:
         for i,case in enumerate(cases,1):
@@ -41,9 +46,10 @@ def main():
             (target/"output").mkdir()
             print(f"CASE {i}/{len(cases)}: {case.name}",flush=True)
             try:
-                report=run_case(client,a.model,target,a.max_requests,a.max_tools,a.sandbox_image,a.workflow_hint)
+                report=selected_runner(client,a.model,target,a.max_requests,a.max_tools,a.sandbox_image,a.workflow_hint)
                 result={k:report.get(k) for k in ("run_id","state","requests","tool_calls","artifact_created","output_files")}
                 result["case"]=case.name
+                result["api_type"]=a.api_type
                 result["condition"]="workflow_hint" if a.workflow_hint else "baseline"
             except Exception as exc:
                 result={"case":case.name,"state":"runner_error","error":str(exc)[:500]}
