@@ -2,7 +2,7 @@
 
 This is a controlled research generator, not a validated official benchmark.
 """
-import argparse,hashlib,json,shutil
+import argparse,hashlib,json,shutil,re
 from pathlib import Path
 from openpyxl import load_workbook
 
@@ -33,6 +33,27 @@ def values(path):
   return {(s.title,c.coordinate):normalized(c.value)
     for s in w for c in s._cells.values()}
  finally:w.close()
+def formula_matches(actual, expected):
+ # Only normalize a mechanically verifiable SUM of the exact same contiguous
+ # cells. Never claim general mathematical/formula equivalence.
+ if actual==expected:return True
+ if not isinstance(actual,str) or not isinstance(expected,str):return False
+ m=re.fullmatch(r"=\\+?SUM\\(([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)\\)",expected,re.I)
+ if not m or m.group(1).upper()!=m.group(3).upper():return False
+ col=m.group(1).upper();lo=int(m.group(2));hi=int(m.group(4))
+ terms=[f"{col}{row}" for row in range(lo,hi+1)]
+ expression=actual.lstrip("=+").upper().replace("$","").replace(" ","")
+ return expression in ("+".join(terms),"+".join(reversed(terms)))
+
+def structure(path):
+ w=load_workbook(path,read_only=False,data_only=False,keep_links=True)
+ try:
+  return {"sheets":w.sheetnames,
+          "merged":{s.title:sorted(str(r) for r in s.merged_cells.ranges) for s in w},
+          "defined_names":sorted(w.defined_names),
+          "sheet_states":{s.title:s.sheet_state for s in w}}
+ finally:w.close()
+
 def validate(case,submission):
  case=Path(case);meta=json.loads((case/"private"/"oracle.json").read_text(encoding="utf-8"))
  if meta["kind"]=="cell_set":
@@ -44,11 +65,18 @@ def validate(case,submission):
  original=values(input_file);edited=values(Path(submission))
  target={(SHEET,k):v for k,v in meta["expected_formulas"].items()}
  wrong={f"{s}!{cell}":{"expected":val,"actual":edited.get((s,cell))}
-        for (s,cell),val in target.items() if edited.get((s,cell))!=val}
+        for (s,cell),val in target.items() if not formula_matches(edited.get((s,cell)),val)}
  extra=[f"{s}!{cell}" for (s,cell) in original.keys()|edited.keys()
         if (s,cell) not in target and original.get((s,cell))!=edited.get((s,cell))]
- return {"pass":not wrong and not extra,"wrong":wrong,"unexpected_edits":sorted(extra)[:50],
-         "unexpected_count":len(extra),"note":"Exact formulas only; numerical equivalence and OOXML integrity not yet checked"}
+ structural_differences={}
+ before_structure=structure(input_file);after_structure=structure(Path(submission))
+ for key in before_structure:
+  if before_structure[key]!=after_structure[key]:
+   structural_differences[key]={"original":before_structure[key],"submitted":after_structure[key]}
+ return {"pass":not wrong and not extra and not structural_differences,
+         "wrong":wrong,"unexpected_edits":sorted(extra)[:50],
+         "unexpected_count":len(extra),"structure_differences":structural_differences,
+         "note":"Exact formulas plus verified SUM expansions; limited workbook structure checks. Not a numerical recalculation or full OOXML audit."}
 def generate(source,out):
  source=Path(source).resolve();out=Path(out).resolve()
  if out.exists():raise FileExistsError(out)
