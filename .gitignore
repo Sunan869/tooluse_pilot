@@ -69,3 +69,6 @@ downloads/
 Thumbs.db
 ~$*
 *.tmp
+
+# Third-party XLSX benchmark archives, golden answers and local screening manifests
+/datasets/spreadsheetbench2/
