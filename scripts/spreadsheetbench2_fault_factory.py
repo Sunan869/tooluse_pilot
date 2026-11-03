@@ -246,6 +246,8 @@ def main():
     p.add_argument("--seed",type=int,default=20261103)
     p.add_argument("--id");p.add_argument("--submission",type=Path)
     p.add_argument("--review-evidence",type=Path,help="Optional SHA-bound trusted audit annotations; never mount in model workspace")
+    p.add_argument("--report",type=Path,help="Write complete trusted grading JSON to file")
+    p.add_argument("--summary-only",action="store_true",help="Show compact three-axis grading summary")
     args=p.parse_args()
     if args.action=="generate":
         result=generate(args.source,args.golden,args.out,args.seed,args.compound)
@@ -257,7 +259,21 @@ def main():
         golden_file=args.golden if args.golden.is_file() else None
         result=evaluate_v3(args.out,load_task(args.out,args.id),args.submission,
                            golden=golden_file,review_evidence=args.review_evidence)
-    print(json.dumps(result,ensure_ascii=False,indent=2))
+    if args.action=="grade" and args.report:
+        args.report.parent.mkdir(parents=True,exist_ok=True)
+        args.report.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
+    if args.action=="grade" and args.summary_only:
+        view={"grading_version":result["grading_version"],"pass":result["pass"],
+              "injected_faults":result["injected_faults"],
+              "extra_changes":{"count":result["extra_changes"]["count"],
+                               "evidence_tiers":result["extra_changes"]["evidence_tiers"]},
+              "artifact_integrity":{"preservation_pass":result["artifact_integrity"]["preservation_pass"],
+                                    "issues":result["artifact_integrity"]["issues"],
+                                    "warnings":result["artifact_integrity"]["warnings"]},
+              "verdict":result["verdict"]}
+    else:
+        view=result
+    print(json.dumps(view,ensure_ascii=False,indent=2))
     if args.action=="selftest" and result["failures"]:
         raise SystemExit(1)
 
