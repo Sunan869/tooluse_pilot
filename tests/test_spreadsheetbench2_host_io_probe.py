@@ -7,11 +7,21 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"scripts"))
-from spreadsheetbench2_host_io_probe import sandbox_io_preflight
+from spreadsheetbench2_host_io_probe import sandbox_io_preflight, assert_repo_sandbox, REPO_ROOT
 from tooluse_pilot.sandbox import DockerTools
 
 
 class SandboxEncodingTests(unittest.TestCase):
+    def test_loaded_sandbox_is_this_repository(self):
+        path=Path(assert_repo_sandbox())
+        self.assertEqual(path,(REPO_ROOT/"tooluse_pilot"/"sandbox.py").resolve())
+
+    def test_import_guard_rejects_old_editable_checkout(self):
+        import spreadsheetbench2_host_io_probe as probe
+        with patch.object(probe.sandbox_module,"__file__",r"E:\\old_project\\tooluse_pilot\\sandbox.py"):
+            with self.assertRaisesRegex(RuntimeError,"WRONG_SANDBOX_IMPORT"):
+                assert_repo_sandbox()
+
     def test_dockertools_uses_binary_pipes_and_replaces_malformed_bytes(self):
         obj=DockerTools.__new__(DockerTools)
         obj.image="sandbox-image"
