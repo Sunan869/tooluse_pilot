@@ -29,7 +29,7 @@ def infrastructure_error(error):
     status=getattr(error,"status_code",None)
     text=str(error)
     if status is None:
-        match=re.search(r"(?:Error code:|status(?: code)?[: =])\\s*(\\d{3})",text,re.I)
+        match=re.search(r"(?:Error code:|status(?: code)?[: =])\s*(\d{3})",text,re.I)
         status=int(match.group(1)) if match else None
     if status in (429,500,502,503,504):
         return f"upstream_http_{status}"
