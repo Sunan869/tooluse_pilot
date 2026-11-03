@@ -29,12 +29,13 @@ MA = "Ex 5 - M&A"
 PARTS[LBO] = "xl/worksheets/sheet1.xml"
 
 PROMPT = (
-    "Audit the supplied financial acquisition workbook for substantively "
-    "incorrect formulas. Independently identify and repair demonstrable "
-    "calculation defects using surrounding financial relationships. Preserve "
-    "unrelated workbook content and formatting. Submit the corrected XLSX "
-    "under output/ with the original filename. Do not merely describe changes."
+    "任务：修复附带的财务工作簿中人为引入的计算公式错误。"
+    "请利用业务关系、相邻公式及跨表引用自主定位这些错误。"
+    "只恢复本次人为改动的公式；其他原有公式、数据、样式、工作表结构均不得改动。"
+    "请将修复后的完整 XLSX 保存到 output/，文件名必须与 input/ 内的原文件一致。"
+    "不能仅提供文字解释，也不会提供错误位置、数量或正确公式。"
 )
+
 RANGE = re.compile(r"(?<![A-Za-z0-9_])\$?([A-Z]{1,3})\$?(\d+):\$?([A-Z]{1,3})\$?(\d+)")
 CELL = re.compile(r"(?<![A-Za-z0-9_!])\$?([A-Z]{1,3})\$?(\d+)")
 
@@ -317,11 +318,15 @@ def main():
     p.add_argument("--out",type=Path,default=Path("runs/ssb2-discovered-v2"))
     p.add_argument("--compound",type=int,default=48)
     p.add_argument("--seed",type=int,default=20261103)
+    p.add_argument("--batch-out",type=Path,help="Also package a standalone Chinese batch after generation")
     p.add_argument("--id")
     p.add_argument("--submission",type=Path)
     args=p.parse_args()
     if args.action=="generate":
         result=generate(args.dataset,args.out,args.compound,args.seed)
+        if args.batch_out:
+            from spreadsheetbench2_batch_pack import pack
+            result["packaged_batch"]=pack(args.out,args.batch_out)
     elif args.action=="selftest":
         result=selftest(args.out)
     elif args.action=="list":
