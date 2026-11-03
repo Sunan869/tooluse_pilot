@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--golden",type=Path,help="Optional trusted official Golden for evidence-tiered scoring")
     parser.add_argument("--review-evidence",type=Path,help="Optional SHA-bound audit evidence; must not be shared with agent")
+    parser.add_argument("--lbo-scenarios",action="store_true",help="Run optional five-year synthetic LBO replay after model finishes")
     parser.add_argument("--api-type",choices=["responses","chat_completions"],default="responses")
     parser.add_argument("--max-requests",type=int,default=25)
     parser.add_argument("--max-tools",type=int,default=60)
@@ -52,6 +53,12 @@ def main():
     if len(artifacts)==1 and artifacts[0].name==src.name:
         grade=evaluate_v3(dataset,task,artifacts[0],golden=args.golden,
                           review_evidence=args.review_evidence)
+        if args.lbo_scenarios:
+            from spreadsheetbench2_lbo_replay import compare_books,summary
+            replay=compare_books(dataset/"private"/"normalized_baseline.xlsx",artifacts[0])
+            grade["lbo_scenario_evidence"]={"summary":summary(replay),
+                                            "cases":replay["cases"],
+                                            "limitations":replay["limitations"]}
     else:
         grade={"pass":False,"reason":"expected_exactly_one_output_xlsx_with_original_filename",
                "output_files":[p.name for p in artifacts]}
