@@ -1,0 +1,1 @@
+{"asof": "2026-09-11", "trigger_after_read_sheets": 8, "message": "需求变更：结算快照改为2026-09-11（含当天）。重新核算全部订单金额、付款、退款、冲正及冻结状态，并覆盖生成 output/anomalies.csv。以新截止日为准。"}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "task_id": "TOOL-XLSX-DYNAMIC-W06-001",
+  "title": "集团采购历史版本核销审计",
+  "primary_weakness": "W6",
+  "secondary_weaknesses": [
+    "W7",
+    "W4",
+    "W11"
+  ],
+  "allowed_modes": [
+    "structured",
+    "python_shell"
+  ],
+  "input_files": [
+    "input/procurement.xlsx"
+  ],
+  "output_file": "output/anomalies.csv",
+  "oracle_path": "private/oracle.json",
+  "tool_names": [
+    "list_sheets",
+    "read_rows",
+    "write_csv"
+  ],
+  "grading": {
+    "result_weight": 0.85,
+    "process_weight": 0.15
+  },
+  "dynamic": true
+}

@@ -1,0 +1,121 @@
+--- w7/executable_runner.py
++++ w8/executable_runner.py
+@@ -23,6 +23,7 @@
+ from .real_multisheet import Environment as MultiSheetEnvironment, specs as multisheet_specs
+ from .real_w6_reconciliation import Environment as W6Environment, specs as w6_specs
+ from .allocation_task import Environment as AllocationEnvironment, specs as allocation_specs
++from .w8_task import Environment as W8Environment, specs as w8_specs
+ from .w7_task import Environment as W7Environment, specs as w7_specs
+ from .reservation_task import Environment as ReservationEnvironment, specs as reservation_specs
+ from .gateway import _config, _is_retryable, _usage_dict, get_responses_calls, to_responses_tools
+@@ -33,7 +34,7 @@
+                   max_requests=12, max_tools=30, client_factory=None):
+     case=json.loads(Path(path).read_text(encoding="utf-8"))
+     file_workspace=None
+-    if case["family"] in ("real_w7","real_reservation","real_allocation","real_file_procurement","real_file_dynamic","real_multisheet_audit","real_w6_reconciliation"):
++    if case["family"] in ("real_w8","real_w7","real_reservation","real_allocation","real_file_procurement","real_file_dynamic","real_multisheet_audit","real_w6_reconciliation"):
+         file_workspace=Path("runs/file_workspaces")/str(uuid4())
+         file_workspace.parent.mkdir(parents=True,exist_ok=True)
+         shutil.copytree(Path(path).parent,file_workspace)
+@@ -44,7 +45,8 @@
+     profile=case.get("profile")
+     if profile is not None and case["family"] != "state_change":
+         raise ValueError("Profiles supported only for state_change")
+-    env=(W7Environment(case,file_workspace) if case["family"]=="real_w7" else
++    env=(W8Environment(case,file_workspace) if case["family"]=="real_w8" else
++         W7Environment(case,file_workspace) if case["family"]=="real_w7" else
+          ReservationEnvironment(case,file_workspace) if case["family"]=="real_reservation" else
+          AllocationEnvironment(case,file_workspace) if case["family"]=="real_allocation" else
+          W6Environment(case,file_workspace) if case["family"]=="real_w6_reconciliation" else
+@@ -70,7 +72,8 @@
+     else:
+         client=client_factory()
+     run_id=str(uuid4())
+-    definitions=(w7_specs() if case["family"]=="real_w7" else
++    definitions=(w8_specs() if case["family"]=="real_w8" else
++                 w7_specs() if case["family"]=="real_w7" else
+                  reservation_specs() if case["family"]=="real_reservation" else
+                  allocation_specs() if case["family"]=="real_allocation" else
+                  w6_specs() if case["family"]=="real_w6_reconciliation" else
+@@ -149,7 +152,7 @@
+         if api_type=="responses":history.extend(output)
+         else:history.append(msg.model_dump(exclude_none=True))
+         if not function_calls:
+-            state="finished";break
++            state="model_stopped" if getattr(env,"terminal_stops_runner",False) else "finished";break
+         for call in function_calls:
+             if calls>=max_tools:
+                 state="max_tools";break
+@@ -168,11 +171,15 @@
+             events.append({"event":"tool_call","tool":call.function.name,"tool_call_id":call.id,
+                            "arguments":getattr(call.function,"arguments",None),
+                            "result":json.loads(payload)})
+-        if state=="max_tools":break
++            if getattr(env,"terminal_stops_runner",False) and getattr(env,"finished",False):
++                state="task_completed";break
++        if state in ("max_tools","task_completed"):break
+     result={"run_id":run_id,"candidate_id":case["id"],"model":modelcfg["model"],
+             "protocol":api_type,"state":state,"requests":attempts,"tool_calls":calls,
+             "score":env.score(),"invalid_tool_actions":getattr(env,"invalid_actions",0),"profile":profile,"estimated_cost":cost_total if cost_complete else None,
+             "events":events,"calls":env.calls,"usage_db":str(db_path)}
++    if getattr(env,"terminal_stops_runner",False):
++        result.update(stop_reason=state,budget_exhausted=state in ("max_requests","max_tools"),task_completed=bool(env.finished))
+     if file_workspace is not None:
+         result["artifact_dir"]=str(file_workspace)
+         (file_workspace/"run_result.json").write_text(
+--- /dev/null
++++ w8/w8_task.py
+@@ -0,0 +1,53 @@
++import copy,json
++from openpyxl import load_workbook
++from .w7_task import Environment as Base,specs as base_specs
++class Environment(Base):
++ terminal_stops_runner=True
++ def __init__(self,case,folder):
++  super().__init__(case,folder);self.revision='R1';self.published_update=False;self.saved_revision=None;self.data['snapshot_id']='W8-R1'
++ def publish(self):
++  if self.case['condition']!='dynamic' or self.published_update:return
++  for row in self.data['grades']:
++   if row['record_id']=='g-B2-s05-r1':row.update(record_id='g-B2-s05-r2',revision=2,score=96,supersedes='g-B2-s05-r1')
++  self.revision='R2';self.data['snapshot_id']='W8-R2';self.published_update=True
++ def status(self):
++  return {'current_revision':self.revision,'update_published':self.published_update,'changed_record_ids':['g-B2-s05-r2'] if self.published_update else [],'saved_revision':self.saved_revision,'recovery':'If read_revision differs, re-read authoritative sources; then write using current expected_revision. No further update after R2.'}
++ def call(self,name,args):
++  if self.finished:raise ValueError('Terminal task: runner must stop after successful finish')
++  before=len(self.calls)
++  if name=='get_status':result=self.status()
++  elif name=='read_submission':
++   if not (self.folder/'submission.xlsx').exists():result={'exists':False,'saved_revision':None,'rows':[]}
++   else:
++    wb=load_workbook(self.folder/'submission.xlsx',data_only=True);rows=[list(r) for r in wb['Top3'].iter_rows(min_row=2,values_only=True)];wb.close();result={'exists':True,'saved_revision':self.saved_revision,'rows':rows}
++  elif name=='write_submission':
++   self.publish()
++   if args['expected_revision']!=self.revision:result={'accepted':False,'reason':'stale_revision','current_revision':self.revision,'saved_revision':self.saved_revision,'recovery':'Query get_status, re-read changed authoritative sources and resubmit. No file was modified.'}
++   else:
++    result=super().call(name,{'rows_json':args['rows_json']});self.saved_revision=self.revision;result.update(accepted=True,saved_revision=self.saved_revision)
++  elif name=='finish':
++   if self.saved_revision!=self.revision:result={'finished':False,'reason':'missing_or_stale_submission','current_revision':self.revision,'saved_revision':self.saved_revision,'recovery':'Save a submission with the current revision before finish.'}
++   else:result=super().call(name,args)
++  else:
++   read_revision=self.revision;result=super().call(name,args)
++   if name=='directory':result.update(version_rules='At most one publication follows first grades read, or precedes first write. Reads expose both revisions; query get_status before writing. write_submission compares expected_revision but never checks answer. Wrong saves can be replaced until finish. Successful finish is terminal; runner stops immediately.',current_revision=self.revision)
++   if name in ('read_rows','get_record'):
++    if args['source']=='grades':self.publish()
++    result.update(read_revision=read_revision,current_revision=self.revision,stale=read_revision!=self.revision)
++    if result['stale']:result['recovery']='Revision changed after this read. Query get_status and re-read the authoritative data before submission.'
++  if len(self.calls)>before:self.calls.pop()
++  self.calls.append({'tool':name,'arguments':copy.deepcopy(args),'result':copy.deepcopy(result)})
++  return result
++ def score(self):
++  s=super().score();s.update(task_completed=self.finished,answer_correct=s['answer_success'],saved_revision=self.saved_revision,current_revision=self.revision,revision_current=self.saved_revision==self.revision)
++  s['success']=s['answer_success'] and s['task_completed'] and s['revision_current'];return s
++
++def specs():
++ tools=base_specs()
++ for tool in tools:
++  f=tool['function']
++  if f['name']=='write_submission':
++   f['parameters']['properties']['expected_revision']={'type':'string'};f['parameters']['required'].append('expected_revision');f['description']+=' Requires expected_revision from current status; stale write has no effect and is recoverable. Can overwrite before finish.'
++  if f['name']=='finish':f['description']='Irreversible terminal commit. Stops runner immediately. Check saved submission and version first. Does not check answer correctness. Missing/stale submission is recoverable and nonterminal.'
++ for name,description in [('get_status','Read current revision, changed record IDs and saved revision. Does not return answers.'),('read_submission','Inspect saved XLSX rows and their revision without grading them.')]:tools.append({'type':'function','function':{'name':name,'description':description,'parameters':{'type':'object','properties':{},'required':[],'additionalProperties':False}}})
++ return tools

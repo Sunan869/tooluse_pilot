@@ -5,6 +5,8 @@ Every HTTP attempt, including explicit retries, is recorded in the SQLite ledger
 """
 
 import json
+import hashlib
+import shutil
 import os
 import random
 import time
@@ -289,7 +291,18 @@ def run_gateway(
     cost_complete = True
     state = "max_requests"
     prices = modelcfg.get("pricing")
+    dynamic_file=root/"private"/"dynamic.json"
+    dynamic=json.loads(dynamic_file.read_text(encoding="utf-8")) if dynamic_file.exists() else None
+    revision_marker=root/"private"/"revision_applied.json"
+    revision_done=False
+    initial_score=None
+    initial_digest=None
+    initial_write_count=0
+    revision_write_count=0
     try:
+        if revision_marker.exists(): revision_marker.unlink()
+        snapshot=root/"private"/"initial_submission.csv"
+        if snapshot.exists(): snapshot.unlink()
         old_output = root / "output" / "anomalies.csv"
         if old_output.exists():
             old_output.unlink()
@@ -412,6 +425,27 @@ def run_gateway(
             else:
                 messages.append(msg.model_dump(exclude_none=True))
             if not calls:
+                if dynamic and not revision_done:
+                    # A real first submission is required before showing the revision.
+                    artifact = root / "output" / "anomalies.csv"
+                    if not artifact.is_file():
+                        state = "initial_output_missing"
+                        break
+                    from .grade import grade as grade_result
+                    initial_score = grade_result(root, trace_data={"calls": tools.calls})
+                    shutil.copyfile(artifact, snapshot)
+                    initial_digest = hashlib.sha256(snapshot.read_bytes()).hexdigest()
+                    initial_write_count = sum(x.get("tool") == "write_csv" for x in tools.calls)
+                    messages.append({"role": "user", "content": dynamic["message"]})
+                    revision_done = True
+                    revision_marker.write_text(json.dumps({"applied": True}), encoding="utf-8")
+                    trace.append({
+                        "event": "user_revision", "after_turn": turn,
+                        "asof": dynamic["asof"], "initial_score": initial_score["result_score"],
+                        "initial_sha256": initial_digest,
+                    })
+                    state = "max_requests"
+                    continue
                 state = "finished"
                 break
 
@@ -477,7 +511,29 @@ def run_gateway(
             tools.publish()
         from .grade import grade
 
-        scored = grade(root)
+        scored = grade(root, trace_data={"calls":tools.calls})
+        if dynamic:
+            scored["revision_injected"] = revision_done
+            scored["initial_result_score"] = initial_score["result_score"] if initial_score else None
+            scored["revised_result_score"] = scored["result_score"] if revision_done else None
+            if revision_done:
+                from .grade import delta_score
+                scored["delta"] = delta_score(root)
+                revision_write_count = sum(x.get("tool") == "write_csv" for x in tools.calls)
+                artifact = root / "output" / "anomalies.csv"
+                updated = revision_write_count > initial_write_count and artifact.is_file()
+                scored["artifact_updated"] = updated
+                initial_fraction = initial_score["result_score"] if initial_score else 0
+                revised_fraction = scored["result_score"]
+                changed_fraction = scored["delta"]["changed_accuracy"]
+                scored["total"] = round(100 * (
+                    .15 * initial_fraction + .45 * revised_fraction +
+                    .25 * changed_fraction + .15 * int(updated)
+                ), 2)
+                if state != "finished":
+                    scored["error"] = "revised stage not finished"
+            else:
+                scored.update(total=0, result_score=0, error="initial submission not completed")
         result = {
             "run_id": run_id,
             "model_alias": model_alias,

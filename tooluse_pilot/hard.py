@@ -18,7 +18,8 @@ COLS={
  'Notes':['code','description']
 }
 def active(day,begin,end):return begin<=day and (not end or day<=end)
-def oracle(data):
+def oracle(data, asof=ASOF):
+    if isinstance(asof, str): asof=date.fromisoformat(asof)
     supplier_alias={r['alias']:r['canonical_supplier_id'] for r in data['Aliases']}
     supplier=defaultdict(list)
     for r in data['Suppliers']:supplier[r['supplier_id']].append(r)
@@ -34,7 +35,7 @@ def oracle(data):
     for order in data['Orders']:
         if order['status']!='ACTIVE' or int(order['test_flag']):continue
         oid=order['order_id'];day=order['order_date']; amount=int(order['amount_cents']);issues=[]
-        valid_amends=[r for r in amendments[oid] if int(r['approved'])==1 and r['effective_from']<=ASOF.isoformat()]
+        valid_amends=[r for r in amendments[oid] if int(r['approved'])==1 and r['effective_from']<=asof.isoformat()]
         if valid_amends:
             chosen=sorted(valid_amends,key=lambda r:(r['effective_from'],r['amendment_id']))[-1];amount=int(chosen['new_amount_cents'])
         sid=supplier_alias.get(order['supplier_id'],order['supplier_id'])
@@ -43,11 +44,11 @@ def oracle(data):
         dept_rules=[r for r in rules[order['dept']] if active(day,r['effective_from'],r['effective_to'])]
         if len(dept_rules)!=1:issues.append('RULE_MISSING')
         elif amount>int(dept_rules[0]['approval_limit_cents']):issues.append('REQUIRES_APPROVAL')
-        if any(active(ASOF.isoformat(),h['hold_from'],h['hold_until']) for h in holds[oid]):issues.append('ON_HOLD')
+        if any(active(asof.isoformat(),h['hold_from'],h['hold_until']) for h in holds[oid]):issues.append('ON_HOLD')
         # Reversals are signed compensating ledger entries, not an additional refund.
         total=0
         for p in pays[oid]:
-            if p['posted_date']>ASOF.isoformat():continue
+            if p['posted_date']>asof.isoformat():continue
             if p['kind']=='PAYMENT': sign=1
             elif p['kind']=='REFUND': sign=-1
             elif p['kind']=='REVERSAL':
@@ -60,7 +61,7 @@ def oracle(data):
         if issues:result.append({'order_id':oid,'expected_cents':amount,'net_paid_cents':total,'issues':'|'.join(sorted(issues))})
     return sorted(result,key=lambda x:x['order_id'])
 
-def make_hard_case(root,seed=20261019,count=180):
+def make_hard_case(root,seed=20261019,count=180,dynamic=False):
     root=Path(root);(root/'input').mkdir(parents=True,exist_ok=True);(root/'private').mkdir(parents=True,exist_ok=True)
     rng=random.Random(seed)
     data={name:[] for name in COLS}
@@ -102,12 +103,17 @@ def make_hard_case(root,seed=20261019,count=180):
         for r in data[sheet_name]:ws.append([r.get(h,'') for h in headers])
         ws.freeze_panes='A2';ws.auto_filter.ref=ws.dimensions
     wb.save(root/'input'/'procurement.xlsx')
+    wb.close()
     answer=oracle(data)
+    if dynamic:
+        revision={'asof':'2026-09-11','trigger_after_read_sheets':len(COLS),'message':'需求变更：结算快照改为2026-09-11（含当天）。重新核算全部订单金额、付款、退款、冲正及冻结状态，并覆盖生成 output/anomalies.csv。以新截止日为准。'}
+        (root/'private'/'dynamic.json').write_text(json.dumps(revision,ensure_ascii=False),encoding='utf-8')
+        (root/'private'/'oracle_revised.json').write_text(json.dumps({'rows':oracle(data,revision['asof'])},ensure_ascii=False),encoding='utf-8')
     (root/'private'/'oracle.json').write_text(json.dumps({'schema_version':'1.0','rows':answer},ensure_ascii=False,indent=2),encoding='utf-8')
-    (root/'private'/'generator_config.json').write_text(json.dumps({'seed':seed,'count':count,'family':'procurement_temporal_audit'},indent=2),encoding='utf-8')
+    (root/'private'/'generator_config.json').write_text(json.dumps({'seed':seed,'count':count,'family':'procurement_temporal_audit','dynamic':dynamic},indent=2),encoding='utf-8')
     instructions='''# 集团采购核销和异常审计（2026年9月30日快照）\n\n读取 input/procurement.xlsx 所有相关工作表并产出 output/anomalies.csv。不要修改原文件。仅审计 ACTIVE 且 test_flag=0 的采购订单。\n\n业务规则：\n1. 供应商可能通过 Aliases 的历史 ID 关联到 Suppliers 的 canonical ID；供应商有效性必须依据订单日期选择生效区间，未找到或多条同时有效均视为 SUPPLIER_INVALID。\n2. 审批 Rules 按订单日期的生效区间选版本；缺失或重叠匹配标 RULE_MISSING；存在唯一规则且实际订单金额大于审批额度标 REQUIRES_APPROVAL。\n3. 已批准的 Amendments 按 snapshot 2026-09-30 之前已生效的最新一条修改订单金额；相同日期按 amendment_id 排序选最后一条。\n4. 截至 snapshot 的 Payments 中，PAYMENT 加、REFUND 减、REVERSAL 抵消 reversal_of 指定记录的原效果。只按 posted_date<=snapshot 统计。净支付不等于调整后的订单金额标 PAYMENT_MISMATCH。\n5. Holds 以 snapshot 日期判断是否生效，生效标 ON_HOLD。\n6. 每个异常订单只输出一行，包含所有命中的问题，不输出正常、测试或已取消订单。\n\n最终输出 output/anomalies.csv，列顺序严格为 order_id,expected_cents,net_paid_cents,issues；金额单位整数分，issues 的标签按字典序用 | 拼接，结果按 order_id 升序。不允许猜测或跳过未读取的工作表。\n'''
     (root/'instruction.md').write_text(instructions,encoding='utf-8')
-    (root/'task.json').write_text(json.dumps({'schema_version':'1.0','task_id':'TOOL-XLSX-HARD-W07-W12-001','title':'集团采购历史版本核销审计','primary_weakness':'W12','secondary_weaknesses':['W7','W4','W11'],'allowed_modes':['structured','python_shell'],'input_files':['input/procurement.xlsx'],'output_file':'output/anomalies.csv','oracle_path':'private/oracle.json','tool_names':['list_sheets','read_rows','write_csv'],'grading':{'result_weight':0.85,'process_weight':0.15}},ensure_ascii=False,indent=2),encoding='utf-8')
+    (root/'task.json').write_text(json.dumps({'schema_version':'1.0','task_id':('TOOL-XLSX-DYNAMIC-W06-001' if dynamic else 'TOOL-XLSX-HARD-W07-W12-001'),'title':'集团采购历史版本核销审计','primary_weakness':('W6' if dynamic else 'W12'),'secondary_weaknesses':['W7','W4','W11'],'allowed_modes':['structured','python_shell'],'input_files':['input/procurement.xlsx'],'output_file':'output/anomalies.csv','oracle_path':'private/oracle.json','tool_names':['list_sheets','read_rows','write_csv'],'grading':{'result_weight':0.85,'process_weight':0.15},'dynamic':dynamic},ensure_ascii=False,indent=2),encoding='utf-8')
     return root
 
 def reference_hard(root):

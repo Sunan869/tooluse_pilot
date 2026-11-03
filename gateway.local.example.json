@@ -1,0 +1,21 @@
+{
+  "base_url_env": "MODEL_BASE_URL",
+  "api_key_env": "MODEL_API_KEY",
+  "timeout_sec": 300,
+  "models": {
+    "qwen": {
+      "provider": "local_vllm",
+      "model": "Qwen3.8-27B",
+      "api_type": "chat_completions",
+      "base_url_env": "LOCAL_MODEL_BASE_URL",
+      "api_key": "local",
+      "request_options": {
+        "extra_body": {
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      }
+    }
+  }
+}
