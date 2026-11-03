@@ -1,3 +1,32 @@
+## 已确认根因：旧仓库的同名 Python 包被导入
+
+2026-11-03 Windows 实测的报错堆栈明确指向：
+
+`E:\\文档类\\信通院\\tooluse_pilot_v0.3_tokenops\\tooluse_pilot\\tooluse_pilot\\sandbox.py`
+
+而当前应该使用：
+
+`E:\\文档类\\信通院\\tooluser_pilot\\tooluse_pilot\\sandbox.py`
+
+之前虽然在当前仓库打印过 `text=False` 的源码，但实际运行 `python scripts/spreadsheetbench2_host_io_probe.py` 时却从旧项目加载了 `text=True` 的版本，因此在 Windows GBK/UTF-8 字节流上崩溃。**主要修复是确保 import 使用当前仓库的工具代码，不是修改当前已正确的二进制管道实现。**
+
+已在 `spreadsheetbench2_host_io_probe.py` 与批量入口调整 `sys.path` 优先级，并加入 `assert_repo_sandbox()` 防护；加载错误路径将立即报 `WRONG_SANDBOX_IMPORT`。即使发生 `sys.modules` 缓存污染，也不应继续调用模型 API。
+
+拉取后仅运行（不调用模型 API）：
+
+```powershell
+git fetch origin feature/dynamic-w6-pilot
+git merge FETCH_HEAD
+python -m unittest discover -s tests -p "test_spreadsheetbench2_host_io_probe.py" -v
+python -X utf8 scripts/spreadsheetbench2_host_io_probe.py
+```
+
+预期首先输出 `Sandbox import: E:\\文档类\\信通院\\tooluser_pilot\\tooluse_pilot\\sandbox.py`，随后两个 `passed=true`。
+
+若仍有旧路径，检查 `$env:PYTHONPATH`、当前 Python 解释器，以及 `python -m pip show -f tooluse-pilot` 指向的包来源。请不要删除旧仓库作为首选修复手段，因为可能影响其他项目。
+
+---
+
 # SpreadsheetBench Windows GBK / UTF-8 诊断（2026-11）
 
 ## 实验事实
