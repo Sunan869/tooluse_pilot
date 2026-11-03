@@ -16,7 +16,10 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+# Prioritize this checkout over stale editable installs on PYTHONPATH.
+PROJECT_ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(PROJECT_ROOT))
+sys.path.insert(0,str(Path(__file__).resolve().parent))
 from spreadsheetbench2_discovery_factory import load_case, score
 from spreadsheetbench2_fault_factory import sha
 
