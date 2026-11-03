@@ -248,6 +248,7 @@ def main():
     p.add_argument("--review-evidence",type=Path,help="Optional SHA-bound trusted audit annotations; never mount in model workspace")
     p.add_argument("--report",type=Path,help="Write complete trusted grading JSON to file")
     p.add_argument("--summary-only",action="store_true",help="Show compact three-axis grading summary")
+    p.add_argument("--lbo-scenarios",action="store_true",help="Add optional five-year synthetic LBO replay; no Excel recalc")
     args=p.parse_args()
     if args.action=="generate":
         result=generate(args.source,args.golden,args.out,args.seed,args.compound)
@@ -259,6 +260,11 @@ def main():
         golden_file=args.golden if args.golden.is_file() else None
         result=evaluate_v3(args.out,load_task(args.out,args.id),args.submission,
                            golden=golden_file,review_evidence=args.review_evidence)
+        if args.lbo_scenarios:
+            from spreadsheetbench2_lbo_replay import compare_books, summary
+            replay=compare_books(args.out/"private"/"normalized_baseline.xlsx",args.submission)
+            result["lbo_scenario_evidence"]={"summary":summary(replay),"cases":replay["cases"],
+                                           "limitations":replay["limitations"]}
     if args.action=="grade" and args.report:
         args.report.parent.mkdir(parents=True,exist_ok=True)
         args.report.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
@@ -279,6 +285,8 @@ def main():
               "verdict":result["verdict"]}
     else:
         view=result
+    if args.action=="grade" and args.summary_only and args.lbo_scenarios:
+        view["lbo_scenario_evidence"]=result["lbo_scenario_evidence"]["summary"]
     print(json.dumps(view,ensure_ascii=False,indent=2))
     if args.action=="selftest" and result["failures"]:
         raise SystemExit(1)
