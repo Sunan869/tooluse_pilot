@@ -10,7 +10,8 @@ import shutil
 from pathlib import Path
 
 from openai import OpenAI
-from spreadsheetbench2_fault_factory import evaluate,load_task,sha
+from spreadsheetbench2_fault_factory import load_task,sha
+from spreadsheetbench2_oracle_v3 import evaluate_v3
 from spreadsheetbench2_local_qwen import run_case as run_chat
 from spreadsheetbench2_responses_runner import run_case_responses as run_responses
 
@@ -19,6 +20,8 @@ def main():
     parser.add_argument("--dataset",type=Path,default=Path("runs/ssb2-injected-01"))
     parser.add_argument("--id",required=True)
     parser.add_argument("--out",type=Path,required=True)
+    parser.add_argument("--golden",type=Path,help="Optional trusted official Golden for evidence-tiered scoring")
+    parser.add_argument("--review-evidence",type=Path,help="Optional SHA-bound audit evidence; must not be shared with agent")
     parser.add_argument("--api-type",choices=["responses","chat_completions"],default="responses")
     parser.add_argument("--max-requests",type=int,default=25)
     parser.add_argument("--max-tools",type=int,default=60)
@@ -47,7 +50,8 @@ def main():
                   args.max_tools,args.sandbox_image)
     artifacts=sorted((dest/"output").glob("*.xlsx"))
     if len(artifacts)==1 and artifacts[0].name==src.name:
-        grade=evaluate(dataset,task,artifacts[0])
+        grade=evaluate_v3(dataset,task,artifacts[0],golden=args.golden,
+                          review_evidence=args.review_evidence)
     else:
         grade={"pass":False,"reason":"expected_exactly_one_output_xlsx_with_original_filename",
                "output_files":[p.name for p in artifacts]}
