@@ -15,6 +15,7 @@ import zipfile
 from pathlib import Path
 
 from spreadsheetbench2_fault_factory import workbook, norm, sha
+from spreadsheetbench2_financial_constraints import evaluate_business_constraints, classify_extra_business_rule
 
 M = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
@@ -241,12 +242,20 @@ def evaluate_v3(out, task, submission, golden=None, review_evidence=None):
                         "needs_policy_review":"business_policy_pending",
                         "direct_golden":"review_claim_unverified_without_golden"}.get(level,"unreviewed")
                 supporting.append("prior_audit_annotation_not_independent_validation")
-            additional.append({"cell":f"{sheet}!{addr}","status":status,
-                               "before":a.get("formula") if a.get("formula") is not None else a.get("value"),
-                               "after":b.get("formula") if b.get("formula") is not None else b.get("value"),
-                               "evidence":supporting})
+            item={"cell":f"{sheet}!{addr}","status":status,
+                  "before":a.get("formula") if a.get("formula") is not None else a.get("value"),
+                  "after":b.get("formula") if b.get("formula") is not None else b.get("value"),
+                  "evidence":supporting}
+            witness=classify_extra_business_rule(sheet,addr,a.get("formula"),b.get("formula"))
+            if witness is not None:
+                item["synthetic_business_witness"]=witness
+            additional.append(item)
     statuses=dict(sorted(collections.Counter(x["status"] for x in additional).items()))
     integrity=compare_integrity(source_path,submission)
+    finance=evaluate_business_constraints(root,task,submission)
+    supplemental=[{"cell":x["cell"],**x["synthetic_business_witness"]}
+                  for x in additional if x.get("synthetic_business_witness")]
+    supported=sum(bool(x["synthetic_business_witness_improved"]) for x in supplemental)
     total=len(faults)
     fixed=len(repaired)
     known_targets_complete=(fixed==total)
@@ -261,6 +270,12 @@ def evaluate_v3(out, task, submission, golden=None, review_evidence=None):
         "extra_changes":{"count":len(additional),"evidence_tiers":statuses,
                          "items":additional,"requires_adjudication":bool(additional)},
         "artifact_integrity":integrity,
+        "financial_constraints":finance,
+        "supplemental_business_evidence":{
+            "evaluated_extra_cells":len(supplemental),
+            "improved_under_synthetic_witnesses":supported,
+            "items":supplemental,
+            "status":"advisory_not_independent_full_workbook_recalculation"},
         "verdict":{
             "minimal_repair_strict_pass":strict,
             "known_injection_status":"complete" if known_targets_complete else "incomplete",
@@ -269,5 +284,6 @@ def evaluate_v3(out, task, submission, golden=None, review_evidence=None):
         },
         "limitations":["No numeric Excel-compatible recalculation",
                        "Goldens and prior annotations are evidence, not automatic proof of business correctness",
-                       "No full OOXML validation"],
+                       "No full OOXML validation",
+                       "Synthetic precedent probes do not establish actual workbook numerical outcomes"],
     }
