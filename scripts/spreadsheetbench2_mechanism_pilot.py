@@ -195,12 +195,24 @@ def run_plan(plan_file, out, *, api_type, max_requests, max_tools,
                   max_retries=0,timeout=180)
     runner=run_case_responses if api_type=="responses" else run_case
     try:
+        from spreadsheetbench2_host_io_probe import sandbox_io_preflight
+        io_check=sandbox_io_preflight(sandbox_image)
+        if not io_check["pass"]:
+            return {"status":"preflight_failed","infrastructure_error":"sandbox_io_failure",
+                    "error":"DockerTools UTF-8/malformed-byte IO preflight failed",
+                    "checks":io_check["checks"],"cases":0,"model_evaluations":0,
+                    "note":"No model API request or benchmark task attempted"}
+    except Exception as error:
+        return {"status":"preflight_failed","infrastructure_error":"sandbox_io_failure",
+                "error":str(error)[:400],"cases":0,"model_evaluations":0,
+                "note":"No model API request or benchmark task attempted"}
+    try:
         check=model_preflight(client,os.environ["MODEL_ID"],api_type)
     except Exception as error:
         return {"status":"preflight_failed","infrastructure_error":infrastructure_error(error),
                 "error":str(error)[:400],"cases":0,"model_evaluations":0,
                 "note":"No benchmark task attempted; check the model endpoint, proxy and upstream service"}
-    print("MODEL PREFLIGHT OK: tool calling supported",flush=True)
+    print("SANDBOX IO PREFLIGHT OK; MODEL PREFLIGHT OK: tool calling supported",flush=True)
     destination.mkdir(parents=True)
     records=[]
     for index, row in enumerate(cases,1):
