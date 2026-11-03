@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 from collections import Counter, defaultdict
@@ -21,6 +22,46 @@ from spreadsheetbench2_fault_factory import sha
 
 DEFAULT_DATASET = Path("runs/ssb2-discovered-v2")
 
+
+
+def infrastructure_error(error):
+    """Classify transport/server failures separately from benchmark failures."""
+    status=getattr(error,"status_code",None)
+    text=str(error)
+    if status is None:
+        match=re.search(r"(?:Error code:|status(?: code)?[: =])\\s*(\\d{3})",text,re.I)
+        status=int(match.group(1)) if match else None
+    if status in (429,500,502,503,504):
+        return f"upstream_http_{status}"
+    if status in (401,403,404):
+        return f"api_configuration_http_{status}"
+    if error.__class__.__name__ in ("APIConnectionError","APITimeoutError","ConnectError","TimeoutException"):
+        return "model_transport_error"
+    return None
+
+
+def model_preflight(client,model,api_type):
+    """One small model/tool-call smoke request. No workbook or private answers."""
+    if api_type=="chat_completions":
+        from spreadsheetbench2_local_qwen import TOOLS
+        response=client.chat.completions.create(
+            model=model,stream=False,
+            messages=[{"role":"user","content":"Call execute_python to calculate 2+3. Do not solve directly."}],
+            tools=[TOOLS[0]],tool_choice="auto",
+            **({"extra_body":{"chat_template_kwargs":{"enable_thinking":False}}}
+               if model.lower().startswith("qwen") else {}))
+        calls=response.choices[0].message.tool_calls or []
+        supported=any(c.function.name=="execute_python" for c in calls)
+    else:
+        from spreadsheetbench2_responses_runner import RESPONSE_TOOLS
+        response=client.responses.create(
+            model=model,instructions="Use the provided function to calculate 2+3.",
+            input=[{"role":"user","content":"Call execute_python to calculate 2+3."}],
+            tools=[RESPONSE_TOOLS[0]],tool_choice="auto",store=False)
+        supported=any(x.type=="function_call" and x.name=="execute_python" for x in response.output)
+    if not supported:
+        raise RuntimeError("preflight_no_tool_call: model endpoint responded but did not call execute_python")
+    return {"model_reachable":True,"tool_calls_supported":True,"api_type":api_type}
 
 def read_cases(dataset):
     data=json.loads((dataset/"private"/"oracle.json").read_text(encoding="utf-8"))
@@ -118,7 +159,8 @@ def _create_agent_workspace(dataset,case,destination):
 def _summary_item(case, result, error=None):
     if error is not None:
         return {"case_id":case["id"],"state":"runner_error","error":str(error)[:400],
-                "pass":False,"artifact_created":False}
+                "infrastructure_error":infrastructure_error(error),
+                "pass":None,"artifact_created":False}
     oracle=result.get("oracle",{})
     return {"case_id":case["id"],"state":result.get("state"),
             "requests":result.get("requests"),"tool_calls":result.get("tool_calls"),
@@ -152,6 +194,13 @@ def run_plan(plan_file, out, *, api_type, max_requests, max_tools,
                   api_key=os.getenv("MODEL_API_KEY") or os.getenv("LOCAL_MODEL_API_KEY","not-needed"),
                   max_retries=0,timeout=180)
     runner=run_case_responses if api_type=="responses" else run_case
+    try:
+        check=model_preflight(client,os.environ["MODEL_ID"],api_type)
+    except Exception as error:
+        return {"status":"preflight_failed","infrastructure_error":infrastructure_error(error),
+                "error":str(error)[:400],"cases":0,"model_evaluations":0,
+                "note":"No benchmark task attempted; check the model endpoint, proxy and upstream service"}
+    print("MODEL PREFLIGHT OK: tool calling supported",flush=True)
     destination.mkdir(parents=True)
     records=[]
     for index, row in enumerate(cases,1):
@@ -177,7 +226,13 @@ def run_plan(plan_file, out, *, api_type, max_requests, max_tools,
                 json.dumps(item,ensure_ascii=False,indent=2),encoding="utf-8")
             records.append(_summary_item(task,item))
         except Exception as error:
-            records.append(_summary_item(task,{},error))
+            failed=_summary_item(task,{},error)
+            records.append(failed)
+            if failed["infrastructure_error"]:
+                (destination/"summary.json").write_text(
+                    json.dumps(records,ensure_ascii=False,indent=2),encoding="utf-8")
+                print(f"STOP: infrastructure error {failed['infrastructure_error']}; remaining cases not attempted",flush=True)
+                break
         (destination/"summary.json").write_text(
             json.dumps(records,ensure_ascii=False,indent=2),encoding="utf-8")
     return aggregate(records)
@@ -185,7 +240,10 @@ def run_plan(plan_file, out, *, api_type, max_requests, max_tools,
 
 def aggregate(records):
     states=Counter(c.get("state") for c in records)
-    return {"cases":len(records),"delivered_xlsx":sum(bool(c.get("artifact_created")) for c in records),
+    infra=sum(bool(c.get("infrastructure_error")) for c in records)
+    return {"cases":len(records),"valid_model_evaluations":len(records)-infra,
+            "infrastructure_errors":infra,
+            "delivered_xlsx":sum(bool(c.get("artifact_created")) for c in records),
             "strict_passes":sum(bool(c.get("pass")) for c in records),
             "states":dict(states),"results":records,
             "note":"Descriptive pilot metrics, not independent model benchmark accuracy"}
