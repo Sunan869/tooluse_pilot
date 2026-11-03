@@ -7,12 +7,14 @@ import argparse,json,os,shutil,sys
 from pathlib import Path
 from openai import OpenAI
 from spreadsheetbench2_responses_runner import run_case_responses
+from spreadsheetbench2_local_qwen import run_case as run_case_chat
 from spreadsheetbench2_derive import validate
 
 def main():
  p=argparse.ArgumentParser()
  p.add_argument("--case",type=Path,default=Path("runs/ssb2-derived-01/repair"))
  p.add_argument("--out",type=Path,required=True)
+ p.add_argument("--api-type",choices=["responses","chat_completions"],default="responses")
  p.add_argument("--max-requests",type=int,default=25)
  p.add_argument("--max-tools",type=int,default=60)
  p.add_argument("--sandbox-image",default="tooluse-pilot-sandbox:py311-openpyxl")
@@ -30,10 +32,11 @@ def main():
  (dest/"output").mkdir()
  client=OpenAI(base_url=os.environ["MODEL_BASE_URL"],api_key=os.environ["MODEL_API_KEY"],
                timeout=180,max_retries=0)
- report=run_case_responses(client,os.environ["MODEL_ID"],dest,a.max_requests,a.max_tools,a.sandbox_image)
+ runner=run_case_responses if a.api_type=="responses" else run_case_chat
+ report=runner(client,os.environ["MODEL_ID"],dest,a.max_requests,a.max_tools,a.sandbox_image)
  outputs=list((dest/"output").glob("*.xlsx"))
  grade=validate(dest,outputs[0]) if len(outputs)==1 else {"pass":False,"reason":"no_single_xlsx_output"}
- result={"model":os.environ["MODEL_ID"],"condition":"derived_minimal_repair",
+ result={"model":os.environ["MODEL_ID"],"api_type":a.api_type,"condition":"derived_minimal_repair",
          "case":source.name,"run_id":report["run_id"],"requests":report["requests"],
          "tool_calls":report["tool_calls"],"state":report["state"],
          "artifact_created":report["artifact_created"],"oracle":grade,
