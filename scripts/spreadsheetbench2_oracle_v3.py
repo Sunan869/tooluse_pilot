@@ -262,7 +262,7 @@ def evaluate_v3(out, task, submission, golden=None, review_evidence=None):
     strict=(known_targets_complete and not additional and integrity["preservation_pass"])
     return {
         "pass":strict,
-        "grading_version":"three_axis_v3",
+        "grading_version":"three_axis_v3_plus_financial_witness_v1",
         "injected_faults":{"fixed":fixed,"total":total,"recall":fixed/total if total else None,
                            "exact_repaired":sorted(repaired),"not_repaired":sorted(missed),
                            "alternate_formula_unverified":alternate,
