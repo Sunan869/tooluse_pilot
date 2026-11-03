@@ -245,6 +245,7 @@ def main():
     p.add_argument("--compound",type=int,default=24)
     p.add_argument("--seed",type=int,default=20261103)
     p.add_argument("--id");p.add_argument("--submission",type=Path)
+    p.add_argument("--review-evidence",type=Path,help="Optional SHA-bound trusted audit annotations; never mount in model workspace")
     args=p.parse_args()
     if args.action=="generate":
         result=generate(args.source,args.golden,args.out,args.seed,args.compound)
@@ -252,7 +253,10 @@ def main():
         result=selftest(args.out)
     else:
         if not args.id or not args.submission:p.error("grade requires --id and --submission")
-        result=evaluate(args.out,load_task(args.out,args.id),args.submission)
+        from spreadsheetbench2_oracle_v3 import evaluate_v3
+        golden_file=args.golden if args.golden.is_file() else None
+        result=evaluate_v3(args.out,load_task(args.out,args.id),args.submission,
+                           golden=golden_file,review_evidence=args.review_evidence)
     print(json.dumps(result,ensure_ascii=False,indent=2))
     if args.action=="selftest" and result["failures"]:
         raise SystemExit(1)
