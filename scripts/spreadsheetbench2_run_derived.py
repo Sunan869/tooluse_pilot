@@ -36,7 +36,8 @@ def main():
  report=runner(client,os.environ["MODEL_ID"],dest,a.max_requests,a.max_tools,a.sandbox_image)
  outputs=list((dest/"output").glob("*.xlsx"))
  grade=validate(dest,outputs[0]) if len(outputs)==1 else {"pass":False,"reason":"no_single_xlsx_output"}
- result={"model":os.environ["MODEL_ID"],"api_type":a.api_type,"condition":"derived_minimal_repair",
+ condition="blind_audit_candidate" if (source/"private"/"study_metadata.json").exists() else "derived_minimal_repair"
+ result={"model":os.environ["MODEL_ID"],"api_type":a.api_type,"condition":condition,
          "case":source.name,"run_id":report["run_id"],"requests":report["requests"],
          "tool_calls":report["tool_calls"],"state":report["state"],
          "artifact_created":report["artifact_created"],"oracle":grade,
