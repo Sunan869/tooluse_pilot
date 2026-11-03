@@ -270,6 +270,12 @@ def main():
               "artifact_integrity":{"preservation_pass":result["artifact_integrity"]["preservation_pass"],
                                     "issues":result["artifact_integrity"]["issues"],
                                     "warnings":result["artifact_integrity"]["warnings"]},
+              "financial_constraints":{"rule_count":result["financial_constraints"]["rule_count"],
+                                      "pass":result["financial_constraints"]["pass"],
+                                      "fail":result["financial_constraints"]["fail"],
+                                      "unverified":result["financial_constraints"]["unverified"]},
+              "supplemental_business_evidence":{"evaluated_extra_cells":result["supplemental_business_evidence"]["evaluated_extra_cells"],
+                                                "improved_under_synthetic_witnesses":result["supplemental_business_evidence"]["improved_under_synthetic_witnesses"]},
               "verdict":result["verdict"]}
     else:
         view=result
